@@ -192,6 +192,12 @@ class MainActivity : Activity() {
             setOnClickListener { checkForUpdates() }
         }
         root.addView(updateButton, LinearLayout.LayoutParams(-2, -2))
+        val serverButton = Button(this).apply {
+            text = "🌐 Серверна бібліотека"
+            isAllCaps = false
+            setOnClickListener { startActivity(Intent(this@MainActivity, ServerLibraryActivity::class.java)) }
+        }
+        root.addView(serverButton, LinearLayout.LayoutParams(-1, -2))
         root.addView(search, LinearLayout.LayoutParams(-1, -2).apply { topMargin = 12; bottomMargin = 12 })
         root.addView(categoryScroll)
         refreshCategories()
