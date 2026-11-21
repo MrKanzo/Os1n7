@@ -9,6 +9,7 @@ import android.media.ExifInterface
 import android.net.Uri
 import android.content.res.ColorStateList
 import android.view.View
+import android.view.WindowInsets
 
 class AcademyActivity:Activity() {
  private val lessons=listOf(
@@ -42,7 +43,7 @@ class AcademyActivity:Activity() {
    v.setPadding(24,bars.top+24,24,bars.bottom+24);ins
   }
   val body=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL }
-  val scroll=ScrollView(this);scroll.addView(body);root.addView(scroll);setContentView(root);root.requestApplyWindowInsets()
+  val scroll=ScrollView(this);scroll.addView(body);root.addView(scroll);setContentView(root);root.requestApplyInsets()
   return body
  }
  private fun label(p:LinearLayout,s:String):TextView {
