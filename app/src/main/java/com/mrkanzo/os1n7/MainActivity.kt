@@ -27,6 +27,8 @@ class MainActivity : Activity() {
                 val conn = URL("https://api.github.com/repos/MrKanzo/Os1n7/releases/latest").openConnection()
                 conn.setRequestProperty("Accept", "application/vnd.github+json")
                 conn.setRequestProperty("User-Agent", "OS1N7-Android")
+                conn.connectTimeout = 10000
+                conn.readTimeout = 10000
                 val json = JSONObject(conn.getInputStream().bufferedReader().use { it.readText() })
                 val latest = json.optString("tag_name")
                 val assets = json.getJSONArray("assets")
@@ -39,17 +41,22 @@ class MainActivity : Activity() {
                     }
                 }
                 val current = packageManager.getPackageInfo(packageName, 0).versionName ?: "0"
+                fun parts(v: String) = v.removePrefix("v").substringBefore("-").split(".").map { it.toIntOrNull() ?: 0 }
+                val a = parts(latest)
+                val b = parts(current)
+                val difference = (0 until maxOf(a.size, b.size)).map { a.getOrElse(it) { 0 } - b.getOrElse(it) { 0 } }.firstOrNull { it != 0 } ?: 0
+                val hasUpdate = difference > 0
                 runOnUiThread {
                     if (apkUrl.isBlank()) {
                         Toast.makeText(this, "У релізі немає APK", Toast.LENGTH_LONG).show()
-                    } else if (latest.removePrefix("v") == current) {
+                    } else if (!hasUpdate) {
                         android.app.AlertDialog.Builder(this)
-                            .setMessage("У тебе вже остання версія: $current")
+                            .setMessage("Встановлено: $current. Останній реліз: $latest. Новіших версій немає.")
                             .setPositiveButton("Гаразд", null).show()
                     } else {
                         android.app.AlertDialog.Builder(this)
                             .setTitle("Доступне оновлення $latest")
-                            .setMessage("Поточна версія: $current. Завантажити новий APK? Після завантаження відкрий його з повідомлення або папки Downloads і підтвердь встановлення.")
+                            .setMessage("Поточна версія: $current. Завантажити APK $latest? Поки немає постійного підпису, Android може вимагати перевстановлення.")
                             .setNegativeButton("Пізніше", null)
                             .setPositiveButton("Завантажити") { _, _ ->
                                 val request = DownloadManager.Request(Uri.parse(apkUrl))
