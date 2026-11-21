@@ -16,13 +16,7 @@ import android.view.ViewGroup
 import android.widget.*
 
 class MainActivity : Activity() {
-    private val books = listOf(
-        Triple("Основи OSINT", "Початок", "Пошук у відкритих джерелах, перевірка фактів та етика."),
-        Triple("Пошукові оператори", "Пошук", "Лапки, site:, filetype: та комбінування запитів."),
-        Triple("Перевірка зображень", "Верифікація", "Зворотний пошук та перевірка контексту фотографій."),
-        Triple("Цифрова безпека", "OPSEC", "Захист акаунтів, двофакторна автентифікація та приватність."),
-        Triple("Архіви інтернету", "Джерела", "Пошук історичних версій публічних вебсторінок.")
-    )
+    private val books = LessonLibrary.lessons.map { Triple(it.title, it.category, it.summary) }
     private val saved by lazy { getSharedPreferences("bookmarks", Context.MODE_PRIVATE) }
     private var onlySaved = false
     private var selectedCategory = "Усі"
@@ -114,7 +108,7 @@ class MainActivity : Activity() {
         var onCategoryChange: () -> Unit = {}
         fun refreshCategories() {
             categories.removeAllViews()
-            for (cat in listOf("Усі", "Початок", "Пошук", "Верифікація", "OPSEC", "Джерела", "★ Закладки")) {
+            for (cat in listOf("Усі") + LessonLibrary.lessons.map { it.category }.distinct() + listOf("★ Закладки")) {
                 val selected = if (cat == "★ Закладки") onlySaved else !onlySaved && cat == selectedCategory
                 val button = Button(this).apply {
                     text = cat
@@ -158,7 +152,11 @@ class MainActivity : Activity() {
                     }
                     setOnClickListener {
                         android.app.AlertDialog.Builder(this@MainActivity)
-                            .setTitle(name).setMessage(desc)
+                            .setTitle(name).setMessage(LessonLibrary.lessons.firstOrNull { it.title == name }?.let { lesson ->
+                                lesson.summary + "\n\n📚 ТЕОРІЯ\n" + lesson.explanation +
+                                "\n\n🔎 ПРИКЛАД\n" + lesson.example +
+                                "\n\n✍ ПРАКТИКА\n" + lesson.task
+                            } ?: desc)
                             .setNeutralButton(if (saved.getBoolean(name, false)) "Прибрати ★" else "Зберегти ★") { _, _ ->
                                 saved.edit().putBoolean(name, !saved.getBoolean(name, false)).apply()
                                 render(search.text.toString())
