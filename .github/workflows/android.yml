@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -23,3 +23,16 @@ jobs:
         with:
           name: Os1n7-debug-apk
           path: app/build/outputs/apk/debug/*.apk
+
+      - name: Publish GitHub Release APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(grep 'versionName = ' app/build.gradle.kts | head -1 | sed -E 's/.*"([^"]+)".*/\1/')
+          TAG="v$VERSION"
+          APK="app/build/outputs/apk/debug/app-debug.apk"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$APK" --clobber
+          else
+            gh release create "$TAG" "$APK" --title "OS1N7 $TAG" --notes "OS1N7 Android APK. Debug build; installation over older debug APK may require reinstalling due to different signing keys." --target "$GITHUB_SHA"
+          fi
