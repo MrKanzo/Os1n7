@@ -88,6 +88,7 @@ class ServerLibraryActivity : Activity() {
             view.setPadding(dp(18), bars.top + dp(16), dp(18), bars.bottom + dp(12))
             insets
         }
+        root.addView(Button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
         root.addView(text("◈  OS1N7", 27f, accent, true))
         val subtitle = text("СЕРВЕРНА БІБЛІОТЕКА", 12f, muted)
         subtitle.setPadding(0, dp(4), 0, dp(18))
