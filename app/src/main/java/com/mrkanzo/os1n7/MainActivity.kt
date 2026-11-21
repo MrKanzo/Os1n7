@@ -10,6 +10,8 @@ import android.net.Uri
 import android.app.DownloadManager
 import org.json.JSONObject
 import java.net.URL
+import android.view.View
+import android.graphics.Typeface
 import android.view.ViewGroup
 import android.widget.*
 
@@ -82,19 +84,29 @@ class MainActivity : Activity() {
         window.statusBarColor = Color.rgb(15, 19, 29)
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(24, 42, 24, 16)
+            setPadding(20, 36, 20, 16)
             setBackgroundColor(Color.rgb(15, 19, 29))
         }
         val title = TextView(this).apply {
-            text = "OS1N7  •  БІБЛІОТЕКА"
-            textSize = 23f
+            text = "◈  OS1N7"
+            textSize = 29f
+            setTypeface(null, Typeface.BOLD)
+            setTextColor(Color.rgb(90, 232, 173))
             setTextColor(Color.WHITE)
         }
+        val subtitle = TextView(this).apply {
+            text = "OSINT  /  ЦИФРОВА ЧИТАЛЬНЯ"
+            textSize = 12f
+            setTextColor(Color.rgb(158, 180, 192))
+            letterSpacing = 0.12f
+        }
         val search = EditText(this).apply {
-            hint = "Пошук по бібліотеці"
+            hint = "⌕  Знайти матеріал або тему"
             setSingleLine(true)
             setTextColor(Color.WHITE)
-            setHintTextColor(Color.LTGRAY)
+            setHintTextColor(Color.rgb(160, 178, 189))
+            setPadding(20, 15, 20, 15)
+            background = GradientDrawable().apply { setColor(Color.rgb(29, 39, 50)); cornerRadius = 20f }
         }
         val categories = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
         val categoryScroll = HorizontalScrollView(this).apply { addView(categories); isHorizontalScrollBarEnabled = false }
@@ -122,18 +134,27 @@ class MainActivity : Activity() {
         }
         fun render(query: String) {
             list.removeAllViews()
+            val section = TextView(this).apply {
+                text = if (onlySaved) "★  ЗБЕРЕЖЕНЕ" else if (selectedCategory == "Усі") "МАТЕРІАЛИ БІБЛІОТЕКИ" else selectedCategory.uppercase()
+                textSize = 13f
+                setTypeface(null, Typeface.BOLD)
+                setTextColor(Color.rgb(90, 232, 173))
+                setPadding(3, 16, 0, 17)
+            }
+            list.addView(section)
             books.filter { (name, cat, desc) ->
                 (if (onlySaved) saved.getBoolean(name, false) else selectedCategory == "Усі" || selectedCategory == cat) &&
                     listOf(name, cat, desc).any { it.contains(query, ignoreCase = true) }
             }.forEach { (name, category, desc) ->
                 val item = TextView(this).apply {
-                    text = "📖  $name\n$category  •  $desc"
+                    text = "▣  $name\n\n$desc\n\n$category   •   Читати →"
                     textSize = 16f
+                    setLineSpacing(3f, 1f)
                     setTextColor(Color.WHITE)
-                    setPadding(18, 20, 18, 20)
+                    setPadding(22, 24, 22, 24)
                     background = GradientDrawable().apply {
                         setColor(Color.rgb(29, 39, 50))
-                        cornerRadius = 18f
+                        cornerRadius = 24f
                     }
                     setOnClickListener {
                         android.app.AlertDialog.Builder(this@MainActivity)
@@ -146,7 +167,7 @@ class MainActivity : Activity() {
                     }
                 }
                 list.addView(item, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-                    bottomMargin = 14
+                    bottomMargin = 18
                 })
             }
         }
@@ -157,15 +178,16 @@ class MainActivity : Activity() {
         })
         onCategoryChange = { render(search.text.toString()) }
         root.addView(title)
+        root.addView(subtitle)
         val updateButton = Button(this).apply {
-            text = "↻  Перевірити оновлення"
+            text = "↻  Оновлення"
             isAllCaps = false
-            setTextColor(Color.BLACK)
-            backgroundTintList = android.content.res.ColorStateList.valueOf(Color.rgb(80, 225, 160))
+            setTextColor(Color.rgb(90, 232, 173))
+            backgroundTintList = android.content.res.ColorStateList.valueOf(Color.rgb(29, 39, 50))
             setOnClickListener { checkForUpdates() }
         }
-        root.addView(updateButton)
-        root.addView(search)
+        root.addView(updateButton, LinearLayout.LayoutParams(-2, -2))
+        root.addView(search, LinearLayout.LayoutParams(-1, -2).apply { topMargin = 12; bottomMargin = 12 })
         root.addView(categoryScroll)
         refreshCategories()
         root.addView(ScrollView(this).apply { addView(list) })
