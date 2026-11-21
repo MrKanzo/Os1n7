@@ -2,7 +2,12 @@ package com.mrkanzo.os1n7
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.Color
+import android.view.MotionEvent
+import android.view.View
+import kotlin.math.hypot
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -70,6 +75,20 @@ class CaseFilesActivity : Activity() {
             }
         }
         evidence.addView(evidenceText)
+        val graphCard = card(body, "🕸️ Граф зв'язків")
+        graphCard.addView(text("Натискай на вузли: побачиш доказ, силу зв'язку й пораду із захисту.", 13f, Color.LTGRAY))
+        val nodeInfo = text("Вибери вузол на схемі.", 14f, accent)
+        val graph = CaseGraphView(this) { node ->
+            nodeInfo.text = when (node) {
+                0 -> "ПЕРСОНАЖ • особа невідома. Не ототожнюй акаунти з реальною людиною без перевірки."
+                1 -> "ФОРУМ • @night_owl_17. Сильний зв'язок із фотоблогом через однаковий нік. 🛡️ Різні ніки для різних контекстів."
+                2 -> "ФОТОБЛОГ • @night_owl_17. Фото радіо R17. 🛡️ Прибери геомітки, EXIF та унікальні деталі."
+                3 -> "МАРКЕТПЛЕЙС • @radiofix17. Збіг наклейки R17 — лише непрямий доказ. 🛡️ Не публікуй зайві персональні деталі."
+                else -> "РАДІО R17 • спільний предмет, не доказ тотожності власника. 🛡️ Перевіряй фото перед публікацією."
+            }
+        }
+        graphCard.addView(graph, LinearLayout.LayoutParams(-1, dp(290)))
+        graphCard.addView(nodeInfo)
         val answer = card(body, "Висновок слідчого")
         answer.addView(text("Які два профілі мають найсильніший зв'язок?"))
         val choices = RadioGroup(this).apply { orientation = RadioGroup.VERTICAL }
@@ -111,5 +130,68 @@ class CaseFilesActivity : Activity() {
             }
         }
         defense.addView(defenseResult)
+    }
+}
+
+/** Tap-enabled, fixed-layout relationship graph with deliberately fictional nodes. */
+private class CaseGraphView(
+    context: android.content.Context,
+    private val onNode: (Int) -> Unit
+) : View(context) {
+    private val ink = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val nodes = listOf(
+        Triple(0.50f, 0.13f, "Особа"),
+        Triple(0.23f, 0.40f, "Форум"),
+        Triple(0.77f, 0.40f, "Фото"),
+        Triple(0.22f, 0.80f, "Ринок"),
+        Triple(0.76f, 0.80f, "R17")
+    )
+    private val links = listOf(0 to 1, 0 to 2, 1 to 2, 2 to 4, 3 to 4)
+    private val green = Color.rgb(98, 230, 173)
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        val w = width.toFloat()
+        val h = height.toFloat()
+        val radius = (w * 0.105f).coerceAtMost(h * 0.13f)
+        links.forEachIndexed { i, (a, b) ->
+            ink.color = if (i == 2) green else Color.rgb(89, 116, 124)
+            ink.strokeWidth = if (i == 2) 5f else 2.5f
+            val from = nodes[a]; val to = nodes[b]
+            canvas.drawLine(from.first * w, from.second * h, to.first * w, to.second * h, ink)
+        }
+        nodes.forEachIndexed { i, node ->
+            val x = node.first * w; val y = node.second * h
+            ink.color = if (i == 1 || i == 2) Color.rgb(31, 96, 80) else Color.rgb(40, 62, 74)
+            ink.style = Paint.Style.FILL
+            canvas.drawCircle(x, y, radius, ink)
+            ink.color = green
+            ink.style = Paint.Style.STROKE
+            ink.strokeWidth = 2.5f
+            canvas.drawCircle(x, y, radius, ink)
+            ink.style = Paint.Style.FILL
+            ink.color = Color.WHITE
+            ink.textSize = radius * 0.46f
+            ink.textAlign = Paint.Align.CENTER
+            canvas.drawText(node.third, x, y + radius * 0.16f, ink)
+        }
+    }
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) return true
+        if (event.action == MotionEvent.ACTION_UP) {
+            val radius = (width * 0.105f).coerceAtMost(height * 0.13f)
+            val index = nodes.indexOfFirst {
+                hypot(event.x - it.first * width, event.y - it.second * height) <= radius * 1.3f
+            }
+            if (index >= 0) {
+                onNode(index)
+                performClick()
+            }
+            return true
+        }
+        return super.onTouchEvent(event)
+    }
+    override fun performClick(): Boolean {
+        super.performClick()
+        return true
     }
 }
