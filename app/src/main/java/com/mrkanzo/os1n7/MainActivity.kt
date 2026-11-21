@@ -158,7 +158,7 @@ class MainActivity : Activity() {
         body.addView(description)
 
         addAction(body, "Категорії та уроки", "Теорія • Книжки • Практика • Тести", "▣") { openLibrary() }
-        addAction(body, "Серверна бібліотека", "Матеріали з локального сервера Termux", "◎") {
+        addAction(body, "OSINT Лабораторія", "Термінал • Симуляції • Практичні місії", "⌘") {\n            startActivity(Intent(this, LabActivity::class.java))\n        }\n        addAction(body, "Серверна бібліотека", "Матеріали з локального сервера Termux", "◎") {
             startActivity(Intent(this, ServerLibraryActivity::class.java))
         }
         addAction(body, "Перевірити оновлення", "Знайти нову версію APK на GitHub", "↻") { checkForUpdates() }
