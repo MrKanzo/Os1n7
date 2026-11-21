@@ -164,6 +164,9 @@ class MainActivity : Activity() {
         addAction(body, "OSINT Case Files", "Розслідування • Докази • Захист", "◇") {
             startActivity(Intent(this, CaseFilesActivity::class.java))
         }
+        addAction(body, "OSINT з нуля", "7 етапів • Розслідування • Звіт • Захист", "✦") {
+            startActivity(Intent(this, FoundationsActivity::class.java))
+        }
         addAction(body, "OS1N7 Academy", "Навчитися • Спробувати • Захист • Тест", "◈") {
             startActivity(Intent(this, AcademyActivity::class.java))
         }
@@ -179,7 +182,7 @@ class MainActivity : Activity() {
         val academyPrefs = getSharedPreferences("academy", Context.MODE_PRIVATE)
         val labPrefs = getSharedPreferences("os1n7_lab", Context.MODE_PRIVATE)
         val casePrefs = getSharedPreferences("os1n7_cases", Context.MODE_PRIVATE)
-        val total = LessonLibrary.lessons.size + 7
+        val total = LessonLibrary.lessons.size + 14
         val progress = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(17), dp(17), dp(17), dp(17))
@@ -201,9 +204,11 @@ class MainActivity : Activity() {
             val academy = (0..2).count { academyPrefs.getBoolean("done_" + it, false) }
             val lab = listOf("mission_phishing", "mission_footprint").count { labPrefs.getBoolean(it, false) }
             val cases = listOf("case001", "case001_defense").count { casePrefs.getBoolean(it, false) }
-            val finished = library + academy + lab + cases
+            val foundationsPrefs = getSharedPreferences("os1n7_foundations", Context.MODE_PRIVATE)
+            val foundations = (0..6).count { foundationsPrefs.getBoolean("step_" + it, false) }
+            val finished = library + academy + lab + cases + foundations
             summary.text = finished.toString() + " із " + total + " завдань виконано"
-            breakdown.text = "Бібліотека: " + library + "  •  Academy: " + academy + "  •  Лабораторія: " + lab + "  •  Case Files: " + cases
+            breakdown.text = "Бібліотека: " + library + "  •  Academy: " + academy + "  •  Лабораторія: " + lab + "  •  Case Files: " + cases + "  •  OSINT з нуля: " + foundations
             track.post {
                 val width = if (total == 0) 0 else (track.width * finished / total).coerceIn(0, track.width)
                 bar.layoutParams = FrameLayout.LayoutParams(width, dp(9))
