@@ -56,6 +56,7 @@ class CaseFilesActivity : Activity() {
         root.addView(scroll)
         setContentView(root)
         root.requestApplyInsets()
+        body.addView(Button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
         body.addView(text("◈  CASE FILES", 27f, accent, true))
         body.addView(text("СПРАВА 001 • ТІНЬОВИЙ ПРОФІЛЬ", 13f, Color.LTGRAY))
         val intro = card(body, "Завдання")

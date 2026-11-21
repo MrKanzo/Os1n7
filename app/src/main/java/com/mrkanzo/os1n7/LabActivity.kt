@@ -58,6 +58,7 @@ class LabActivity : Activity() {
         root.addView(scroll)
         setContentView(root)
         root.requestApplyInsets()
+        content.addView(Button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
         content.addView(text("◈  OS1N7 / LAB", 27f, green, true))
         content.addView(text("Офлайн-полігон • лише навчальні дані", 13f, muted))
         val terminal = section(content, "01  OSINT Terminal")

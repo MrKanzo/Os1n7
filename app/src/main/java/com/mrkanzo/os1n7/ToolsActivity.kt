@@ -36,6 +36,7 @@ class ToolsActivity : Activity() {
             body.addView(result)
             body.addView(label("🛡️ Захист: "+defense))
         }
+        body.addView(Button(this).apply { text="← Головне меню";isAllCaps=false;setOnClickListener { finish() } })
         body.addView(label("◈ OS1N7 / TOOLS\nОфлайн-інструменти та захист"))
         exercise("01 • DNS Inspector","example.com","MFA для реєстратора, перевірка DNS-записів та мінімум публічних контактів.") { value ->
             when(value.lowercase()) {
