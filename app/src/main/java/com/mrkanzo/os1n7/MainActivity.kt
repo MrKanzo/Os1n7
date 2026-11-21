@@ -198,6 +198,12 @@ class MainActivity : Activity() {
             setOnClickListener { startActivity(Intent(this@MainActivity, ServerLibraryActivity::class.java)) }
         }
         root.addView(serverButton, LinearLayout.LayoutParams(-1, -2))
+        val academyButton = Button(this).apply {
+            text = "📚 Категорії • Теорія • Практика • Тести"
+            isAllCaps = false
+            setOnClickListener { startActivity(Intent(this@MainActivity, CategoryLibraryActivity::class.java)) }
+        }
+        root.addView(academyButton, LinearLayout.LayoutParams(-1, -2))
         root.addView(search, LinearLayout.LayoutParams(-1, -2).apply { topMargin = 12; bottomMargin = 12 })
         root.addView(categoryScroll)
         refreshCategories()
