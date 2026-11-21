@@ -165,7 +165,18 @@ class ServerLibraryActivity : Activity() {
                 connection.requestMethod = "GET"
                 connection.setRequestProperty("Accept", "application/json")
                 if (connection.responseCode != 200) throw IllegalStateException("HTTP ${connection.responseCode}")
-                val payload = connection.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
+                val maxBytes = 2 * 1024 * 1024
+                val payload = connection.inputStream.use { stream ->
+                    val buffer = ByteArray(8192)
+                    val output = java.io.ByteArrayOutputStream()
+                    while (true) {
+                        val n = stream.read(buffer)
+                        if (n < 0) break
+                        if (output.size() + n > maxBytes) throw IllegalStateException("Відповідь сервера завелика")
+                        output.write(buffer, 0, n)
+                    }
+                    output.toString("UTF-8")
+                }
                 // Validate before replacing the last known-good offline snapshot.
                 val count = JSONObject(payload).getJSONArray("articles").length()
                 runOnUiThread {
