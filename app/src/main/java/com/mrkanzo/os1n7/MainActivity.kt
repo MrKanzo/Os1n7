@@ -158,6 +158,9 @@ class MainActivity : Activity() {
         body.addView(description)
 
         addAction(body, "Категорії та уроки", "Теорія • Книжки • Практика • Тести", "▣") { openLibrary() }
+        addAction(body, "OSINT Лабораторія", "Термінал • Симуляції • Практичні місії", "⌘") {
+            startActivity(Intent(this, LabActivity::class.java))
+        }
         addAction(body, "Серверна бібліотека", "Матеріали з локального сервера Termux", "◎") {
             startActivity(Intent(this, ServerLibraryActivity::class.java))
         }
