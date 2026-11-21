@@ -5,6 +5,11 @@ import android.os.Bundle
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.app.DownloadManager
+import org.json.JSONObject
+import java.net.URL
 import android.view.ViewGroup
 import android.widget.*
 
@@ -19,6 +24,59 @@ class MainActivity : Activity() {
     private val saved by lazy { getSharedPreferences("bookmarks", Context.MODE_PRIVATE) }
     private var onlySaved = false
     private var selectedCategory = "Усі"
+    private fun checkForUpdates() {
+        Toast.makeText(this, "Перевіряємо GitHub Releases…", Toast.LENGTH_SHORT).show()
+        Thread {
+            try {
+                val conn = URL("https://api.github.com/repos/MrKanzo/Os1n7/releases/latest").openConnection()
+                conn.setRequestProperty("Accept", "application/vnd.github+json")
+                conn.setRequestProperty("User-Agent", "OS1N7-Android")
+                val json = JSONObject(conn.getInputStream().bufferedReader().use { it.readText() })
+                val latest = json.optString("tag_name")
+                val assets = json.getJSONArray("assets")
+                var apkUrl = ""
+                for (i in 0 until assets.length()) {
+                    val a = assets.getJSONObject(i)
+                    if (a.optString("name").endsWith(".apk")) {
+                        apkUrl = a.optString("browser_download_url")
+                        break
+                    }
+                }
+                val current = packageManager.getPackageInfo(packageName, 0).versionName ?: "0"
+                runOnUiThread {
+                    if (apkUrl.isBlank()) {
+                        Toast.makeText(this, "У релізі немає APK", Toast.LENGTH_LONG).show()
+                    } else if (latest.removePrefix("v") == current) {
+                        android.app.AlertDialog.Builder(this)
+                            .setMessage("У тебе вже остання версія: $current")
+                            .setPositiveButton("Гаразд", null).show()
+                    } else {
+                        android.app.AlertDialog.Builder(this)
+                            .setTitle("Доступне оновлення $latest")
+                            .setMessage("Поточна версія: $current. Завантажити новий APK? Після завантаження відкрий його з повідомлення або папки Downloads і підтвердь встановлення.")
+                            .setNegativeButton("Пізніше", null)
+                            .setPositiveButton("Завантажити") { _, _ ->
+                                val request = DownloadManager.Request(Uri.parse(apkUrl))
+                                    .setTitle("OS1N7 $latest")
+                                    .setDescription("Оновлення OSINT-бібліотеки")
+                                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                                    .setDestinationInExternalPublicDir(android.os.Environment.DIRECTORY_DOWNLOADS, "OS1N7-${latest}.apk")
+                                val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                                manager.enqueue(request)
+                                Toast.makeText(this, "Завантаження розпочато", Toast.LENGTH_LONG).show()
+                            }.show()
+                    }
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    android.app.AlertDialog.Builder(this)
+                        .setTitle("Оновлення поки недоступні")
+                        .setMessage("Не вдалося отримати останній реліз GitHub. Перевір інтернет або чи опублікований APK у Releases.")
+                        .setPositiveButton("Гаразд", null).show()
+                }
+            }
+        }.start()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = Color.rgb(15, 19, 29)
@@ -99,6 +157,14 @@ class MainActivity : Activity() {
         })
         onCategoryChange = { render(search.text.toString()) }
         root.addView(title)
+        val updateButton = Button(this).apply {
+            text = "↻  Перевірити оновлення"
+            isAllCaps = false
+            setTextColor(Color.BLACK)
+            backgroundTintList = android.content.res.ColorStateList.valueOf(Color.rgb(80, 225, 160))
+            setOnClickListener { checkForUpdates() }
+        }
+        root.addView(updateButton)
         root.addView(search)
         root.addView(categoryScroll)
         refreshCategories()
