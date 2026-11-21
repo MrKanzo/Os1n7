@@ -24,15 +24,45 @@ jobs:
           name: Os1n7-debug-apk
           path: app/build/outputs/apk/debug/*.apk
 
-      - name: Publish GitHub Release APK
+      - name: Check release signing configuration
+        id: signing
+        env:
+          KEYSTORE_B64: ${{ secrets.OS1N7_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.OS1N7_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.OS1N7_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.OS1N7_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ] && [ -n "$STORE_PASSWORD" ] && [ -n "$KEY_ALIAS" ] && [ -n "$KEY_PASSWORD" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Release signing not configured. Add four OS1N7 GitHub Actions secrets."
+          fi
+      - name: Restore signing key
+        if: steps.signing.outputs.ready == 'true'
+        env:
+          KEYSTORE_B64: ${{ secrets.OS1N7_KEYSTORE_BASE64 }}
+        run: |
+          printf '%s' "$KEYSTORE_B64" | base64 --decode > "$RUNNER_TEMP/os1n7-release.jks"
+          chmod 600 "$RUNNER_TEMP/os1n7-release.jks"
+      - name: Build signed release APK
+        if: steps.signing.outputs.ready == 'true'
+        env:
+          OS1N7_KEYSTORE_PATH: ${{ runner.temp }}/os1n7-release.jks
+          OS1N7_STORE_PASSWORD: ${{ secrets.OS1N7_STORE_PASSWORD }}
+          OS1N7_KEY_ALIAS: ${{ secrets.OS1N7_KEY_ALIAS }}
+          OS1N7_KEY_PASSWORD: ${{ secrets.OS1N7_KEY_PASSWORD }}
+        run: gradle :app:assembleRelease --no-daemon
+      - name: Publish signed APK
+        if: steps.signing.outputs.ready == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           VERSION=$(grep 'versionName = ' app/build.gradle.kts | head -1 | sed -E 's/.*"([^"]+)".*/\1/')
           TAG="v$VERSION"
-          APK="app/build/outputs/apk/debug/app-debug.apk"
+          APK="app/build/outputs/apk/release/app-release.apk"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" "$APK" --clobber
           else
-            gh release create "$TAG" "$APK" --title "OS1N7 $TAG" --notes "OS1N7 Android APK. Debug build; installation over older debug APK may require reinstalling due to different signing keys." --target "$GITHUB_SHA"
+            gh release create "$TAG" "$APK" --title "OS1N7 $TAG" --notes "Signed Android release APK" --target "$GITHUB_SHA"
           fi
