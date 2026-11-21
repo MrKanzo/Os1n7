@@ -170,6 +170,9 @@ class MainActivity : Activity() {
         addAction(body, "OS1N7 Academy", "Навчитися • Спробувати • Захист • Тест", "◈") {
             startActivity(Intent(this, AcademyActivity::class.java))
         }
+        addAction(body, "Каталог OSINT-інструментів", "SpiderFoot • Maltego • Shodan • 12 довідок", "⌕") {
+            startActivity(Intent(this, ToolCatalogActivity::class.java))
+        }
         addAction(body, "OSINT Інструменти", "DNS • URL • EXIF • Захист", "⚒") {
             startActivity(Intent(this, ToolsActivity::class.java))
         }

@@ -11,6 +11,8 @@ import android.widget.*
 /** Offline guided investigation using invented profiles and documentation-only domains. */
 class FoundationsActivity : Activity() {
  private val bg=Color.rgb(15,23,32)
+ private var activeStage:Int?=null
+ private var viewingReport=false
  private val green=Color.rgb(98,230,173)
  private val prefs by lazy { getSharedPreferences("os1n7_foundations",Context.MODE_PRIVATE) }
  private val titles=listOf("Хто і навіщо використовує OSINT","Перша зачіпка: нікнейм","Фотографія та геодані","Домен і DNS","Перевірка доказів","Граф зв'язків","Звіт і захист")
@@ -65,6 +67,7 @@ class FoundationsActivity : Activity() {
  }
  override fun onCreate(savedInstanceState:Bundle?) { super.onCreate(savedInstanceState);home() }
  private fun home() {
+  activeStage=null;viewingReport=false
   val p=page();label(p,"◈ OS1N7 / OSINT З НУЛЯ",24f)
   label(p,"7 навчальних етапів • вигадані дані • без мережевих запитів",14f)
   titles.forEachIndexed { i,t -> button(p,(if(prefs.getBoolean("step_$i",false))"✓ " else "○ ")+(i+1)+". "+t) { open(i) } }
@@ -72,6 +75,7 @@ class FoundationsActivity : Activity() {
   button(p,"Відкрити готовий звіт") { report() }
  }
  private fun open(i:Int) {
+  activeStage=i;viewingReport=false
   val p=page();button(p,"← До курсу"){home()}
   label(p,(i+1).toString()+". "+titles[i],23f)
   label(p,"📖 ТЕОРІЯ\n"+lessons[i])
@@ -108,6 +112,7 @@ class FoundationsActivity : Activity() {
    "Всі дані симульовані. Не використовувати як твердження про реальну особу."
  }
  private fun report() {
+  viewingReport=true
   val p=page();button(p,"← До курсу"){home()}
   label(p,"📄 ПІДСУМКОВИЙ ЗВІТ",23f)
   label(p,reportText(),15f)
@@ -115,6 +120,14 @@ class FoundationsActivity : Activity() {
    val clip=getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
    clip.setPrimaryClip(ClipData.newPlainText("OS1N7 Report",reportText()))
    Toast.makeText(this,"Звіт скопійовано",Toast.LENGTH_SHORT).show()
+  }
+ }
+ @Deprecated("Legacy Activity back navigation")
+ override fun onBackPressed() {
+  when {
+   viewingReport && activeStage!=null -> open(activeStage!!)
+   viewingReport || activeStage!=null -> home()
+   else -> super.onBackPressed()
   }
  }
 }

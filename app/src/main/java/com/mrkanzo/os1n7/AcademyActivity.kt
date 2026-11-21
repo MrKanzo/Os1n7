@@ -18,6 +18,7 @@ class AcademyActivity:Activity() {
   listOf("DNS і домени","A — IP-адреса, MX — поштовий сервер, TXT — текстові дані.","Який DNS-запис визначає поштовий сервер?","MX","A","Захисти реєстратора MFA; перевіряй зміни DNS; обмеж доступ до панелі.")
  )
  private var photoResult:TextView?=null
+ private var activeLessonIndex:Int?=null
  private val protectionSteps=listOf(
   listOf(
    "Вимкни геотеги камери" to "Камера → Налаштування → Геотеги / Зберігати місцезнаходження → Вимкнути. Назва залежить від моделі.",
@@ -52,11 +53,13 @@ class AcademyActivity:Activity() {
  private fun btn(p:LinearLayout,s:String,action:()->Unit) { p.addView(Button(this).apply { text=s;isAllCaps=false;setOnClickListener { action() } }) }
  override fun onCreate(savedInstanceState:Bundle?) { super.onCreate(savedInstanceState);home() }
  private fun home() {
+  activeLessonIndex=null
   val p=page();label(p,"◈ OS1N7 ACADEMY\nТеорія → Практика → Захист → Тест")
   lessons.forEachIndexed { i,l -> btn(p,l[0]+if(prefs.getBoolean("done_$i",false))" ✓" else "") { lesson(i) } }
   label(p,"Завершено: "+lessons.indices.count { prefs.getBoolean("done_$it",false) }+" / 3")
  }
  private fun lesson(i:Int) {
+  activeLessonIndex=i
   val l=lessons[i];val p=page();btn(p,"← Усі уроки"){home()}
   label(p,"01 • Навчитися\n"+l[0]+"\n"+l[1])
   label(p,"02 • Спробувати\n"+l[2])
@@ -97,6 +100,8 @@ class AcademyActivity:Activity() {
    }
   }
  }
+ @Deprecated("Legacy Activity back navigation")
+ override fun onBackPressed() { if(activeLessonIndex!=null)home() else super.onBackPressed() }
  @Deprecated("Android document picker result callback")
  override fun onActivityResult(requestCode:Int,resultCode:Int,data:Intent?) {
   super.onActivityResult(requestCode,resultCode,data)
