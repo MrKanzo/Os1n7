@@ -170,6 +170,9 @@ class MainActivity : Activity() {
         addAction(body, "OS1N7 Academy", "Навчитися • Спробувати • Захист • Тест", "◈") {
             startActivity(Intent(this, AcademyActivity::class.java))
         }
+        addAction(body, "OSINT Graph", "Власні справи • Об'єкти • Зв'язки • Звіти", "◉") {
+            startActivity(Intent(this, GraphActivity::class.java))
+        }
         addAction(body, "Security Center", "Реальний DNS • Privacy Shield • Чекліст", "🛡") {
             startActivity(Intent(this, SecurityCenterActivity::class.java))
         }
