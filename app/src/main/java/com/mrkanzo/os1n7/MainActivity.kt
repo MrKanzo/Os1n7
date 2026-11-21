@@ -175,27 +175,41 @@ class MainActivity : Activity() {
         }
         addAction(body, "Перевірити оновлення", "Знайти нову версію APK на GitHub", "↻") { checkForUpdates() }
 
-        val total = LessonLibrary.lessons.size
-        val prefs = getSharedPreferences("os1n7_learning", Context.MODE_PRIVATE)
-        val finished = LessonLibrary.lessons.count { prefs.getBoolean("practice:${it.title}", false) }
+        val libraryPrefs = getSharedPreferences("os1n7_learning", Context.MODE_PRIVATE)
+        val academyPrefs = getSharedPreferences("academy", Context.MODE_PRIVATE)
+        val labPrefs = getSharedPreferences("os1n7_lab", Context.MODE_PRIVATE)
+        val casePrefs = getSharedPreferences("os1n7_cases", Context.MODE_PRIVATE)
+        val total = LessonLibrary.lessons.size + 7
         val progress = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(17), dp(17), dp(17), dp(17))
             background = shape(panel)
         }
         progress.addView(label("ТВІЙ ПРОГРЕС", 13f, green, true))
-        val summary = label("$finished із $total практичних завдань виконано", 14f, Color.WHITE)
+        val summary = label("", 14f, Color.WHITE)
         summary.setPadding(0, dp(12), 0, dp(12))
         progress.addView(summary)
+        val breakdown = label("", 12f, muted)
+        progress.addView(breakdown)
         val track = FrameLayout(this).apply { background = shape(Color.rgb(54, 70, 81), 8) }
         val bar = View(this).apply { background = shape(green, 8) }
-        track.addView(bar, FrameLayout.LayoutParams(0, dp(7)))
-        progress.addView(track, LinearLayout.LayoutParams(-1, dp(7)))
+        track.addView(bar, FrameLayout.LayoutParams(0, dp(9)))
+        progress.addView(track, LinearLayout.LayoutParams(-1, dp(9)).apply { topMargin = dp(12) })
         body.addView(progress, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(15) })
-        track.post {
-            val width = if (total == 0) 0 else (track.width * finished / total)
-            bar.layoutParams = FrameLayout.LayoutParams(width, dp(7))
+        dashboardRefresh = {
+            val library = LessonLibrary.lessons.count { libraryPrefs.getBoolean("practice:" + it.title, false) }
+            val academy = (0..2).count { academyPrefs.getBoolean("done_" + it, false) }
+            val lab = listOf("mission_phishing", "mission_footprint").count { labPrefs.getBoolean(it, false) }
+            val cases = listOf("case001", "case001_defense").count { casePrefs.getBoolean(it, false) }
+            val finished = library + academy + lab + cases
+            summary.text = finished.toString() + " із " + total + " завдань виконано"
+            breakdown.text = "Бібліотека: " + library + "  •  Academy: " + academy + "  •  Лабораторія: " + lab + "  •  Case Files: " + cases
+            track.post {
+                val width = if (total == 0) 0 else (track.width * finished / total).coerceIn(0, track.width)
+                bar.layoutParams = FrameLayout.LayoutParams(width, dp(9))
+            }
         }
+        dashboardRefresh()
         val footer = label("OS1N7  •  Навчання OSINT з повагою до приватності", 11f, muted)
         footer.setPadding(0, dp(22), 0, dp(8))
         body.addView(footer)
