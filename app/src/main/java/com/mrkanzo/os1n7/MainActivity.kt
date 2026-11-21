@@ -164,6 +164,9 @@ class MainActivity : Activity() {
         addAction(body, "OSINT Case Files", "Розслідування • Докази • Захист", "◇") {
             startActivity(Intent(this, CaseFilesActivity::class.java))
         }
+        addAction(body, "OS1N7 Academy", "Навчитися • Спробувати • Захист • Тест", "◈") {
+            startActivity(Intent(this, AcademyActivity::class.java))
+        }
         addAction(body, "OSINT Інструменти", "DNS • URL • EXIF • Захист", "⚒") {
             startActivity(Intent(this, ToolsActivity::class.java))
         }
