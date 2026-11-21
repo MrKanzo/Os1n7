@@ -101,7 +101,51 @@ class LabActivity : Activity() {
             feedback.text = if (correct) "✓ Правильно! Не переходь за підозрілим посиланням. Відкрий банк самостійно." else "Спробуй ще. Не вводь пароль за посиланням із листа."
         }
         mission.addView(feedback)
-        val info = section(content, "03  Наступні симулятори")
-        info.addView(text("Digital Footprint • Email Analyzer • Metadata Lab • Link Analysis\n\nЦі модулі з'являться в наступних оновленнях.", 14f, muted))
+
+        val footprint = section(content, "03  Digital Footprint / Захист")
+        footprint.addView(text("Навчальний персонаж: Марко. Усі профілі та знахідки вигадані.", 14f, muted))
+        val footprintOutput = text("Обери дію, щоб дослідити цифрові сліди.", 14f, green)
+        button(footprint, "🔎 Знайти профілі за ніком marko_lab") {
+            footprintOutput.text = "СИМУЛЯЦІЯ:\n@marko_lab — форум: публічний нік\n@marko_lab — фотоблог: публічна геомітка\n@marko_work — робочий профіль\n\nВисновок: повторний нік пов'язує різні акаунти."
+        }
+        footprint.addView(footprintOutput)
+        val defenses = listOf(
+            "Різні нікнейми для особистих і робочих акаунтів",
+            "Прибрати публічні геомітки та EXIF перед публікацією",
+            "Обмежити видимість профілю та списків контактів",
+            "Увімкнути MFA і використовувати унікальні паролі"
+        )
+        footprint.addView(text("🛡️ Захист: познач потрібні заходи", 14f, Color.WHITE, true))
+        val checks = defenses.map { item ->
+            CheckBox(this).apply { text = item; setTextColor(Color.WHITE); footprint.addView(this) }
+        }
+        val protectionStatus = text(if (prefs.getBoolean("mission_footprint", false)) "✓ Захист пройдено" else "Оберіть усі чотири заходи.", 13f, green)
+        button(footprint, "Перевірити захист") {
+            if (checks.all { it.isChecked }) {
+                prefs.edit().putBoolean("mission_footprint", true).apply()
+                protectionStatus.text = "✓ Чудово! Ти зменшив ризик зв'язування акаунтів."
+            } else protectionStatus.text = "Перевір кожен захід захисту та спробуй знову."
+        }
+        footprint.addView(protectionStatus)
+
+        val tools = section(content, "04  Інструменти та протидія")
+        val lessons = listOf(
+            Triple("Email OSINT", "Симуляція: публічна адреса пов'язує кілька профілів.", "Окремі адреси або аліаси, MFA, приховування адреси у профілях."),
+            Triple("DNS / WHOIS", "Симуляція: DNS показує технічні записи домену.", "Захист облікового запису реєстратора, MFA, мінімізація публічних контактів."),
+            Triple("EXIF Metadata", "Симуляція: фото містить дату, модель пристрою та геодані.", "Видаляти геомітки й метадані перед публікацією."),
+            Triple("Phishing", "Симуляція: лист підміняє адресу та просить пароль.", "Перевіряти сайт окремо, використовувати менеджер паролів та MFA."),
+            Triple("Network Basics", "Симуляція: відкритий порт демонструє доступний сервіс.", "Закривати непотрібні порти, оновлювати сервіси, налаштувати firewall.")
+        )
+        lessons.forEach { (name, demo, defense) ->
+            button(tools, "▶ $name") {
+                android.app.AlertDialog.Builder(this)
+                    .setTitle(name + " • Навчальна симуляція")
+                    .setMessage("$demo\n\n🛡️ ЗАХИСТ\n$defense\n\nЖодних мережевих запитів не виконується.")
+                    .setPositiveButton("Зрозуміло", null)
+                    .show()
+            }
+        }
+        val info = section(content, "05  Наступні симулятори")
+        info.addView(text("Link Analysis • Розширені кейси • Перевірка знань\n\nЦі модулі з'являться в наступних оновленнях.", 14f, muted))
     }
 }
