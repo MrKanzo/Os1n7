@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.WindowInsets
 import android.widget.*
 
 /** Dark, native Android UI. Reuses the existing offline LessonLibrary and progress storage. */
@@ -100,11 +101,17 @@ class CategoryLibraryActivity : Activity() {
         val info = text(subtitle, 13f, muted)
         info.setPadding(0, dp(7), 0, dp(18))
         root.addView(info)
+        root.setOnApplyWindowInsetsListener { view, insets ->
+            val bars = insets.getInsets(WindowInsets.Type.systemBars())
+            view.setPadding(dp(18), bars.top + dp(16), dp(18), bars.bottom + dp(12))
+            insets
+        }
         val scroll = ScrollView(this).apply { isFillViewport = true }
         content = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         scroll.addView(content)
         root.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
         setContentView(root)
+        root.requestApplyInsets()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
