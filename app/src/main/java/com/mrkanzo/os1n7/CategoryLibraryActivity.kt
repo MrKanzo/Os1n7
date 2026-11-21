@@ -24,6 +24,9 @@ class CategoryLibraryActivity : Activity() {
     private lateinit var content: LinearLayout
     private var category: String? = null
     private var tab = 0
+    private var screen = "categories"
+    private var activeLesson: Lesson? = null
+    private var activePractice = false
     private val tabs = listOf("Теорія", "Книжки", "Практика", "Тести")
 
     private fun dp(n: Int) = (n * resources.displayMetrics.density).toInt()
@@ -119,6 +122,7 @@ class CategoryLibraryActivity : Activity() {
     }
     private fun showCategories(query: String = "") {
         category = null
+        screen = "categories"
         start("Напрямки дослідження", "Обирай тему, читай і закріплюй знання на практиці")
         val search = EditText(this).apply {
             hint = "⌕  Пошук категорії або уроку"
@@ -176,6 +180,7 @@ class CategoryLibraryActivity : Activity() {
     }
     private fun showCategory() {
         val selected = category ?: return showCategories()
+        screen = "category"
         val lessons = LessonLibrary.lessons.filter { it.category == selected }
         start(selected, "${lessons.size} матеріалів • читай, досліджуй, перевіряй")
         content.addView(button("← Усі категорії", { showCategories() }), LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(12) })
@@ -213,6 +218,9 @@ class CategoryLibraryActivity : Activity() {
         }
     }
     private fun showLesson(lesson: Lesson, practice: Boolean) {
+        screen = "lesson"
+        activeLesson = lesson
+        activePractice = practice
         start(lesson.title, lesson.summary)
         content.addView(button("← Назад", { showCategory() }))
         heading("01  ТЕОРІЯ")
@@ -230,8 +238,10 @@ class CategoryLibraryActivity : Activity() {
             LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(10) })
     }
     private fun showQuiz(lesson: Lesson) {
+        screen = "quiz"
+        activeLesson = lesson
         start("Перевірка знань", lesson.title)
-        content.addView(button("← Назад", { showCategory() }))
+        content.addView(button("← До уроку", { showLesson(lesson, false) }))
         heading("ПИТАННЯ 01 / 01")
         paragraph("Яке твердження найкраще відповідає принципам OSINT?")
         val options = listOf(
@@ -255,6 +265,11 @@ class CategoryLibraryActivity : Activity() {
     }
     @Deprecated("Legacy Activity back navigation")
     override fun onBackPressed() {
-        if (category != null) showCategories() else super.onBackPressed()
+        when (screen) {
+            "quiz" -> activeLesson?.let { showLesson(it, false) } ?: showCategory()
+            "lesson" -> showCategory()
+            "category" -> showCategories()
+            else -> super.onBackPressed()
+        }
     }
 }
