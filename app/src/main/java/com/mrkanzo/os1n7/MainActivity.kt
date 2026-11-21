@@ -41,6 +41,7 @@ class MainActivity : Activity() {
         val categories = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
         val categoryScroll = HorizontalScrollView(this).apply { addView(categories); isHorizontalScrollBarEnabled = false }
         val list = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        var onCategoryChange: () -> Unit = {}
         fun refreshCategories() {
             categories.removeAllViews()
             for (cat in listOf("Усі", "Початок", "Пошук", "Верифікація", "OPSEC", "Джерела", "★ Закладки")) {
@@ -55,7 +56,7 @@ class MainActivity : Activity() {
                         onlySaved = cat == "★ Закладки"
                         if (!onlySaved) selectedCategory = cat
                         refreshCategories()
-                        render(search.text.toString())
+                        onCategoryChange()
                     }
                 }
                 categories.addView(button)
@@ -96,6 +97,7 @@ class MainActivity : Activity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { render(s?.toString().orEmpty()) }
             override fun afterTextChanged(s: android.text.Editable?) {}
         })
+        onCategoryChange = { render(search.text.toString()) }
         root.addView(title)
         root.addView(search)
         root.addView(categoryScroll)
