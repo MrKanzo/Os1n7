@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application android:icon="@drawable/ic_os1n7" android:roundIcon="@drawable/ic_os1n7" android:allowBackup="false" android:label="OSINT Бібліотека" android:theme="@style/Os1n7Theme" android:usesCleartextTraffic="true">
+        <activity android:name=".GraphActivity" android:exported="false"/>
         <activity android:name=".SecurityCenterActivity" android:exported="false"/>
         <activity android:name=".ToolCatalogActivity" android:exported="false"/>
         <activity android:name=".FoundationsActivity" android:exported="false"/>
