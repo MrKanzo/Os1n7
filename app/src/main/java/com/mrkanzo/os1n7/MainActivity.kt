@@ -161,6 +161,9 @@ class MainActivity : Activity() {
         addAction(body, "OSINT Лабораторія", "Термінал • Симуляції • Практичні місії", "⌘") {
             startActivity(Intent(this, LabActivity::class.java))
         }
+        addAction(body, "OSINT Case Files", "Розслідування • Докази • Захист", "◇") {
+            startActivity(Intent(this, CaseFilesActivity::class.java))
+        }
         addAction(body, "Серверна бібліотека", "Матеріали з локального сервера Termux", "◎") {
             startActivity(Intent(this, ServerLibraryActivity::class.java))
         }
