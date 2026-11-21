@@ -4,6 +4,11 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.*
+import android.content.Intent
+import android.media.ExifInterface
+import android.net.Uri
+import android.content.res.ColorStateList
+import android.view.View
 
 class AcademyActivity:Activity() {
  private val lessons=listOf(
@@ -11,11 +16,33 @@ class AcademyActivity:Activity() {
   listOf("URL і фішинг","HTTPS шифрує з'єднання, але не гарантує чесність сайту. Домен і параметри URL потребують перевірки.","Яка ознака URL викликає підозру?","Пароль у параметрі URL","Довгий шлях","Не відкривай підозрілі посилання; вводь адресу вручну; використовуй MFA."),
   listOf("DNS і домени","A — IP-адреса, MX — поштовий сервер, TXT — текстові дані.","Який DNS-запис визначає поштовий сервер?","MX","A","Захисти реєстратора MFA; перевіряй зміни DNS; обмеж доступ до панелі.")
  )
+ private var photoResult:TextView?=null
+ private val protectionSteps=listOf(
+  listOf(
+   "Вимкни геотеги камери" to "Камера → Налаштування → Геотеги / Зберігати місцезнаходження → Вимкнути. Назва залежить від моделі.",
+   "Перевір EXIF власного фото" to "Натисни кнопку вибору фото нижче. OS1N7 прочитає метадані локально, без завантаження на сервер.",
+   "Прибери GPS перед публікацією" to "Збережи копію фото без геоданих у фоторедакторі та перевір її повторно. OS1N7 поки не очищає фото."
+  ),
+  listOf(
+   "Перевір домен" to "Уважно читай адресу. example.com.attacker.test не належить example.com.",
+   "Не передавай токени в URL" to "Не пересилай посилання з токенами, ключами чи паролями. Перевір їх в URL Analyzer.",
+   "Увімкни MFA" to "Акаунт → Безпека → Двоетапна перевірка. Обирай застосунок автентифікації або ключ доступу."
+  ),
+  listOf(
+   "Захисти реєстратора" to "Увімкни MFA та унікальний пароль у кабінеті реєстратора.",
+   "Перевір DNS-записи" to "Переглянь A, MX, TXT у DNS-панелі. Для практики є DNS Inspector.",
+   "Обмеж права доступу" to "Перевір, хто має доступ до DNS-панелі та активні сеанси."
+  )
+ )
  private val prefs by lazy { getSharedPreferences("academy",Context.MODE_PRIVATE) }
  private fun page():LinearLayout {
-  val root=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL;setBackgroundColor(Color.rgb(15,23,32));setPadding(30,45,30,30) }
+  val root=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL;setBackgroundColor(Color.rgb(15,23,32));setPadding(24,24,24,24) }
+  root.setOnApplyWindowInsetsListener { v,ins ->
+   val bars=ins.getInsets(WindowInsets.Type.systemBars())
+   v.setPadding(24,bars.top+24,24,bars.bottom+24);ins
+  }
   val body=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL }
-  val scroll=ScrollView(this);scroll.addView(body);root.addView(scroll);setContentView(root)
+  val scroll=ScrollView(this);scroll.addView(body);root.addView(scroll);setContentView(root);root.requestApplyWindowInsets()
   return body
  }
  private fun label(p:LinearLayout,s:String):TextView {
@@ -33,15 +60,32 @@ class AcademyActivity:Activity() {
   label(p,"01 • Навчитися\n"+l[0]+"\n"+l[1])
   label(p,"02 • Спробувати\n"+l[2])
   val practice=RadioGroup(this);p.addView(practice)
-  listOf(l[3],l[4]).forEachIndexed { n,s -> practice.addView(RadioButton(this).apply { id=100+n;text=s;setTextColor(Color.WHITE) }) }
+  listOf(l[3],l[4]).forEachIndexed { n,s -> practice.addView(RadioButton(this).apply { id=100+n;text=s;setTextColor(Color.WHITE);buttonTintList=ColorStateList.valueOf(Color.rgb(98,230,173)) }) }
   var practiced=false
   val practiceResult=label(p,"Обери відповідь.")
   btn(p,"Перевірити") { practiced=practice.checkedRadioButtonId==100;practiceResult.text=if(practiced)"✓ Правильно" else "Спробуй ще раз" }
-  label(p,"03 • Захиститися\n"+l[5])
-  val checks=(1..3).map { n -> CheckBox(this).apply { text="Крок захисту $n виконано або опрацьовано";setTextColor(Color.WHITE);p.addView(this) } }
+  label(p,"03 • Захиститися\nВідкривай пояснення кожного кроку. Галочка означає, що ти опрацював інструкцію, а не автоматичну зміну налаштувань.")
+  val checks=protectionSteps[i].mapIndexed { n,step ->
+   val cb=CheckBox(this).apply {
+    text=(n+1).toString()+". "+step.first
+    setTextColor(Color.WHITE);buttonTintList=ColorStateList.valueOf(Color.rgb(98,230,173))
+   }
+   p.addView(cb)
+   val info=label(p,step.second).apply { visibility=View.GONE }
+   btn(p,"Пояснення кроку "+(n+1)) { info.visibility=if(info.visibility==View.VISIBLE)View.GONE else View.VISIBLE }
+   cb
+  }
+  if(i==0) {
+   btn(p,"📷 Вибрати фото та перевірити EXIF") {
+    startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+     type="image/*";addCategory(Intent.CATEGORY_OPENABLE)
+    },101)
+   }
+   photoResult=label(p,"Фото не вибрано. Аналіз виконується локально.")
+  }
   label(p,"04 • Тест\nЧи гарантує HTTPS, що сайт безпечний?")
   val quiz=RadioGroup(this);p.addView(quiz)
-  listOf("Ні","Так").forEachIndexed { n,s -> quiz.addView(RadioButton(this).apply { id=200+n;text=s;setTextColor(Color.WHITE) }) }
+  listOf("Ні","Так").forEachIndexed { n,s -> quiz.addView(RadioButton(this).apply { id=200+n;text=s;setTextColor(Color.WHITE);buttonTintList=ColorStateList.valueOf(Color.rgb(98,230,173)) }) }
   val feedback=label(p,"Пройди всі етапи.")
   btn(p,"Завершити урок") {
    feedback.text=when {
@@ -51,5 +95,20 @@ class AcademyActivity:Activity() {
     else -> { prefs.edit().putBoolean("done_$i",true).apply();"✓ Урок завершено, прогрес збережено!" }
    }
   }
+ }
+ @Deprecated("Android document picker result callback")
+ override fun onActivityResult(requestCode:Int,resultCode:Int,data:Intent?) {
+  super.onActivityResult(requestCode,resultCode,data)
+  if(requestCode!=101||resultCode!=RESULT_OK)return
+  val uri:Uri=data?.data?:return
+  photoResult?.text=try {
+   contentResolver.openInputStream(uri)?.use { stream ->
+    val exif=ExifInterface(stream)
+    val coords=FloatArray(2)
+    val model=exif.getAttribute(ExifInterface.TAG_MODEL) ?: "невідома"
+    if(exif.getLatLong(coords)) "⚠️ GPS знайдено: "+coords[0]+", "+coords[1]+"\nКамера: "+model+"\nПеревір фото перед публікацією."
+    else "✓ GPS не знайдено у прочитаному EXIF.\nКамера: "+model+"\nЦе не гарантує повної приватності."
+   } ?: "Не вдалося відкрити файл."
+  } catch(e:Exception) { "Не вдалося прочитати EXIF цього фото." }
  }
 }
