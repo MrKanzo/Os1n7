@@ -208,10 +208,7 @@ class MainActivity : Activity() {
         setContentView(root)
         root.requestApplyInsets()
 
-        body.addView(label("◈  OS1N7", 30f, green, true))
-        val subtitle = label("OSINT  /  ЦИФРОВА БІБЛІОТЕКА", 12f, muted)
-        subtitle.setPadding(0, dp(3), 0, dp(25))
-        body.addView(subtitle)
+        Os1n7Ui.pageTitle(this, body, "◈", "OS1N7", "OSINT • Цифрова бібліотека")
 
         body.addView(label("Досліджуй. Перевіряй. Навчайся.", 22f, Color.WHITE, true))
         val description = label("Усі матеріали в одному місці — без повторів і зайвих екранів.", 14f, muted)
