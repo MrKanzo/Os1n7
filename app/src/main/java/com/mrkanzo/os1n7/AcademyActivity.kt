@@ -54,7 +54,8 @@ class AcademyActivity:Activity() {
  override fun onCreate(savedInstanceState:Bundle?) { super.onCreate(savedInstanceState);home() }
  private fun home() {
   activeLessonIndex=null
-  val p=page();label(p,"◈ OS1N7 ACADEMY\nТеорія → Практика → Захист → Тест")
+  val p=page();Os1n7Ui.pageTitle(this,p,"✦","OS1N7 Academy","Теорія → Практика → Захист → Тест")
+  btn(p,"← Головне меню"){finish()}
   lessons.forEachIndexed { i,l -> btn(p,l[0]+if(prefs.getBoolean("done_$i",false))" ✓" else "") { lesson(i) } }
   label(p,"Завершено: "+lessons.indices.count { prefs.getBoolean("done_$it",false) }+" / 3")
  }
