@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-22T21:02:25Z",
+  "updatedAt": "2026-11-22T21:30:56Z",
   "news": [
     {
       "id": "b22eec5809ce5c9c44d6",
@@ -404,6 +404,5 @@
       "ok": true,
       "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
     }
-  ],
-  "language": "uk"
+  ]
 }
