@@ -59,8 +59,7 @@ class LabActivity : Activity() {
         setContentView(root)
         root.requestApplyInsets()
         content.addView(Os1n7Ui.button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
-        content.addView(text("◈  OS1N7 / LAB", 27f, green, true))
-        content.addView(text("Офлайн-полігон • лише навчальні дані", 13f, muted))
+        Os1n7Ui.pageTitle(this,content,"⌘","OSINT Lab","Офлайн-полігон • лише навчальні дані")
         val terminal = section(content, "01  OSINT Terminal")
         terminal.addView(text("Спробуй: help, whois example.com, dig example.com, nslookup lab.test", 13f, muted))
         val command = EditText(this).apply {
