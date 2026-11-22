@@ -11,7 +11,7 @@ import android.view.WindowInsets
 import android.widget.*
 
 /** Offline OSINT sandbox: all names, IPs and evidence are fictional training fixtures. */
-class LabActivity : Activity() {
+class LabActivity : Os1n7Activity() {
     private val bg = Color.rgb(15, 23, 32)
     private val panel = Color.rgb(29, 42, 52)
     private val green = Color.rgb(98, 230, 173)
