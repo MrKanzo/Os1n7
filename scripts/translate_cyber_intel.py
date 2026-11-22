@@ -56,7 +56,8 @@ def localize_snapshot(payload: dict, translator) -> tuple[dict, int]:
         article["title"] = ukrainian_title
         article["summary"] = ukrainian_summary
         article["translation"] = "uk-v1"
-        translated_count += 1
+        if ukrainian_title != raw_title or ukrainian_summary != raw_summary:
+            translated_count += 1
     return payload, translated_count
 
 
