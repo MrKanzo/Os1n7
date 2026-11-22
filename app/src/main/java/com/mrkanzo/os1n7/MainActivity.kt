@@ -20,6 +20,7 @@ class MainActivity : Activity() {
     private val panel = Color.rgb(29, 42, 52)
     private val green = Color.rgb(98, 230, 173)
     private val muted = Color.rgb(166, 183, 196)
+    private var profileShortcut: TextView? = null
     private fun dp(n: Int) = (n * resources.displayMetrics.density).toInt()
     private fun shape(color: Int, radius: Int = 16) = GradientDrawable().apply {
         setColor(color)
@@ -212,8 +213,22 @@ class MainActivity : Activity() {
             orientation = LinearLayout.HORIZONTAL
             gravity = android.view.Gravity.CENTER_VERTICAL
         }
-        val heading = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-        Os1n7Ui.pageTitle(this, heading, "◈", "OS1N7", "OSINT • Цифрова бібліотека")
+        val avatar = Os1n7Ui.icon(this, "◈").apply {
+            contentDescription = "Відкрити мій профіль OS1N7"
+            isClickable = true
+            isFocusable = true
+            setOnClickListener {
+                startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
+            }
+        }
+        profileShortcut = avatar
+        topBar.addView(avatar, LinearLayout.LayoutParams(dp(52), dp(52)))
+        val heading = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(12), 0, 0, 0)
+        }
+        heading.addView(label("OS1N7", 23f, Color.WHITE, true))
+        heading.addView(label("OSINT • Цифрова бібліотека", 12f, muted))
         topBar.addView(heading, LinearLayout.LayoutParams(0, -2, 1f))
         val cloudShortcut = label("☁", 23f, muted).apply {
             gravity = android.view.Gravity.CENTER
@@ -309,6 +324,8 @@ class MainActivity : Activity() {
         super.onResume()
         // Refresh the dashboard after returning from completed lessons.
         if (::dashboardRefresh.isInitialized) dashboardRefresh.invoke()
+        profileShortcut?.text = getSharedPreferences("os1n7_profile", Context.MODE_PRIVATE)
+            .getString("avatar", "◈").orEmpty().ifBlank { "◈" }
     }
     private lateinit var dashboardRefresh: () -> Unit
 }
