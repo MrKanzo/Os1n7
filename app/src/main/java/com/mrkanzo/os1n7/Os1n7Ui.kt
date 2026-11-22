@@ -1,11 +1,13 @@
 package com.mrkanzo.os1n7
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
+import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -117,5 +119,22 @@ object Os1n7Ui {
         })
         row.addView(labels, LinearLayout.LayoutParams(0, -2, 1f))
         parent.addView(row)
+        // Visible native page-enter motion throughout the application.
+        // Respect Android's global remove-animations accessibility setting.
+        if (ValueAnimator.areAnimatorsEnabled()) {
+            row.alpha = 0f
+            row.translationY = dp(context, 14).toFloat()
+            row.post {
+                if (!row.isAttachedToWindow) {
+                    row.alpha = 1f
+                    row.translationY = 0f
+                } else {
+                    row.animate().alpha(1f).translationY(0f)
+                        .setDuration(440)
+                        .setInterpolator(DecelerateInterpolator())
+                        .start()
+                }
+            }
+        }
     }
 }
