@@ -43,7 +43,7 @@ class MainActivity : Activity() {
             isFocusable = true
             setOnClickListener { click() }
         }
-        box.addView(label(glyph, 28f, green), LinearLayout.LayoutParams(dp(48), -2))
+        box.addView(Os1n7Ui.icon(this, glyph), LinearLayout.LayoutParams(dp(46), dp(46)).apply { rightMargin = dp(12) })
         val column = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         column.addView(label(title, 17f, Color.WHITE, true))
         val small = label(detail, 13f, muted)
@@ -222,7 +222,7 @@ class MainActivity : Activity() {
         addAction(body, "OSINT Лабораторія", "Термінал • Симуляції • Практичні місії", "⌘") {
             startActivity(Intent(this, LabActivity::class.java))
         }
-        addAction(body, "OSINT Case Files", "Розслідування • Докази • Захист", "◇") {
+        addAction(body, "OSINT Case Files", "Розслідування • Докази • Захист", "▤") {
             startActivity(Intent(this, CaseFilesActivity::class.java))
         }
         addAction(body, "OSINT з нуля", "7 етапів • Розслідування • Звіт • Захист", "✦") {
@@ -231,13 +231,13 @@ class MainActivity : Activity() {
         addAction(body, "OS1N7 Academy", "Навчитися • Спробувати • Захист • Тест", "◈") {
             startActivity(Intent(this, AcademyActivity::class.java))
         }
-        addAction(body, "OSINT Graph", "Власні справи • Об'єкти • Зв'язки • Звіти", "◉") {
+        addAction(body, "OSINT Graph", "Власні справи • Об'єкти • Зв'язки • Звіти", "◎") {
             startActivity(Intent(this, GraphActivity::class.java))
         }
-        addAction(body, "Security Center", "Реальний DNS • Privacy Shield • Чекліст", "🛡") {
+        addAction(body, "Security Center", "Реальний DNS • Privacy Shield • Чекліст", "⬡") {
             startActivity(Intent(this, SecurityCenterActivity::class.java))
         }
-        addAction(body, "Каталог OSINT-інструментів", "SpiderFoot • Maltego • Shodan • 12 довідок", "⌕") {
+        addAction(body, "Каталог OSINT-інструментів", "SpiderFoot • Maltego • Shodan • 12 довідок", "▦") {
             startActivity(Intent(this, ToolCatalogActivity::class.java))
         }
         addAction(body, "OSINT Інструменти", "DNS • URL • EXIF • Захист", "⚒") {
