@@ -93,7 +93,7 @@ class CaseFilesActivity : Activity() {
         answer.addView(text("Які два профілі мають найсильніший зв'язок?"))
         val choices = RadioGroup(this).apply { orientation = RadioGroup.VERTICAL }
         listOf("Форум і фотоблог", "Форум і маркетплейс", "Усі три точно належать одній людині").forEachIndexed { index, option ->
-            choices.addView(RadioOs1n7Ui.button(this).apply { id = 300 + index; text = option; setTextColor(Color.WHITE) })
+            choices.addView(RadioButton(this).apply { id = 300 + index; text = option; setTextColor(Color.WHITE) })
         }
         answer.addView(choices)
         val result = text(if (prefs.getBoolean("case001", false)) "✓ Розслідування завершено" else "Поки не завершено", 14f, accent)
