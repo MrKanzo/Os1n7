@@ -17,7 +17,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 /** Official-source cyber news and annual metrics, cached offline on the device. */
-class CyberIntelActivity : Activity() {
+class CyberIntelActivity : Os1n7Activity() {
     private val bg = Os1n7Ui.background
     private val surface = Os1n7Ui.surface
     private val mint = Os1n7Ui.accent
