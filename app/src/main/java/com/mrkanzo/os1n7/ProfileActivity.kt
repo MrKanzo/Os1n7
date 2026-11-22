@@ -14,7 +14,7 @@ import android.view.WindowInsets
 import android.widget.*
 
 /** Local-only OS1N7 profile. No login, network transfer, or account creation. */
-class ProfileActivity : Activity() {
+class ProfileActivity : Os1n7Activity() {
     private val bg = Os1n7Ui.background
     private val panel = Os1n7Ui.surface
     private val accent = Os1n7Ui.accent
