@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_back">← Atrás</string>
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_subtitle">Idioma • apariencia • privacidad</string>
+    <string name="settings_language">Idioma de la interfaz</string>
+    <string name="settings_language_note">Los menús y las pantallas principales están traducidos. Las lecciones y parte de la ayuda siguen en ucraniano.</string>
+    <string name="settings_appearance">Aspecto y comodidad</string>
+    <string name="settings_banner">Banner animado</string>
+    <string name="settings_banner_hint">Activado: árbol y compañero animados. Desactivado: menú clásico y 2D estático.</string>
+    <string name="settings_short_descriptions">Descripciones breves</string>
+    <string name="settings_short_descriptions_hint">Menos texto en las tarjetas de inicio.</string>
+    <string name="settings_companion">Mostrar compañero</string>
+    <string name="settings_companion_hint">Guía integrada sin IA externa.</string>
+    <string name="settings_privacy">Privacidad</string>
+    <string name="settings_privacy_detail">Las preferencias permanecen en este dispositivo. Puedes cambiar el idioma cuando quieras. Sin sonidos.</string>
+    <string name="settings_version">OS1N7 • versión %1$s</string>
+    <string name="settings_cancel">Cancelar</string>
+    <string name="profile_settings_button">⚙ Ajustes</string>
+</resources>
