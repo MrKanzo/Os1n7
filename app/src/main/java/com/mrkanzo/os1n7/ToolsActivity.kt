@@ -29,14 +29,14 @@ class ToolsActivity : Activity() {
             val input=EditText(this).apply { setSingleLine(true);setText(example);setTextColor(Color.WHITE) }
             body.addView(input)
             val result=label("Введи дані й натисни перевірити.")
-            body.addView(Button(this).apply {
+            body.addView(Os1n7Ui.button(this).apply {
                 text="▶ Перевірити";isAllCaps=false
                 setOnClickListener { result.text=calc(input.text.toString().trim()) }
             })
             body.addView(result)
             body.addView(label("🛡️ Захист: "+defense))
         }
-        body.addView(Button(this).apply { text="← Головне меню";isAllCaps=false;setOnClickListener { finish() } })
+        body.addView(Os1n7Ui.button(this).apply { text="← Головне меню";isAllCaps=false;setOnClickListener { finish() } })
         body.addView(label("◈ OS1N7 / TOOLS\nОфлайн-інструменти та захист"))
         exercise("01 • DNS Inspector","example.com","MFA для реєстратора, перевірка DNS-записів та мінімум публічних контактів.") { value ->
             when(value.lowercase()) {
