@@ -236,7 +236,7 @@ class CyberIntelActivity : Activity() {
         content.addView(text("Публікації CERT-UA, CISA та NCSC UK", 16f, mint, true).apply {
             setPadding(0, dp(6), 0, dp(8))
         })
-        content.addView(text("Тут відображаються заголовки та короткі описи з офіційних RSS. Для повного тексту відкрий першоджерело.", 12f, muted).apply {
+        content.addView(text("Заголовки та описи — неофіційні українські переклади й перекази повідомлень CERT-UA, CISA та NCSC UK. Для точних технічних деталей перевіряй оригінал. OS1N7 не пов’язаний із цими установами.", 12f, muted).apply {
             setPadding(0, 0, 0, dp(12))
         })
         val arr = data.getJSONArray("news")
@@ -257,6 +257,10 @@ class CyberIntelActivity : Activity() {
             val url = item.optString("url")
             card.addView(button("Читати на офіційному сайті  ↗") { openSource(url, source) })
         }
+        content.addView(text(
+            "NCSC UK: матеріали використовуються на умовах Open Government Licence v3.0 (якщо не зазначено інше). Власні переклади OS1N7 не є офіційними; логотипи установ не використовуються.",
+            12f, muted
+        ).apply { setPadding(0, dp(8), 0, dp(10)) })
         val sources = data.optJSONArray("sources")
         if (sources != null) {
             val health = card()
