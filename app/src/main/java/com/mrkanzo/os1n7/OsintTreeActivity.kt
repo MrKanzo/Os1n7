@@ -238,6 +238,15 @@ class OsintTreeActivity : Activity() {
         scroll.addView(layout)
         scene.addView(scroll, FrameLayout.LayoutParams(-1, -1))
 
+        // This illustrated tree is deliberately ABOVE the scrolling category map,
+        // so users see substantial moving cyber graphics immediately on entry.
+        val illustratedTree = CyberTreeHeroView(this).apply {
+            contentDescription = "Живе кібердерево OSINT: світлові гілки, рухомі сигнали та основні напрями"
+        }
+        layout.addView(illustratedTree, LinearLayout.LayoutParams(-1, dp(246)).apply {
+            bottomMargin = dp(12)
+        })
+
         val hero = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
