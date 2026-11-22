@@ -37,7 +37,7 @@ class ToolsActivity : Activity() {
             body.addView(label("🛡️ Захист: "+defense))
         }
         body.addView(Os1n7Ui.button(this).apply { text="← Головне меню";isAllCaps=false;setOnClickListener { finish() } })
-        body.addView(label("◈ OS1N7 / TOOLS\nОфлайн-інструменти та захист"))
+        Os1n7Ui.pageTitle(this,body,"⚒","OSINT Інструменти","DNS • URL • EXIF • захист")
         exercise("01 • DNS Inspector","example.com","MFA для реєстратора, перевірка DNS-записів та мінімум публічних контактів.") { value ->
             when(value.lowercase()) {
                 "example.com" -> "SIMULATED: A 192.0.2.10; MX mail.example.com"
