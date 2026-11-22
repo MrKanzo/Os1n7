@@ -1,5 +1,6 @@
 package com.mrkanzo.os1n7
 
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
@@ -11,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
+import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import org.json.JSONObject
 import java.net.URL
@@ -21,6 +23,7 @@ class MainActivity : Activity() {
     private val green = Color.rgb(98, 230, 173)
     private val muted = Color.rgb(166, 183, 196)
     private var profileShortcut: TextView? = null
+    private var introCardIndex = 0
     private fun dp(n: Int) = (n * resources.displayMetrics.density).toInt()
     private fun shape(color: Int, radius: Int = 16) = GradientDrawable().apply {
         setColor(color)
@@ -55,9 +58,26 @@ class MainActivity : Activity() {
         return box
     }
     private fun addAction(parent: LinearLayout, title: String, detail: String, glyph: String, click: () -> Unit) {
-        parent.addView(action(title, detail, glyph, click), LinearLayout.LayoutParams(-1, -2).apply {
+        val tile = action(title, detail, glyph, click)
+        parent.addView(tile, LinearLayout.LayoutParams(-1, -2).apply {
             bottomMargin = dp(11)
         })
+        if (ValueAnimator.areAnimatorsEnabled()) {
+            tile.alpha = 0f
+            tile.translationY = dp(18).toFloat()
+            val delay = (introCardIndex * 70L).coerceAtMost(490L)
+            tile.post {
+                if (tile.isAttachedToWindow) {
+                    tile.animate().alpha(1f).translationY(0f)
+                        .setStartDelay(delay).setDuration(480)
+                        .setInterpolator(DecelerateInterpolator()).start()
+                } else {
+                    tile.alpha = 1f
+                    tile.translationY = 0f
+                }
+            }
+        }
+        introCardIndex++
     }
     private fun openLibrary() {
         startActivity(Intent(this, CategoryLibraryActivity::class.java))
