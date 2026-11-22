@@ -85,8 +85,8 @@ class CompanionOrbView @JvmOverloads constructor(
         canvas.translate((width - side) / 2f, (height - side) / 2f)
         canvas.scale(side / 64f, side / 64f)
 
-        val hover = if (live) sin(phase * 2f * PI).toFloat() * 1.5f else 0f
-        val glow = if (live) (0.65f + 0.30f * sin(phase * 2f * PI).toFloat()) else 0.70f
+        val hover = if (live) sin(phase.toDouble() * 2.0 * PI).toFloat() * 1.5f else 0f
+        val glow = if (live) (0.65f + 0.30f * sin(phase.toDouble() * 2.0 * PI).toFloat()) else 0.70f
         val primary = color
         paint.style = Paint.Style.FILL
         paint.color = Color.argb((42f * glow).toInt(), Color.red(primary), Color.green(primary), Color.blue(primary))
