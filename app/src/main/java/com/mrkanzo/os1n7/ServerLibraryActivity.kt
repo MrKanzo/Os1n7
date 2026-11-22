@@ -23,6 +23,9 @@ class ServerLibraryActivity : Activity() {
     private lateinit var status: TextView
     private lateinit var address: EditText
     private lateinit var sync: Button
+    private lateinit var sourceMode: Button
+    private lateinit var help: TextView
+    private var cloud = true
     private var generation = 0
 
     private fun dp(v: Int) = (v * resources.displayMetrics.density).toInt()
@@ -94,9 +97,20 @@ class ServerLibraryActivity : Activity() {
         subtitle.setPadding(0, dp(4), 0, dp(18))
         root.addView(subtitle)
         root.addView(text("Джерело матеріалів", 21f, Color.WHITE, true))
-        val help = text("Вкажи адресу сервера Termux. Для сервера на цьому телефоні залиш 127.0.0.1.", 13f, muted)
+        help = text("Хмарна бібліотека: оновлення статей із GitHub без завантаження APK.", 13f, muted)
         help.setPadding(0, dp(9), 0, dp(12))
         root.addView(help)
+        sourceMode = Button(this).apply {
+            isAllCaps = false
+            setOnClickListener {
+                cloud = !cloud
+                prefs.edit().putBoolean("use_cloud", cloud).apply()
+                updateSource()
+                showSnapshot()
+                loadArticles()
+            }
+        }
+        root.addView(sourceMode)
         address = EditText(this).apply {
             setSingleLine(true)
             textSize = 14f
@@ -124,35 +138,52 @@ class ServerLibraryActivity : Activity() {
         root.addView(ScrollView(this).apply { addView(list) }, LinearLayout.LayoutParams(-1, 0, 1f))
         setContentView(root)
         root.requestApplyInsets()
-        val cached = prefs.getString("articles_json", null)
+        cloud = prefs.getBoolean("use_cloud", true)
+        updateSource()
+        showSnapshot()
+        loadArticles()
+    }
+    private fun updateSource() {
+        sourceMode.text = if (cloud) "☁ GitHub • перемкнути на Termux" else "⌂ Termux • перемкнути на GitHub"
+        help.text = if (cloud) "Каталог з GitHub. Нові матеріали доступні без перевстановлення APK."
+            else "Локальний сервер Termux. Для цього телефона використовуй 127.0.0.1."
+        address.visibility = if (cloud) android.view.View.GONE else android.view.View.VISIBLE
+    }
+    private fun snapshotKey() = if (cloud) "cloud_articles_json" else "articles_json"
+    private fun showSnapshot() {
+        val cached = prefs.getString(snapshotKey(), null)
+        list.removeAllViews()
         if (cached != null) {
             try {
                 val count = render(cached)
                 status.text = "Офлайн-копія • $count матеріалів"
             } catch (_: Exception) {
-                prefs.edit().remove("articles_json").apply()
+                prefs.edit().remove(snapshotKey()).apply()
                 status.text = "Збережена копія пошкоджена. Синхронізуй заново."
             }
         } else status.text = "Ще немає збережених матеріалів."
-        loadArticles()
     }
     private fun loadArticles() {
-        val base = address.text.toString().trim().trimEnd('/')
-        val uri = android.net.Uri.parse(base)
-        val host = uri.host
-        if (uri.scheme !in listOf("http", "https") || host.isNullOrBlank() || uri.userInfo != null) {
-            status.text = "Введи адресу у форматі http://127.0.0.1:8765"
-            return
+        val modeCloud = cloud
+        val endpoint = if (modeCloud) {
+            "https://raw.githubusercontent.com/MrKanzo/Os1n7/main/content/library.json"
+        } else {
+            val base = address.text.toString().trim().trimEnd('/')
+            val uri = android.net.Uri.parse(base)
+            val host = uri.host
+            if (uri.scheme !in listOf("http", "https") || host.isNullOrBlank() || uri.userInfo != null) {
+                status.text = "Введи адресу у форматі http://127.0.0.1:8765"
+                return
+            }
+            val local = host == "127.0.0.1" || host == "localhost" ||
+                host.startsWith("192.168.") || host.startsWith("10.")
+            if (uri.scheme == "http" && !local) {
+                status.text = "Для віддаленого сервера використовуй HTTPS."
+                return
+            }
+            prefs.edit().putString("base_url", base).apply()
+            "$base/api/articles"
         }
-        // HTTP is intended for local, trusted networks; prefer HTTPS for remote hosts.
-        val local = host == "127.0.0.1" || host == "localhost" ||
-            host.startsWith("192.168.") || host.startsWith("10.")
-        if (uri.scheme == "http" && !local) {
-            status.text = "Для віддаленого сервера використовуй HTTPS."
-            return
-        }
-        prefs.edit().putString("base_url", base).apply()
-        val endpoint = "$base/api/articles"
         status.text = "Підключення до сервера…"
         sync.isEnabled = false
         val request = ++generation
@@ -178,13 +209,25 @@ class ServerLibraryActivity : Activity() {
                     output.toString("UTF-8")
                 }
                 // Validate before replacing the last known-good offline snapshot.
-                val count = JSONObject(payload).getJSONArray("articles").length()
+                val rootJson = JSONObject(payload)
+                if (modeCloud && rootJson.optInt("schemaVersion", -1) != 1) throw IllegalStateException("Непідтримувана версія каталогу")
+                val incoming = rootJson.getJSONArray("articles")
+                if (incoming.length() > 500) throw IllegalStateException("Забагато матеріалів")
+                val ids = HashSet<String>()
+                for (i in 0 until incoming.length()) {
+                    val item = incoming.getJSONObject(i)
+                    val id = item.optString("id", "")
+                    if (modeCloud && (id.isBlank() || !ids.add(id))) throw IllegalStateException("Неправильний ідентифікатор матеріалу")
+                    if (item.optString("title").isBlank() || item.optString("content").isBlank()) throw IllegalStateException("Порожній матеріал")
+                }
+                val count = incoming.length()
                 runOnUiThread {
-                    if (request != generation || isFinishing || isDestroyed) return@runOnUiThread
+                    if (request != generation || cloud != modeCloud || isFinishing || isDestroyed) return@runOnUiThread
                     try {
                         render(payload)
-                        prefs.edit().putString("articles_json", payload).apply()
-                        status.text = "● Сервер онлайн • $count матеріалів • збережено офлайн"
+                        prefs.edit().putString(snapshotKey(), payload).apply()
+                        val catalogVersion = if (modeCloud) " • каталог " + rootJson.optString("contentVersion", "1") else ""
+                        status.text = "● Синхронізовано • $count матеріалів$catalogVersion • доступно офлайн"
                     } catch (e: Exception) {
                         status.text = "Помилка формату даних. Збережені матеріали не змінено."
                     }
@@ -193,9 +236,9 @@ class ServerLibraryActivity : Activity() {
             } catch (e: Exception) {
                 runOnUiThread {
                     if (request != generation || isFinishing || isDestroyed) return@runOnUiThread
-                    val cached = prefs.contains("articles_json")
-                    status.text = if (cached) "○ Сервер недоступний • показано офлайн-копію" else
-                        "○ Сервер недоступний • запусти server.py у Termux"
+                    val cached = prefs.contains(snapshotKey())
+                    status.text = if (cached) "○ Немає з’єднання • показано офлайн-копію" else
+                        if (modeCloud) "○ GitHub недоступний • перевір інтернет" else "○ Сервер недоступний • запусти server.py у Termux"
                     sync.isEnabled = true
                 }
             } finally {
