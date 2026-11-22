@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_back">← Kembali</string>
+    <string name="settings_title">Pengaturan</string>
+    <string name="settings_subtitle">Bahasa • tampilan • privasi</string>
+    <string name="settings_language">Bahasa antarmuka</string>
+    <string name="settings_language_note">Menu dan layar utama sudah diterjemahkan. Pelajaran dan sebagian bantuan masih berbahasa Ukraina.</string>
+    <string name="settings_appearance">Tampilan dan kenyamanan</string>
+    <string name="settings_banner">Banner animasi</string>
+    <string name="settings_banner_hint">Aktif: pohon dan pendamping bergerak. Nonaktif: menu klasik dan 2D statis.</string>
+    <string name="settings_short_descriptions">Deskripsi singkat</string>
+    <string name="settings_short_descriptions_hint">Lebih sedikit teks pada kartu beranda.</string>
+    <string name="settings_companion">Tampilkan pendamping</string>
+    <string name="settings_companion_hint">Pemandu internal tanpa AI eksternal.</string>
+    <string name="settings_privacy">Privasi</string>
+    <string name="settings_privacy_detail">Pengaturan disimpan hanya di perangkat ini. Bahasa dapat diubah kapan saja. Tanpa efek suara.</string>
+    <string name="settings_version">OS1N7 • versi %1$s</string>
+    <string name="settings_cancel">Batal</string>
+    <string name="profile_settings_button">⚙ Pengaturan</string>
+</resources>
