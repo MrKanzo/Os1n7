@@ -91,6 +91,19 @@ object CompanionEngine {
                 "$next Виконані завдання дають 20 XP, тести — 10 XP.")
         }
 
+        if (listOf("гардероб", "шмот", "вбран", "одяг", "кепк", "візор", "еволюц").any { q.contains(it) }) {
+            val available = CompanionWardrobe.items.count {
+                it.id != "none" && CompanionWardrobe.unlocked(context, it)
+            }
+            val mode = if (CompanionWardrobe.state(context).auto) "Авто" else "Вручну"
+            return Answer(
+                "У гардеробі вже відкрито $available із 11 речей. Рівень компаньйона: " +
+                    "${progress.level}, режим: $mode. Нові елементи дають навчальні завдання, " +
+                    "тести й справи. Можеш залишити автоеволюцію або вибрати відкриті речі вручну.",
+                CompanionWardrobeActivity::class.java
+            )
+        }
+
         if (listOf("інструмент", "spiderfoot", "maltego", "shodan", "censys", "каталог").any { q.contains(it) }) {
             val advanced = deeper(progress.level, "catalog")
             return Answer("У каталозі OS1N7 є довідки про SpiderFoot, Maltego, Shodan та інші інструменти. " +
