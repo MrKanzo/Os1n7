@@ -208,7 +208,27 @@ class MainActivity : Activity() {
         setContentView(root)
         root.requestApplyInsets()
 
-        Os1n7Ui.pageTitle(this, body, "◈", "OS1N7", "OSINT • Цифрова бібліотека")
+        val topBar = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = android.view.Gravity.CENTER_VERTICAL
+        }
+        val heading = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        Os1n7Ui.pageTitle(this, heading, "◈", "OS1N7", "OSINT • Цифрова бібліотека")
+        topBar.addView(heading, LinearLayout.LayoutParams(0, -2, 1f))
+        val cloudShortcut = label("☁", 23f, muted).apply {
+            gravity = android.view.Gravity.CENTER
+            background = shape(panel, 12)
+            contentDescription = "Відкрити хмарну бібліотеку та синхронізацію"
+            isClickable = true
+            isFocusable = true
+            setOnClickListener {
+                startActivity(Intent(this@MainActivity, ServerLibraryActivity::class.java))
+            }
+        }
+        topBar.addView(cloudShortcut, LinearLayout.LayoutParams(dp(48), dp(48)).apply {
+            leftMargin = dp(8)
+        })
+        body.addView(topBar)
 
         body.addView(label("Досліджуй. Перевіряй. Навчайся.", 22f, Color.WHITE, true))
         val description = label("Усі матеріали в одному місці — без повторів і зайвих екранів.", 14f, muted)
@@ -239,9 +259,6 @@ class MainActivity : Activity() {
         }
         addAction(body, "OSINT Інструменти", "DNS • URL • EXIF • Захист", "⚒") {
             startActivity(Intent(this, ToolsActivity::class.java))
-        }
-        addAction(body, "Хмарна бібліотека", "GitHub • нові статті без APK • офлайн • Termux", "☁") {
-            startActivity(Intent(this, ServerLibraryActivity::class.java))
         }
         addAction(body, "Перевірити оновлення", "Знайти нову версію APK на GitHub", "↻") { checkForUpdates() }
 
