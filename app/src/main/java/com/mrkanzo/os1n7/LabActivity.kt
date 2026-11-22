@@ -32,7 +32,7 @@ class LabActivity : Activity() {
         return box
     }
     private fun button(parent: LinearLayout, title: String, click: () -> Unit) {
-        parent.addView(Button(this).apply {
+        parent.addView(Os1n7Ui.button(this).apply {
             text = title
             isAllCaps = false
             setOnClickListener { click() }
@@ -58,7 +58,7 @@ class LabActivity : Activity() {
         root.addView(scroll)
         setContentView(root)
         root.requestApplyInsets()
-        content.addView(Button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
+        content.addView(Os1n7Ui.button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
         content.addView(text("◈  OS1N7 / LAB", 27f, green, true))
         content.addView(text("Офлайн-полігон • лише навчальні дані", 13f, muted))
         val terminal = section(content, "01  OSINT Terminal")
@@ -88,7 +88,7 @@ class LabActivity : Activity() {
         val answers = RadioGroup(this).apply { orientation = RadioGroup.VERTICAL }
         val options = listOf("Ввести пароль, щоб не заблокували рахунок", "Перевірити адресу через офіційний застосунок банку", "Переслати лист друзям")
         options.forEachIndexed { i, option ->
-            answers.addView(RadioButton(this).apply {
+            answers.addView(RadioOs1n7Ui.button(this).apply {
                 id = i + 100
                 text = option
                 setTextColor(Color.WHITE)
