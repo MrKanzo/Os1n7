@@ -27,8 +27,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Verify OSINT quiz and practice catalogue
-        run: gradle :app:testDebugUnitTest --no-daemon --console=plain
+      - name: Verify OSINT quiz and practice catalogue (offline)
+        run: python3 scripts/validate_quizzes.py
       - name: Build debug APK (capture errors)
         run: |
           set -o pipefail
