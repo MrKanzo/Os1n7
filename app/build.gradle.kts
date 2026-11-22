@@ -9,8 +9,8 @@ android {
         applicationId = "com.mrkanzo.os1n7"
         minSdk = 26
         targetSdk = 35
-        versionCode = 42
-        versionName = "0.7.8"
+        versionCode = 43
+        versionName = "0.7.9"
     }
     signingConfigs {
         create("production") {
