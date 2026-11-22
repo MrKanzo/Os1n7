@@ -135,7 +135,9 @@ def parse_feed(data, source):
             link = item.findtext("link", default="")
         url = official_link(link, source)
         title = clean(title, 190)
-        if not url or not title or not day or url in seen:
+        # Do not mix very old bulletins into a feed meant for fresh news.
+        earliest = (datetime.now(timezone.utc) - timedelta(days=365)).strftime("%Y-%m-%d")
+        if not url or not title or not day or day < earliest or url in seen:
             continue
         seen.add(url)
         articles.append({
