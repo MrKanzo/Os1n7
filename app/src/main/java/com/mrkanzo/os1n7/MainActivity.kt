@@ -75,51 +75,96 @@ class MainActivity : Activity() {
                 val assets = json.getJSONArray("assets")
                 var apkUrl = ""
                 for (i in 0 until assets.length()) {
-                    val a = assets.getJSONObject(i)
-                    if (a.optString("name").endsWith(".apk")) {
-                        apkUrl = a.optString("browser_download_url")
+                    val asset = assets.getJSONObject(i)
+                    if (asset.optString("name").endsWith(".apk", ignoreCase = true)) {
+                        apkUrl = asset.optString("browser_download_url")
                         break
                     }
                 }
                 val current = packageManager.getPackageInfo(packageName, 0).versionName ?: "0"
                 fun parts(v: String) = v.removePrefix("v").substringBefore("-").split(".").map { it.toIntOrNull() ?: 0 }
-                val a = parts(latest)
-                val b = parts(current)
-                val difference = (0 until maxOf(a.size, b.size)).map { a.getOrElse(it) { 0 } - b.getOrElse(it) { 0 } }.firstOrNull { it != 0 } ?: 0
-                val hasUpdate = difference > 0
+                val newer = (0 until maxOf(parts(latest).size, parts(current).size))
+                    .map { parts(latest).getOrElse(it) { 0 } - parts(current).getOrElse(it) { 0 } }
+                    .firstOrNull { it != 0 }?.let { it > 0 } ?: false
                 runOnUiThread {
                     if (apkUrl.isBlank()) {
                         Toast.makeText(this, "У релізі немає APK", Toast.LENGTH_LONG).show()
-                    } else if (!hasUpdate) {
+                    } else if (!newer) {
                         android.app.AlertDialog.Builder(this)
-                            .setMessage("Встановлено: $current. Останній реліз: $latest. Новіших версій немає.")
+                            .setTitle("OS1N7 оновлено")
+                            .setMessage("Встановлено: $current. Останній реліз: $latest.")
                             .setPositiveButton("Гаразд", null).show()
                     } else {
                         android.app.AlertDialog.Builder(this)
                             .setTitle("Доступне оновлення $latest")
-                            .setMessage("Поточна версія: $current. Завантажити APK $latest? Поки немає постійного підпису, Android може вимагати перевстановлення.")
+                            .setMessage("Поточна версія: $current. Завантажити й встановити оновлення поверх наявної програми? Дані зберігаються, якщо APK підписаний тим самим ключем.")
                             .setNegativeButton("Пізніше", null)
-                            .setPositiveButton("Завантажити") { _, _ ->
-                                val request = DownloadManager.Request(Uri.parse(apkUrl))
-                                    .setTitle("OS1N7 $latest")
-                                    .setDescription("Оновлення OSINT-бібліотеки")
-                                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                                    .setDestinationInExternalPublicDir(android.os.Environment.DIRECTORY_DOWNLOADS, "OS1N7-${latest}.apk")
-                                val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                                manager.enqueue(request)
-                                Toast.makeText(this, "Завантаження розпочато", Toast.LENGTH_LONG).show()
-                            }.show()
+                            .setPositiveButton("Оновити") { _, _ -> downloadAndInstall(apkUrl, latest) }
+                            .show()
                     }
                 }
             } catch (e: Exception) {
                 runOnUiThread {
                     android.app.AlertDialog.Builder(this)
                         .setTitle("Оновлення поки недоступні")
-                        .setMessage("Не вдалося отримати останній реліз GitHub. Перевір інтернет або чи опублікований APK у Releases.")
+                        .setMessage("Не вдалося перевірити GitHub Releases. Перевір інтернет та наявність опублікованого APK.")
                         .setPositiveButton("Гаразд", null).show()
                 }
             }
         }.start()
+    }
+
+    private fun downloadAndInstall(apkUrl: String, version: String) {
+        try {
+            val request = DownloadManager.Request(Uri.parse(apkUrl))
+                .setTitle("OS1N7 $version")
+                .setDescription("Оновлення OSINT-бібліотеки")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalFilesDir(this, android.os.Environment.DIRECTORY_DOWNLOADS, "OS1N7-$version.apk")
+                .setMimeType("application/vnd.android.package-archive")
+            val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+            val downloadId = manager.enqueue(request)
+            Toast.makeText(this, "Завантажуємо оновлення…", Toast.LENGTH_LONG).show()
+            Thread {
+                var finished = false
+                while (!finished) {
+                    Thread.sleep(1000)
+                    val query = DownloadManager.Query().setFilterById(downloadId)
+                    manager.query(query)?.use { cursor ->
+                        if (!cursor.moveToFirst()) {
+                            finished = true
+                            runOnUiThread { Toast.makeText(this, "Завантаження не знайдено", Toast.LENGTH_LONG).show() }
+                        } else {
+                            when (cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))) {
+                                DownloadManager.STATUS_SUCCESSFUL -> {
+                                    finished = true
+                                    val uri = manager.getUriForDownloadedFile(downloadId)
+                                    runOnUiThread {
+                                        if (uri != null) {
+                                            try {
+                                                val intent = Intent(Intent.ACTION_VIEW).apply {
+                                                    setDataAndType(uri, "application/vnd.android.package-archive")
+                                                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                                }
+                                                startActivity(intent)
+                                            } catch (e: Exception) {
+                                                Toast.makeText(this, "Не вдалося відкрити інсталятор: ${e.message}", Toast.LENGTH_LONG).show()
+                                            }
+                                        }
+                                    }
+                                }
+                                DownloadManager.STATUS_FAILED -> {
+                                    finished = true
+                                    runOnUiThread { Toast.makeText(this, "Помилка завантаження APK", Toast.LENGTH_LONG).show() }
+                                }
+                            }
+                        }
+                    }
+                }
+            }.start()
+        } catch (e: Exception) {
+            Toast.makeText(this, "Не вдалося почати оновлення: ${e.message}", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
