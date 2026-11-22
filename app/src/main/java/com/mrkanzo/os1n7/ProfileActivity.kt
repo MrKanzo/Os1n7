@@ -158,6 +158,40 @@ class ProfileActivity : Activity() {
         action(identity, "✎ Змінити нікнейм") { showNameEditor() }
         action(identity, "◈ Вибрати аватар") { showAvatarEditor() }
 
+        val appearance = section("ВИГЛЯД ГОЛОВНОГО ЕКРАНА")
+        val modeDescription = label("", 13f, muted)
+        val animatedToggle = Switch(this).apply {
+            text = "Увімкнути анімований режим"
+            textSize = 15f
+            setTextColor(Color.WHITE)
+            isChecked = profile.getBoolean("animated_home", false)
+            isSaveEnabled = false
+            thumbTintList = android.content.res.ColorStateList.valueOf(accent)
+            setPadding(0, dp(8), 0, dp(7))
+        }
+        appearance.addView(animatedToggle, LinearLayout.LayoutParams(-1, -2))
+        fun explainMode(enabled: Boolean) {
+            modeDescription.text = if (enabled) {
+                "🌳 Анімований: велике живе дерево замість довгого списку. " +
+                    "Торкнися гілки або центру, щоб відкрити розділи. Профіль і хмара залишаються доступними."
+            } else {
+                "▦ Класичний: компактне меню всіх розділів без банера. " +
+                    "«Живе дерево OSINT» доступне окремим пунктом."
+            }
+        }
+        explainMode(animatedToggle.isChecked)
+        appearance.addView(modeDescription)
+        animatedToggle.setOnCheckedChangeListener { _, enabled ->
+            profile.edit().putBoolean("animated_home", enabled).apply()
+            explainMode(enabled)
+            Toast.makeText(
+                this,
+                if (enabled) "Анімований режим увімкнено" else "Класичний режим увімкнено",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        action(appearance, "✓ Повернутися до головного екрана") { finish() }
+
         val progress = section("НАВЧАЛЬНИЙ ПРОГРЕС")
         progress.addView(label("$done із $total основних завдань", 18f, Color.WHITE, true))
         val track = FrameLayout(this).apply { background = shape(Color.rgb(54, 70, 81), 8) }
