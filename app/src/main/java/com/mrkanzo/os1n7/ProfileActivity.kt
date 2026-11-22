@@ -102,7 +102,7 @@ class ProfileActivity : Activity() {
                 insets
             }
         }
-        val scroll = ScrollView(this).apply { fillViewport = false }
+        val scroll = ScrollView(this).apply { isFillViewport = false }
         content = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         scroll.addView(content)
         root.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
