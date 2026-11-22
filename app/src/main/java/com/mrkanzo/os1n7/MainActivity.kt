@@ -243,7 +243,7 @@ class MainActivity : Activity() {
         addAction(body, "OSINT Інструменти", "DNS • URL • EXIF • Захист", "⚒") {
             startActivity(Intent(this, ToolsActivity::class.java))
         }
-        addAction(body, "Серверна бібліотека", "Матеріали з локального сервера Termux", "◎") {
+        addAction(body, "Хмарна бібліотека", "GitHub • нові статті без APK • офлайн • Termux", "☁") {
             startActivity(Intent(this, ServerLibraryActivity::class.java))
         }
         addAction(body, "Перевірити оновлення", "Знайти нову версію APK на GitHub", "↻") { checkForUpdates() }
