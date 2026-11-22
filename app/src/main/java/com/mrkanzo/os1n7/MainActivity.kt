@@ -275,6 +275,9 @@ class MainActivity : Activity() {
         addAction(body, "OSINT Інструменти", "DNS • URL • EXIF • Захист", "⚒") {
             startActivity(Intent(this, ToolsActivity::class.java))
         }
+        addAction(body, "Кіберправо України", "Закони • Межі OSINT • Статті КК • Покарання", "⚖") {
+            startActivity(Intent(this, CyberLawActivity::class.java))
+        }
         addAction(body, "Відгуки та підтримка", "Повідомити про помилку • Запропонувати ідею", "✉") {
             startActivity(Intent(this, FeedbackActivity::class.java))
         }
