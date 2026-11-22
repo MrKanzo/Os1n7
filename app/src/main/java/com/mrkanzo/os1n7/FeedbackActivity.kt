@@ -19,7 +19,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 /** Public feedback from GitHub Issues. No credential or GitHub token is stored in the APK. */
-class FeedbackActivity : Activity() {
+class FeedbackActivity : Os1n7Activity() {
     private val bg = Os1n7Ui.background
     private val panel = Os1n7Ui.surface
     private val mint = Os1n7Ui.accent
