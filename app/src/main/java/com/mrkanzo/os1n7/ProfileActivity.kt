@@ -160,49 +160,10 @@ class ProfileActivity : Os1n7Activity() {
         action(identity, "✎ Змінити нікнейм") { showNameEditor() }
         action(identity, "◈ Вибрати аватар") { showAvatarEditor() }
 
-        val appearance = section("ВИГЛЯД ГОЛОВНОГО ЕКРАНА")
-        appearance.addView(label(
-            "Обирай зручний вигляд — налаштування застосовується одразу.",
-            12.5f, muted
-        ).apply { setPadding(0, dp(4), 0, dp(8)) })
-        val modeDescription = label("", 12.5f, muted)
-        val animatedToggle = Switch(this).apply {
-            text = "Живе дерево на головній"
-            textSize = 14.5f
-            setTextColor(Color.WHITE)
-            isChecked = profile.getBoolean("animated_home", false)
-            isSaveEnabled = false
-            minHeight = dp(52)
-            thumbTintList = android.content.res.ColorStateList(
-                arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
-                intArrayOf(accent, Color.rgb(188, 201, 207))
-            )
-            trackTintList = android.content.res.ColorStateList(
-                arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
-                intArrayOf(Color.rgb(35, 113, 91), Color.rgb(66, 82, 92))
-            )
-            setPadding(0, dp(6), 0, dp(6))
+        // Global UI preferences live in one Settings screen, not duplicated in the profile.
+        action(identity, getString(R.string.profile_settings_button)) {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
-        appearance.addView(animatedToggle, LinearLayout.LayoutParams(-1, -2))
-        fun explainMode(enabled: Boolean) {
-            modeDescription.text = if (enabled) {
-                "Анімований режим: інтерактивне дерево замість списку. Натискай гілки для переходу."
-            } else {
-                "Класичний режим: усі розділи в компактних списках. Дерево доступне окремо."
-            }
-        }
-        explainMode(animatedToggle.isChecked)
-        appearance.addView(modeDescription)
-        animatedToggle.setOnCheckedChangeListener { _, enabled ->
-            profile.edit().putBoolean("animated_home", enabled).apply()
-            explainMode(enabled)
-            Toast.makeText(
-                this,
-                if (enabled) "Анімований режим увімкнено" else "Класичний режим увімкнено",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-        action(appearance, "✓ Повернутися до головного екрана") { finish() }
 
         val companion = section("МІЙ КОМПАНЬЙОН")
         val companionName = profile.getString("companion_name", "Некс").orEmpty().ifBlank { "Некс" }
@@ -229,17 +190,6 @@ class ProfileActivity : Os1n7Activity() {
                 "Підказки завжди працюють лише з матеріалами OS1N7.",
             12.5f, muted
         ).apply { setPadding(0, dp(8), 0, dp(4)) })
-        val companionSwitch = Switch(this).apply {
-            text = "Показувати компаньйона"
-            textSize = 14f
-            setTextColor(Color.WHITE)
-            isChecked = profile.getBoolean("companion_enabled", true)
-            thumbTintList = android.content.res.ColorStateList.valueOf(accent)
-            setOnCheckedChangeListener { _, checked ->
-                profile.edit().putBoolean("companion_enabled", checked).apply()
-            }
-        }
-        companion.addView(companionSwitch)
         action(companion, "✎ Змінити ім’я") {
             val input = EditText(this).apply {
                 setSingleLine(true)
