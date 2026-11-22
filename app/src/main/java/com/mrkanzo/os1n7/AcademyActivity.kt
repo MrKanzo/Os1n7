@@ -65,7 +65,7 @@ class AcademyActivity:Activity() {
   label(p,"01 • Навчитися\n"+l[0]+"\n"+l[1])
   label(p,"02 • Спробувати\n"+l[2])
   val practice=RadioGroup(this);p.addView(practice)
-  listOf(l[3],l[4]).forEachIndexed { n,s -> practice.addView(RadioOs1n7Ui.button(this).apply { id=100+n;text=s;setTextColor(Color.WHITE);buttonTintList=ColorStateList.valueOf(Color.rgb(98,230,173)) }) }
+  listOf(l[3],l[4]).forEachIndexed { n,s -> practice.addView(RadioButton(this).apply { id=100+n;text=s;setTextColor(Color.WHITE);buttonTintList=ColorStateList.valueOf(Color.rgb(98,230,173)) }) }
   var practiced=false
   val practiceResult=label(p,"Обери відповідь.")
   btn(p,"Перевірити") { practiced=practice.checkedRadioButtonId==100;practiceResult.text=if(practiced)"✓ Правильно" else "Спробуй ще раз" }
@@ -90,7 +90,7 @@ class AcademyActivity:Activity() {
   }
   label(p,"04 • Тест\nЧи гарантує HTTPS, що сайт безпечний?")
   val quiz=RadioGroup(this);p.addView(quiz)
-  listOf("Ні","Так").forEachIndexed { n,s -> quiz.addView(RadioOs1n7Ui.button(this).apply { id=200+n;text=s;setTextColor(Color.WHITE);buttonTintList=ColorStateList.valueOf(Color.rgb(98,230,173)) }) }
+  listOf("Ні","Так").forEachIndexed { n,s -> quiz.addView(RadioButton(this).apply { id=200+n;text=s;setTextColor(Color.WHITE);buttonTintList=ColorStateList.valueOf(Color.rgb(98,230,173)) }) }
   val feedback=label(p,"Пройди всі етапи.")
   btn(p,"Завершити урок") {
    feedback.text=when {
