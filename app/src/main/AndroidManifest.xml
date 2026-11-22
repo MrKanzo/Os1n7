@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
-    <application android:icon="@drawable/ic_os1n7" android:roundIcon="@drawable/ic_os1n7" android:allowBackup="false" android:label="OSINT Бібліотека" android:theme="@style/Os1n7Theme" android:usesCleartextTraffic="true">
+    <application android:icon="@drawable/ic_os1n7" android:roundIcon="@drawable/ic_os1n7" android:allowBackup="false" android:supportsRtl="true" android:label="OSINT Бібліотека" android:theme="@style/Os1n7Theme" android:usesCleartextTraffic="true">
         <activity android:name=".GraphActivity" android:exported="false"/>
         <activity android:name=".SecurityCenterActivity" android:exported="false"/>
         <activity android:name=".ToolCatalogActivity" android:exported="false"/>
@@ -13,6 +13,7 @@
         <activity android:name=".CategoryLibraryActivity" android:exported="false"/>
         <activity android:name=".ServerLibraryActivity" android:exported="false"/>
         <activity android:name=".CyberIntelActivity" android:exported="false"/>
+        <activity android:name=".SettingsActivity" android:exported="false"/>
         <activity android:name=".CompanionActivity" android:exported="false"/>
         <activity android:name=".ProfileActivity" android:exported="false"/>
         <activity android:name=".FeedbackActivity" android:exported="false"/>
