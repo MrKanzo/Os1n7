@@ -261,6 +261,15 @@ class CyberIntelActivity : Activity() {
             "NCSC UK: матеріали використовуються на умовах Open Government Licence v3.0 (якщо не зазначено інше). Власні переклади OS1N7 не є офіційними; логотипи установ не використовуються.",
             12f, muted
         ).apply { setPadding(0, dp(8), 0, dp(10)) })
+        content.addView(button("Ліцензія NCSC UK: Open Government Licence v3.0 ↗") {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(
+                    "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+                )))
+            } catch (_: Exception) {
+                Toast.makeText(this, "Не вдалося відкрити умови ліцензії", Toast.LENGTH_SHORT).show()
+            }
+        })
         val sources = data.optJSONArray("sources")
         if (sources != null) {
             val health = card()
