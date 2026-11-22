@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_back">← Geri</string>
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_subtitle">Dil • görünüm • gizlilik</string>
+    <string name="settings_language">Arayüz dili</string>
+    <string name="settings_language_note">Menüler ve ana ekranlar çevrildi. Dersler ve bazı yardım sayfaları hâlâ Ukraynaca.</string>
+    <string name="settings_appearance">Görünüm ve rahatlık</string>
+    <string name="settings_banner">Canlı afiş</string>
+    <string name="settings_banner_hint">Açık: animasyonlu ağaç ve yoldaş. Kapalı: klasik menü ve sabit 2D.</string>
+    <string name="settings_short_descriptions">Kısa açıklamalar</string>
+    <string name="settings_short_descriptions_hint">Ana ekrandaki kartlarda daha az metin.</string>
+    <string name="settings_companion">Yoldaşı göster</string>
+    <string name="settings_companion_hint">Harici yapay zekâ kullanmayan dahili rehber.</string>
+    <string name="settings_privacy">Gizlilik</string>
+    <string name="settings_privacy_detail">Tercihler yalnızca bu cihazda saklanır. Dili istediğiniz zaman değiştirebilirsiniz. Ses efekti yok.</string>
+    <string name="settings_version">OS1N7 • sürüm %1$s</string>
+    <string name="settings_cancel">İptal</string>
+    <string name="profile_settings_button">⚙ Ayarlar</string>
+</resources>
