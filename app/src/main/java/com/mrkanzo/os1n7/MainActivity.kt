@@ -8,6 +8,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.RippleDrawable
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -42,13 +44,18 @@ class MainActivity : Activity() {
         val box = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = android.view.Gravity.CENTER_VERTICAL
-            setPadding(dp(12), dp(9), dp(11), dp(9))
-            background = shape(panel)
+            setPadding(dp(12), dp(7), dp(11), dp(7))
+            val cardShape = shape(panel).apply {
+                setStroke(dp(1), Color.rgb(46, 68, 76))
+            }
+            background = RippleDrawable(
+                ColorStateList.valueOf(Color.argb(55, 98, 230, 173)), cardShape, null
+            )
             isClickable = true
             isFocusable = true
             setOnClickListener { click() }
         }
-        box.addView(Os1n7Ui.icon(this, glyph).apply { textSize = 18f }, LinearLayout.LayoutParams(dp(38), dp(38)).apply { rightMargin = dp(10) })
+        box.addView(Os1n7Ui.icon(this, glyph).apply { textSize = 17f }, LinearLayout.LayoutParams(dp(36), dp(36)).apply { rightMargin = dp(10) })
         val column = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         column.addView(label(title, 15.5f, Color.WHITE, true))
         val small = label(detail, 11.5f, muted)
@@ -61,16 +68,16 @@ class MainActivity : Activity() {
     private fun addAction(parent: LinearLayout, title: String, detail: String, glyph: String, click: () -> Unit) {
         val tile = action(title, detail, glyph, click)
         parent.addView(tile, LinearLayout.LayoutParams(-1, -2).apply {
-            bottomMargin = dp(7)
+            bottomMargin = dp(6)
         })
         if (ValueAnimator.areAnimatorsEnabled()) {
             tile.alpha = 0f
             tile.translationY = dp(18).toFloat()
-            val delay = (introCardIndex * 70L).coerceAtMost(490L)
+            val delay = (introCardIndex * 35L).coerceAtMost(175L)
             tile.post {
                 if (tile.isAttachedToWindow) {
                     tile.animate().alpha(1f).translationY(0f)
-                        .setStartDelay(delay).setDuration(480)
+                        .setStartDelay(delay).setDuration(300)
                         .setInterpolator(DecelerateInterpolator()).start()
                 } else {
                     tile.alpha = 1f
@@ -80,6 +87,17 @@ class MainActivity : Activity() {
         }
         introCardIndex++
     }
+    private fun sectionHeader(parent: LinearLayout, heading: String) {
+        val title = label(heading, 11.5f, green, true).apply {
+            letterSpacing = 0.10f
+        }
+        parent.addView(title, LinearLayout.LayoutParams(-1, -2).apply {
+            topMargin = dp(16)
+            bottomMargin = dp(8)
+            leftMargin = dp(3)
+        })
+    }
+
     private fun openLibrary() {
         startActivity(Intent(this, CategoryLibraryActivity::class.java))
     }
@@ -354,12 +372,14 @@ class MainActivity : Activity() {
         description.setPadding(0, dp(8), 0, dp(23))
         classicPanel.addView(description)
 
+        sectionHeader(classicPanel, "НАВІГАЦІЯ")
         addAction(classicPanel, "Живе дерево OSINT", "13 гілок • Неонова карта • Плавна анімація", "◈") {
             startActivity(Intent(this, OsintTreeActivity::class.java))
             @Suppress("DEPRECATION")
             overridePendingTransition(R.anim.os1n7_enter, R.anim.os1n7_exit)
         }
         addAction(classicPanel, "Категорії та уроки", "Теорія • Книжки • Практика • Тести", "▣") { openLibrary() }
+        sectionHeader(classicPanel, "НАВЧАННЯ ТА ПРАКТИКА")
         addAction(classicPanel, "OSINT Лабораторія", "Термінал • Симуляції • Практичні місії", "⌘") {
             startActivity(Intent(this, LabActivity::class.java))
         }
@@ -372,6 +392,7 @@ class MainActivity : Activity() {
         addAction(classicPanel, "OS1N7 Academy", "Навчитися • Спробувати • Захист • Тест", "◈") {
             startActivity(Intent(this, AcademyActivity::class.java))
         }
+        sectionHeader(classicPanel, "ІНСТРУМЕНТИ Й АНАЛІЗ")
         addAction(classicPanel, "OSINT Graph", "Власні справи • Об'єкти • Зв'язки • Звіти", "◎") {
             startActivity(Intent(this, GraphActivity::class.java))
         }
@@ -387,6 +408,7 @@ class MainActivity : Activity() {
         addAction(classicPanel, "Кіберправо України", "Закони • Межі OSINT • Статті КК • Покарання", "⚖") {
             startActivity(Intent(this, CyberLawActivity::class.java))
         }
+        sectionHeader(classicPanel, "НАЛАШТУВАННЯ ТА ДОПОМОГА")
         addAction(classicPanel, "Відгуки та підтримка", "Повідомити про помилку • Запропонувати ідею", "✉") {
             startActivity(Intent(this, FeedbackActivity::class.java))
         }
@@ -413,6 +435,16 @@ class MainActivity : Activity() {
         track.addView(bar, FrameLayout.LayoutParams(0, dp(9)))
         progress.addView(track, LinearLayout.LayoutParams(-1, dp(9)).apply { topMargin = dp(12) })
         classicPanel.addView(progress, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(12) })
+        // The progress view can start hidden in animated mode. Recalculate on layout,
+        // so it is never stuck at zero width after switching back to classic mode.
+        var progressRatio = 0f
+        val syncProgressBar = {
+            val newWidth = (track.width * progressRatio).toInt().coerceIn(0, track.width)
+            if (bar.layoutParams.width != newWidth) {
+                bar.layoutParams = FrameLayout.LayoutParams(newWidth, dp(9))
+            }
+        }
+        track.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> syncProgressBar() }
         dashboardRefresh = {
             val library = LessonLibrary.lessons.count { libraryPrefs.getBoolean("practice:" + it.title, false) }
             val academy = (0..2).count { academyPrefs.getBoolean("done_" + it, false) }
@@ -423,10 +455,8 @@ class MainActivity : Activity() {
             val finished = library + academy + lab + cases + foundations
             summary.text = finished.toString() + " із " + total + " завдань виконано"
             breakdown.text = "Бібліотека: " + library + "  •  Academy: " + academy + "  •  Лабораторія: " + lab + "  •  Case Files: " + cases + "  •  OSINT з нуля: " + foundations
-            track.post {
-                val width = if (total == 0) 0 else (track.width * finished / total).coerceIn(0, track.width)
-                bar.layoutParams = FrameLayout.LayoutParams(width, dp(9))
-            }
+            progressRatio = if (total == 0) 0f else (finished.toFloat() / total).coerceIn(0f, 1f)
+            track.post { syncProgressBar() }
         }
         dashboardRefresh()
         val footer = label("OS1N7  •  Навчання OSINT з повагою до приватності", 11f, muted)
