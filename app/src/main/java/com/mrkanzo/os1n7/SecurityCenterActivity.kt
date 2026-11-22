@@ -38,7 +38,8 @@ class SecurityCenterActivity:Activity() {
   p.addView(v);return v
  }
  private fun button(p:LinearLayout,s:String,action:()->Unit) {
-  p.addView(Os1n7Ui.button(this).apply { text=s;isAllCaps=false;setOnClickListener { action() } })
+  p.addView(Os1n7Ui.button(this).apply { text=s;setOnClickListener { action() } },
+   LinearLayout.LayoutParams(-1,-2).apply { bottomMargin=dp(8) })
  }
  override fun onCreate(savedInstanceState:Bundle?) {
   super.onCreate(savedInstanceState)
@@ -54,11 +55,14 @@ class SecurityCenterActivity:Activity() {
   setContentView(root);root.requestApplyInsets()
   button(body,"← Головне меню"){finish()}
   Os1n7Ui.pageTitle(this,body,"⬡","Security Center","DNS • конфіденційність • захист")
-  text(body,"🔎 Scanner • DNS власних і дозволених доменів",18f)
+  body.addView(Os1n7Ui.sectionHeading(this,"🔎 DNS • власні й дозволені домени"))
   text(body,"Введи домен без https:// і шляху. Перевірка виконує лише DNS-запит, не сканує порти та не відвідує сайт.",14f)
   val input=EditText(this).apply {
-   hint="example.com";setText("example.com");setSingleLine(true);setTextColor(Color.WHITE);setHintTextColor(Color.LTGRAY)
-  };body.addView(input)
+   hint="example.com";setText("example.com");setSingleLine(true);textSize=14f
+   setTextColor(Color.WHITE);setHintTextColor(Os1n7Ui.muted)
+   setPadding(dp(14),dp(12),dp(14),dp(12))
+   background=Os1n7Ui.inputBackground(this@SecurityCenterActivity)
+  };body.addView(input,LinearLayout.LayoutParams(-1,-2).apply { bottomMargin=dp(9) })
   val result=text(body,"Результат з'явиться тут.",14f)
   button(body,"▶ Перевірити DNS") {
    val raw=input.text.toString().trim().trimEnd('.')
@@ -80,7 +84,7 @@ class SecurityCenterActivity:Activity() {
     }.start()
    }
   }
-  text(body,"🔒 HTTPS • перевірка сертифіката",18f)
+  body.addView(Os1n7Ui.sectionHeading(this,"🔒 HTTPS • перевірка сертифіката"))
   text(body,"Перевірка виконує HTTPS-з'єднання до введеного домену (порт 443). Це не сканування вразливостей; сервер побачить запит.",14f)
   val tlsResult=text(body,"Ще не перевірено.",14f)
   button(body,"▶ Перевірити HTTPS") {
@@ -114,7 +118,7 @@ class SecurityCenterActivity:Activity() {
     }.start()
    }
   }
-  text(body,"🛡️ Privacy Shield • особистий чекліст",19f)
+  body.addView(Os1n7Ui.sectionHeading(this,"🛡 Privacy Shield • особистий чекліст"))
   text(body,"Це самоперевірка, а не автоматичний аудит телефона. Позначай лише те, що справді перевірив.",14f)
   val summary=text(body,"",15f)
   fun update() {
