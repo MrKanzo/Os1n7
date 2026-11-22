@@ -87,7 +87,7 @@ class LabActivity : Activity() {
         val answers = RadioGroup(this).apply { orientation = RadioGroup.VERTICAL }
         val options = listOf("Ввести пароль, щоб не заблокували рахунок", "Перевірити адресу через офіційний застосунок банку", "Переслати лист друзям")
         options.forEachIndexed { i, option ->
-            answers.addView(RadioOs1n7Ui.button(this).apply {
+            answers.addView(RadioButton(this).apply {
                 id = i + 100
                 text = option
                 setTextColor(Color.WHITE)
