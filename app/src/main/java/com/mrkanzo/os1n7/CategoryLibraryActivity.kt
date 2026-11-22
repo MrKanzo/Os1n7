@@ -244,31 +244,60 @@ class CategoryLibraryActivity : Os1n7Activity() {
         if (!practice) content.addView(button("Перевірити знання →", { showQuiz(lesson) }),
             LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(10) })
     }
-    private fun showQuiz(lesson: Lesson) {
+    /**
+     * Each lesson has two different topic-specific questions. Completion of the
+     * old quiz:<lesson-title> flag stays valid and is never rewarded twice.
+     */
+    private fun showQuiz(lesson: Lesson, index: Int = 0, replay: Boolean = false) {
         screen = "quiz"
         activeLesson = lesson
+        val questions = LessonQuizBank.forLesson(lesson)
         start("Перевірка знань", lesson.title)
-        content.addView(button("← До уроку", { showLesson(lesson, false) }))
-        heading("ПИТАННЯ 01 / 01")
-        paragraph("Яке твердження найкраще відповідає принципам OSINT?")
-        val options = listOf(
-            "Перевіряти відкриті джерела та враховувати контекст",
-            "Вважати кожен допис остаточним доказом",
-            "Ігнорувати дату й автора публікації",
-            "Публікувати приватні дані без дозволу"
-        )
-        options.forEachIndexed { index, answer ->
-            card(answer, "", "${index + 1}") {
-                val correct = index == 0
-                if (correct) prefs.edit().putBoolean("quiz:${lesson.title}", true).apply()
+        content.addView(button("← До уроку", { showLesson(lesson, false) }),
+            LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(8) })
+        if (questions.isEmpty()) {
+            paragraph("Для цього уроку ще немає перевірених запитань.")
+            return
+        }
+        val completed = prefs.getBoolean("quiz:${lesson.title}", false)
+        if (completed && !replay) {
+            heading("✓ ВІКТОРИНУ ПРОЙДЕНО")
+            paragraph("Результат уже збережено. Повторювати той самий тест не обов'язково: " +
+                "можеш повернутися до уроку або потренуватися ще раз без нового XP.")
+            content.addView(button("↻ Повторити для тренування", { showQuiz(lesson, 0, true) }))
+            return
+        }
+
+        val safeIndex = index.coerceIn(0, questions.lastIndex)
+        val question = questions[safeIndex]
+        heading("ПИТАННЯ ${safeIndex + 1} / ${questions.size}")
+        paragraph(question.prompt)
+        question.options.forEachIndexed { answerIndex, answer ->
+            card(answer, "", "${answerIndex + 1}") {
+                val correct = answerIndex == question.correctIndex
+                val last = safeIndex == questions.lastIndex
+                if (correct && last && !completed) {
+                    // A single stable flag, independent of how many times the user replays.
+                    prefs.edit().putBoolean("quiz:${lesson.title}", true).apply()
+                }
+                val next = if (last) "До результату" else "Наступне питання →"
                 android.app.AlertDialog.Builder(this)
                     .setTitle(if (correct) "✓ Правильно" else "Спробуй ще")
-                    .setMessage(if (correct) "Перевірка джерел і контексту — основа OSINT." else "Перечитай теорію та спробуй знову.")
-                    .setPositiveButton("Гаразд") { _, _ -> if (correct) showQuiz(lesson) }
+                    .setMessage(if (correct) question.explanation
+                        else "Поки не зовсім. Повернись до пояснення в уроці або спробуй іншу відповідь.")
+                    .setPositiveButton(if (correct) next else "Гаразд") { _, _ ->
+                        if (correct) {
+                            if (last) showQuiz(lesson)
+                            else showQuiz(lesson, safeIndex + 1, replay)
+                        }
+                    }
                     .show()
             }
         }
-        if (prefs.getBoolean("quiz:${lesson.title}", false)) heading("✓ Тест пройдено")
+        if (replay) {
+            content.addView(text("Режим повторення • XP за вже пройдений тест не нараховується",
+                12f, muted))
+        }
     }
     @Deprecated("Legacy Activity back navigation")
     override fun onBackPressed() {
