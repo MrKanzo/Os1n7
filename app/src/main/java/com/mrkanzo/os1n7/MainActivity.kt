@@ -27,6 +27,7 @@ class MainActivity : Activity() {
     private var profileShortcut: TextView? = null
     private var introCardIndex = 0
     private var refreshHomeMode: (() -> Unit)? = null
+    private var refreshCompanion: (() -> Unit)? = null
     private fun dp(n: Int) = (n * resources.displayMetrics.density).toInt()
     private fun shape(color: Int, radius: Int = 16) = GradientDrawable().apply {
         setColor(color)
@@ -286,6 +287,47 @@ class MainActivity : Activity() {
         })
         body.addView(topBar)
 
+        // A single low-height companion dock serves both home modes; the avatar
+        // switches between static 2D and gentle animation with the banner mode.
+        val companionDock = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = android.view.Gravity.CENTER_VERTICAL
+            setPadding(dp(8), dp(3), dp(12), dp(3))
+            background = Os1n7Ui.cardBackground(this@MainActivity, interactive = true)
+            isClickable = true
+            isFocusable = true
+            contentDescription = "Відкрити внутрішнього OS1N7-компаньйона"
+            setOnClickListener {
+                startActivity(Intent(this@MainActivity, CompanionActivity::class.java))
+            }
+        }
+        val companionOrb = CompanionOrbView(this).apply {
+            contentDescription = "Кіберкомпаньйон"
+        }
+        companionDock.addView(companionOrb, LinearLayout.LayoutParams(dp(48), dp(48)))
+        val companionText = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(9), 0, 0, 0)
+        }
+        val companionTitle = label("", 13.5f, Color.WHITE, true)
+        companionText.addView(companionTitle)
+        companionText.addView(label("Внутрішня допомога • без мережі", 11f, muted))
+        companionDock.addView(companionText, LinearLayout.LayoutParams(0, -2, 1f))
+        companionDock.addView(label("›", 22f, green))
+        body.addView(companionDock, LinearLayout.LayoutParams(-1, -2).apply {
+            topMargin = dp(9)
+            bottomMargin = dp(3)
+        })
+        refreshCompanion = {
+            val pref = getSharedPreferences("os1n7_profile", Context.MODE_PRIVATE)
+            companionDock.visibility = if (pref.getBoolean("companion_enabled", true)) View.VISIBLE else View.GONE
+            companionOrb.live = pref.getBoolean("animated_home", false)
+            companionOrb.skin = pref.getString("companion_style", "neon") ?: "neon"
+            val name = pref.getString("companion_name", "Некс").orEmpty().ifBlank { "Некс" }
+            companionTitle.text = "$name  •  Lv.${CompanionEngine.progress(this).level}"
+        }
+        refreshCompanion?.invoke()
+
         // Two independent home layouts. Only one is visible at a time.
         // Both modes retain the top profile/avatar and cloud shortcut.
         val animatedPanel = LinearLayout(this).apply {
@@ -475,6 +517,7 @@ class MainActivity : Activity() {
             }
         }
         refreshHomeMode?.invoke()
+        refreshCompanion?.invoke()
         checkUpdatesOnLaunch()
     }
 
@@ -485,6 +528,7 @@ class MainActivity : Activity() {
         profileShortcut?.text = getSharedPreferences("os1n7_profile", Context.MODE_PRIVATE)
             .getString("avatar", "◈").orEmpty().ifBlank { "◈" }
         refreshHomeMode?.invoke()
+        refreshCompanion?.invoke()
     }
     private lateinit var dashboardRefresh: () -> Unit
 }
