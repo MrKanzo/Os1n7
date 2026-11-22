@@ -19,7 +19,7 @@ import android.widget.*
  * Concise summaries are NOT a replacement for the current enacted law.
  * The official source button always opens the live Verkhovna Rada text.
  */
-class CyberLawActivity : Activity() {
+class CyberLawActivity : Os1n7Activity() {
     private val bg = Os1n7Ui.background
     private val surface = Os1n7Ui.surface
     private val accent = Os1n7Ui.accent
