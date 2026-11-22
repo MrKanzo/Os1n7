@@ -250,6 +250,11 @@ class MainActivity : Activity() {
         description.setPadding(0, dp(8), 0, dp(23))
         body.addView(description)
 
+        addAction(body, "Живе дерево OSINT", "13 гілок • Неонова карта • Плавна анімація", "◈") {
+            startActivity(Intent(this, OsintTreeActivity::class.java))
+            @Suppress("DEPRECATION")
+            overridePendingTransition(R.anim.os1n7_enter, R.anim.os1n7_exit)
+        }
         addAction(body, "Категорії та уроки", "Теорія • Книжки • Практика • Тести", "▣") { openLibrary() }
         addAction(body, "OSINT Лабораторія", "Термінал • Симуляції • Практичні місії", "⌘") {
             startActivity(Intent(this, LabActivity::class.java))
