@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.RippleDrawable
+import android.graphics.drawable.Drawable
 import android.view.Gravity
 import android.view.animation.DecelerateInterpolator
 import android.widget.Button
@@ -27,6 +28,33 @@ object Os1n7Ui {
         GradientDrawable().apply {
             setColor(color)
             cornerRadius = dp(context, radius).toFloat()
+        }
+
+    /** Unified subtle outlined surfaces for all in-app lists and detail cards. */
+    fun cardBackground(context: Context, interactive: Boolean = false): Drawable {
+        val surfaceShape = rounded(context, surface, 16).apply {
+            setStroke(dp(context, 1), Color.rgb(47, 70, 79))
+        }
+        return if (interactive) RippleDrawable(
+            ColorStateList.valueOf(Color.argb(54, 98, 230, 173)),
+            surfaceShape, null
+        ) else surfaceShape
+    }
+
+    /** Text fields visually match the compact cards without excessive contrast. */
+    fun inputBackground(context: Context): Drawable =
+        rounded(context, Color.rgb(24, 37, 47), 14).apply {
+            setStroke(dp(context, 1), Color.rgb(52, 77, 85))
+        }
+
+    fun sectionHeading(context: Context, caption: String): TextView =
+        TextView(context).apply {
+            text = caption.uppercase()
+            textSize = 12f
+            setTextColor(accent)
+            typeface = Typeface.DEFAULT_BOLD
+            letterSpacing = 0.08f
+            setPadding(dp(context, 2), dp(context, 14), dp(context, 2), dp(context, 9))
         }
 
     fun button(context: Context): Button = Button(context).apply {
