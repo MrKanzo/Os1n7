@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_back">← Back</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_subtitle">Language • appearance • privacy</string>
+    <string name="settings_language">Interface language</string>
+    <string name="settings_language_note">Menus and primary screens are translated. Lessons and some help pages are still in Ukrainian.</string>
+    <string name="settings_appearance">Appearance &amp; comfort</string>
+    <string name="settings_banner">Live banner</string>
+    <string name="settings_banner_hint">On: animated tree and companion. Off: classic menu and static 2D.</string>
+    <string name="settings_short_descriptions">Short descriptions</string>
+    <string name="settings_short_descriptions_hint">Less text in cards on the home screen.</string>
+    <string name="settings_companion">Show companion</string>
+    <string name="settings_companion_hint">Small built-in guide with no external AI.</string>
+    <string name="settings_privacy">Privacy</string>
+    <string name="settings_privacy_detail">Preferences stay on this device. You can change the language at any time. No sound effects.</string>
+    <string name="settings_version">OS1N7 • version %1$s</string>
+    <string name="settings_cancel">Cancel</string>
+    <string name="profile_settings_button">⚙ Settings</string>
+</resources>
