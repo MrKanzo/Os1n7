@@ -15,7 +15,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 /** Optional remote content source; keeps a local snapshot for offline reading. */
-class ServerLibraryActivity : Activity() {
+class ServerLibraryActivity : Os1n7Activity() {
     private val bg = Color.rgb(15, 23, 32)
     private val panel = Color.rgb(29, 42, 52)
     private val accent = Color.rgb(98, 230, 173)
