@@ -15,7 +15,7 @@ import android.view.WindowInsets
 import android.widget.*
 
 /** Self-contained offline fictional case. No remote searches or real identities. */
-class CaseFilesActivity : Activity() {
+class CaseFilesActivity : Os1n7Activity() {
     private val bg = Color.rgb(15, 23, 32)
     private val panel = Color.rgb(29, 42, 52)
     private val accent = Color.rgb(98, 230, 173)
