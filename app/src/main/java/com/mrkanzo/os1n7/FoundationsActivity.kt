@@ -68,8 +68,8 @@ class FoundationsActivity : Activity() {
  override fun onCreate(savedInstanceState:Bundle?) { super.onCreate(savedInstanceState);home() }
  private fun home() {
   activeStage=null;viewingReport=false
-  val p=page();label(p,"◈ OS1N7 / OSINT З НУЛЯ",24f)
-  label(p,"7 навчальних етапів • вигадані дані • без мережевих запитів",14f)
+  val p=page();Os1n7Ui.pageTitle(this,p,"✦","OSINT з нуля","7 етапів • безпечна навчальна практика")
+  button(p,"← Головне меню"){finish()}
   titles.forEachIndexed { i,t -> button(p,(if(prefs.getBoolean("step_$i",false))"✓ " else "○ ")+(i+1)+". "+t) { open(i) } }
   label(p,"Завершено: "+titles.indices.count { prefs.getBoolean("step_$it",false) }+" / 7")
   button(p,"Відкрити готовий звіт") { report() }
