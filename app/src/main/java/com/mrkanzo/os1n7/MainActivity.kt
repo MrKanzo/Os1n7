@@ -61,8 +61,8 @@ class MainActivity : Activity() {
     private fun openLibrary() {
         startActivity(Intent(this, CategoryLibraryActivity::class.java))
     }
-    private fun checkForUpdates() {
-        Toast.makeText(this, "Перевіряємо GitHub Releases…", Toast.LENGTH_SHORT).show()
+    private fun checkForUpdates(silent: Boolean = false) {
+        if (!silent) Toast.makeText(this, "Перевіряємо GitHub Releases…", Toast.LENGTH_SHORT).show()
         Thread {
             try {
                 val conn = URL("https://api.github.com/repos/MrKanzo/Os1n7/releases/latest").openConnection()
@@ -86,15 +86,20 @@ class MainActivity : Activity() {
                 val newer = (0 until maxOf(parts(latest).size, parts(current).size))
                     .map { parts(latest).getOrElse(it) { 0 } - parts(current).getOrElse(it) { 0 } }
                     .firstOrNull { it != 0 }?.let { it > 0 } ?: false
+                if (silent) {
+                    getSharedPreferences("os1n7_updates", Context.MODE_PRIVATE).edit()
+                        .putLong("last_check", System.currentTimeMillis()).apply()
+                }
                 runOnUiThread {
+                    if (isFinishing || isDestroyed) return@runOnUiThread
                     if (apkUrl.isBlank()) {
-                        Toast.makeText(this, "У релізі немає APK", Toast.LENGTH_LONG).show()
-                    } else if (!newer) {
+                        if (!silent) Toast.makeText(this, "У релізі немає APK", Toast.LENGTH_LONG).show()
+                    } else if (!newer && !silent) {
                         android.app.AlertDialog.Builder(this)
                             .setTitle("OS1N7 оновлено")
                             .setMessage("Встановлено: $current. Останній реліз: $latest.")
                             .setPositiveButton("Гаразд", null).show()
-                    } else {
+                    } else if (newer) {
                         android.app.AlertDialog.Builder(this)
                             .setTitle("Доступне оновлення $latest")
                             .setMessage("Поточна версія: $current. Завантажити й встановити оновлення поверх наявної програми? Дані зберігаються, якщо APK підписаний тим самим ключем.")
@@ -105,6 +110,7 @@ class MainActivity : Activity() {
                 }
             } catch (e: Exception) {
                 runOnUiThread {
+                    if (silent || isFinishing || isDestroyed) return@runOnUiThread
                     android.app.AlertDialog.Builder(this)
                         .setTitle("Оновлення поки недоступні")
                         .setMessage("Не вдалося перевірити GitHub Releases. Перевір інтернет та наявність опублікованого APK.")
@@ -112,6 +118,16 @@ class MainActivity : Activity() {
                 }
             }
         }.start()
+    }
+
+    private fun checkUpdatesOnLaunch() {
+        val prefs = getSharedPreferences("os1n7_updates", Context.MODE_PRIVATE)
+        val now = System.currentTimeMillis()
+        val previous = prefs.getLong("last_check", 0L)
+        val day = 24L * 60L * 60L * 1000L
+        if (previous <= 0L || now < previous || now - previous >= day) {
+            checkForUpdates(silent = true)
+        }
     }
 
     private fun downloadAndInstall(apkUrl: String, version: String) {
@@ -272,6 +288,7 @@ class MainActivity : Activity() {
         val footer = label("OS1N7  •  Навчання OSINT з повагою до приватності", 11f, muted)
         footer.setPadding(0, dp(22), 0, dp(8))
         body.addView(footer)
+        checkUpdatesOnLaunch()
     }
 
     override fun onResume() {
