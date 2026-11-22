@@ -26,15 +26,18 @@ class CaseFilesActivity : Activity() {
     private fun card(parent: LinearLayout, heading: String): LinearLayout {
         val group = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(dp(15), dp(15), dp(15), dp(15))
-            background = GradientDrawable().apply { setColor(panel); cornerRadius = dp(14).toFloat() }
+            setPadding(dp(16), dp(13), dp(16), dp(15))
+            background = Os1n7Ui.cardBackground(this@CaseFilesActivity)
         }
-        group.addView(text(heading, 18f, accent, true))
-        parent.addView(group, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(13) })
+        group.addView(Os1n7Ui.sectionHeading(this, heading))
+        parent.addView(group, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(9) })
         return group
     }
     private fun action(parent: LinearLayout, title: String, run: () -> Unit) {
-        parent.addView(Os1n7Ui.button(this).apply { text = title; isAllCaps = false; setOnClickListener { run() } })
+        parent.addView(Os1n7Ui.button(this).apply {
+            text = title
+            setOnClickListener { run() }
+        }, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(6) })
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
