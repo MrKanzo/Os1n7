@@ -47,8 +47,8 @@ class ServerLibraryActivity : Activity() {
     private fun addCard(title: String, category: String, summary: String, body: String) {
         val card = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(dp(17), dp(16), dp(17), dp(16))
-            background = shape(panel)
+            setPadding(dp(15), dp(13), dp(15), dp(13))
+            background = Os1n7Ui.cardBackground(this@ServerLibraryActivity, interactive = true)
             isClickable = true
             isFocusable = true
             setOnClickListener {
@@ -64,7 +64,7 @@ class ServerLibraryActivity : Activity() {
         subtitle.setPadding(0, dp(6), 0, dp(6))
         card.addView(subtitle)
         card.addView(text(summary, 14f, muted))
-        list.addView(card, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(11) })
+        list.addView(card, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(8) })
     }
     private fun render(payload: String): Int {
         displayedPayload = payload
@@ -125,7 +125,7 @@ class ServerLibraryActivity : Activity() {
             topMargin = dp(8)
             bottomMargin = dp(13)
         })
-        root.addView(text("Джерело матеріалів", 21f, Color.WHITE, true))
+        root.addView(Os1n7Ui.sectionHeading(this, "Джерело матеріалів"))
         help = text("Хмарна бібліотека: оновлення статей із GitHub без завантаження APK.", 13f, muted)
         help.setPadding(0, dp(9), 0, dp(12))
         root.addView(help)
@@ -150,7 +150,7 @@ class ServerLibraryActivity : Activity() {
             hint = "http://127.0.0.1:8765"
             inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_URI
             setPadding(dp(14), dp(12), dp(14), dp(12))
-            background = shape(panel)
+            background = Os1n7Ui.inputBackground(this@ServerLibraryActivity)
             setText(prefs.getString("base_url", "http://127.0.0.1:8765"))
         }
         root.addView(address)
@@ -169,7 +169,7 @@ class ServerLibraryActivity : Activity() {
             setTextColor(Color.WHITE)
             setHintTextColor(muted)
             setPadding(dp(14), dp(12), dp(14), dp(12))
-            background = shape(panel)
+            background = Os1n7Ui.inputBackground(this@ServerLibraryActivity)
             addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
