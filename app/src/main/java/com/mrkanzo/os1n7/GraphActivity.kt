@@ -60,8 +60,7 @@ class GraphActivity : Activity() {
  private fun home() {
   caseId="";selected=null
   val p=page();button(p,"← Головне меню"){finish()}
-  text(p,"◈ OS1N7 GRAPH",26f,mint,true)
-  text(p,"Локальні справи • граф зв'язків • джерела • звіт",14f)
+  Os1n7Ui.pageTitle(this,p,"◎","OSINT Graph","Локальні справи • граф зв'язків • джерела • звіт")
   text(p,"Інформація зберігається лише в пам'яті цього застосунку. Не додавай приватні дані сторонніх людей без законних підстав.",13f,Color.LTGRAY)
   button(p,"＋ Створити справу"){createCase()}
   val arr=cases()
