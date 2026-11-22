@@ -1,0 +1,43 @@
+name: Sync official cyber intelligence
+on:
+  schedule:
+    - cron: "17 2,8,14,20 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/sync_cyber_intel.py"
+      - "tests/test_cyber_intel.py"
+      - ".github/workflows/cyber-intel.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: os1n7-cyber-intel
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test feed validation and date handling
+        run: python -m unittest discover -s tests -p "test_cyber_intel.py" -v
+      - name: Fetch official cybersecurity sources
+        run: python scripts/sync_cyber_intel.py
+      - name: Update hosted JSON snapshot, if changed
+        run: |
+          if git diff --quiet -- content/cyber-intel.json; then
+            echo "No changed cyber-intelligence data"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/cyber-intel.json
+          git commit -m "data: refresh official cyber intelligence and yearly statistics"
+          git pull --rebase origin main
+          git push origin HEAD:main
