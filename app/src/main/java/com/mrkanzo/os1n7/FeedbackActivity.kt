@@ -83,12 +83,12 @@ class FeedbackActivity : Activity() {
             "Пишіть, що не працює або що варто додати. Короткі звернення публікуються в GitHub Issues і видимі всім.",
             13f, muted
         ).apply { setPadding(0, dp(4), 0, dp(10)) })
-        root.addView(button("✎ Нове звернення") { compose() }.apply {
+        root.addView(button("✎ Нове звернення") { confirmCommunityRules() }.apply {
             setTextColor(bg)
             backgroundTintList = android.content.res.ColorStateList.valueOf(mint)
         })
         root.addView(text(
-            "Для публікації потрібен GitHub-акаунт. Не додавайте паролі, номери телефонів, особисті адреси чи приватні дані.",
+            "Для публікації потрібен GitHub-акаунт. Звернення загальнодоступні. У стрічці OS1N7 показуються лише схвалені модератором повідомлення. Не додавайте приватні дані.",
             12f, muted
         ).apply { setPadding(0, dp(8), 0, dp(12)) })
         root.addView(text("Фільтр звернень", 13f, mint, true))
@@ -166,6 +166,7 @@ class FeedbackActivity : Activity() {
             val kind = kindOf(title)
             val state = issue.optString("state")
             val number = issue.optInt("number", -1)
+            if (!issue.optBoolean("approved", false)) continue
             if (kind == 0 || number < 1 || (filter != 0 && filter != kind)) continue
             if (!showClosed && state != "open") continue
             shown++
@@ -195,10 +196,29 @@ class FeedbackActivity : Activity() {
         if (shown == 0) {
             val empty = card()
             empty.addView(text(
-                "Поки немає звернень у цій категорії. Можеш запропонувати перше!",
+                "Поки немає схвалених звернень у цій категорії. Нові повідомлення з’являються після перевірки модератором.",
                 14f, muted
             ))
         }
+    }
+
+    private fun confirmCommunityRules() {
+        if (prefs.getBoolean("community_rules_accepted", false)) {
+            compose()
+            return
+        }
+        AlertDialog.Builder(this)
+            .setTitle("Правила звернень OS1N7")
+            .setMessage(
+                "Звернення й коментарі на GitHub є публічними. Не публікуй персональні дані, паролі, токени, погрози, образи, незаконні інструкції або чужі матеріали без права на це. " +
+                "Звернення з'являться у стрічці OS1N7 лише після перевірки модератором. Порушення можуть бути приховані або видалені."
+            )
+            .setNegativeButton("Скасувати", null)
+            .setPositiveButton("Приймаю правила") { _, _ ->
+                prefs.edit().putBoolean("community_rules_accepted", true).apply()
+                compose()
+            }
+            .show()
     }
 
     private fun compose() {
@@ -301,7 +321,13 @@ class FeedbackActivity : Activity() {
                     val title = item.optString("title")
                     val number = item.optInt("number", -1)
                     if (kindOf(title) == 0 || number < 1) continue
+                    val labelsArray = item.optJSONArray("labels") ?: JSONArray()
+                    val approved = (0 until labelsArray.length()).any { idx ->
+                        labelsArray.optJSONObject(idx)?.optString("name") == "os1n7-approved"
+                    }
+                    if (!approved) continue
                     val clean = JSONObject()
+                        .put("approved", true)
                         .put("title", title.take(130))
                         .put("number", number)
                         .put("created_at", item.optString("created_at").take(10))
