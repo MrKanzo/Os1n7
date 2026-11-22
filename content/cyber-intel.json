@@ -5,154 +5,211 @@
     {
       "id": "b22eec5809ce5c9c44d6",
       "source": "CISA",
-      "title": "CISA Adds Four Known Exploited Vulnerabilities to Catalog",
-      "summary": "CISA has added four new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2025-42884 SAP NetWeaver Improper Neutralization of Special Elements in Data Query Logic Vulnerability CVE-2026-76466 Cisco Expressway Series Use of Hard-coded Credentia",
+      "title": "CISA додало чотири активно експлуатовані вразливості до каталогу KEV",
+      "summary": "CISA внесло чотири нові вразливості до каталогу KEV на підставі підтвердженої експлуатації. Серед них згадано SAP NetWeaver (CVE-2025-42884) і Cisco Expressway (CVE-2026-76466).",
       "published": "2026-11-20",
-      "url": "https://www.cisa.gov/news-events/alerts/2026/11/20/cisa-adds-four-known-exploited-vulnerabilities-catalog"
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/20/cisa-adds-four-known-exploited-vulnerabilities-catalog",
+      "originalTitle": "CISA Adds Four Known Exploited Vulnerabilities to Catalog",
+      "originalSummary": "CISA has added four new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2025-42884 SAP NetWeaver Improper Neutralization of Special Elements in Data Query Logic Vulnerability CVE-2026-76466 Cisco Expressway Series Use of Hard-coded Credentia",
+      "translation": "uk-v1"
     },
     {
       "id": "bf2611689a6fa7cb9958",
       "source": "CISA",
-      "title": "libumqtt",
-      "summary": "View CSAF Summary Successful exploitation of this vulnerability could allow a remote attacker to cause a denial of service, memory corruption, or information disclosure. The following versions of libumqtt are affected: libumqtt <=1.1.1 (CVE-2026-125132) CVSS Vendor Equipment v3 8.6 libumqtt libumqtt 1 Vulnera",
+      "title": "Уразливість у бібліотеці libumqtt",
+      "summary": "Експлуатація проблеми в libumqtt версії 1.1.1 та раніших може спричинити відмову в обслуговуванні, пошкодження пам’яті або розкриття інформації. Ідентифікатор: CVE-2026-125132.",
       "published": "2026-11-19",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-323-03"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-323-03",
+      "originalTitle": "libumqtt",
+      "originalSummary": "View CSAF Summary Successful exploitation of this vulnerability could allow a remote attacker to cause a denial of service, memory corruption, or information disclosure. The following versions of libumqtt are affected: libumqtt <=1.1.1 (CVE-2026-125132) CVSS Vendor Equipment v3 8.6 libumqtt libumqtt 1 Vulnera",
+      "translation": "uk-v1"
     },
     {
       "id": "ad267eaa2b1154828ea1",
       "source": "CISA",
-      "title": "Autonomy Logic OpenPLC Runtime",
-      "summary": "View CSAF Summary Successful exploitation of this vulnerability could allow several unauthenticated admin accounts to be created. The following versions of Autonomy Logic OpenPLC Runtime are affected: OpenPLC Runtime <=4.2.4 (CVE-2026-126088) CVSS Vendor Equipment v3 8.1 Autonomy Logic OpenPLC Runtime 1 Vulne",
+      "title": "Autonomy Logic OpenPLC Runtime: можливе створення облікових записів адміністратора",
+      "summary": "Вразливість у OpenPLC Runtime версії 4.2.4 та раніших може дозволити створити адміністративні облікові записи без автентифікації. Ідентифікатор: CVE-2026-126088.",
       "published": "2026-11-19",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-323-01"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-323-01",
+      "originalTitle": "Autonomy Logic OpenPLC Runtime",
+      "originalSummary": "View CSAF Summary Successful exploitation of this vulnerability could allow several unauthenticated admin accounts to be created. The following versions of Autonomy Logic OpenPLC Runtime are affected: OpenPLC Runtime <=4.2.4 (CVE-2026-126088) CVSS Vendor Equipment v3 8.1 Autonomy Logic OpenPLC Runtime 1 Vulne",
+      "translation": "uk-v1"
     },
     {
       "id": "31c4bb63cffd59f4c698",
       "source": "CISA",
-      "title": "Elecbrakes EB2, VM1, ELBC2000",
-      "summary": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to gain control of the brakes of a trailer, modify the firmware, disable the brake lights, modify the brake conditions or disable other critical safety features. The following versions of Elecbrakes EB2, VM1, ELBC2000 a",
+      "title": "Уразливості Elecbrakes EB2, VM1 і ELBC2000",
+      "summary": "Вразливості можуть дозволити зловмиснику втручатися в керування гальмами причепа, змінювати прошивку, вимикати стоп-сигнали та інші важливі функції безпеки.",
       "published": "2026-11-19",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-323-02"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-323-02",
+      "originalTitle": "Elecbrakes EB2, VM1, ELBC2000",
+      "originalSummary": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to gain control of the brakes of a trailer, modify the firmware, disable the brake lights, modify the brake conditions or disable other critical safety features. The following versions of Elecbrakes EB2, VM1, ELBC2000 a",
+      "translation": "uk-v1"
     },
     {
       "id": "2bf6e3b53184cd104c37",
       "source": "CISA",
-      "title": "CISA Adds Four Known Exploited Vulnerabilities to Catalog",
-      "summary": "CISA has added four new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2024-10441 Synology DiskStation Manager (DSM) Improper Encoding or Escaping of Output Vulnerability CVE-2026-40217 BerriAI LiteLLM Unprotected Alternate Channel Vulnerab",
+      "title": "CISA внесло ще чотири експлуатовані вразливості до каталогу KEV",
+      "summary": "Оновлення каталогу KEV містить чотири вразливості, для яких є підтвердження активної експлуатації. Серед них — проблеми в Synology DSM (CVE-2024-10441) і BerriAI LiteLLM (CVE-2026-40217).",
       "published": "2026-11-18",
-      "url": "https://www.cisa.gov/news-events/alerts/2026/11/18/cisa-adds-four-known-exploited-vulnerabilities-catalog"
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/18/cisa-adds-four-known-exploited-vulnerabilities-catalog",
+      "originalTitle": "CISA Adds Four Known Exploited Vulnerabilities to Catalog",
+      "originalSummary": "CISA has added four new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2024-10441 Synology DiskStation Manager (DSM) Improper Encoding or Escaping of Output Vulnerability CVE-2026-40217 BerriAI LiteLLM Unprotected Alternate Channel Vulnerab",
+      "translation": "uk-v1"
     },
     {
       "id": "fae4ec42780a6b53cc83",
       "source": "CISA",
-      "title": "Siemens meta-iot2050",
-      "summary": "View CSAF Summary meta-iot2050 (https://github.com/siemens/meta-iot2050) from V01.03.01 contains a Command Injection vulnerability in the firmware update tool that could allow an attacker which is able to manipulate a configuration file to have arbitrary commands run as root. Siemens is preparing fixes and re",
+      "title": "Siemens meta-iot2050: ризик виконання команд під час оновлення прошивки",
+      "summary": "У Siemens meta-iot2050 від версії V01.03.01 виявлено можливість ін’єкції команд через файл налаштувань інструмента оновлення прошивки. За певних умов це може дозволити виконати команди з правами root; виробник готує виправлення.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-11"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-11",
+      "originalTitle": "Siemens meta-iot2050",
+      "originalSummary": "View CSAF Summary meta-iot2050 (https://github.com/siemens/meta-iot2050) from V01.03.01 contains a Command Injection vulnerability in the firmware update tool that could allow an attacker which is able to manipulate a configuration file to have arbitrary commands run as root. Siemens is preparing fixes and re",
+      "translation": "uk-v1"
     },
     {
       "id": "f61efca8f592b87c7c09",
       "source": "CISA",
-      "title": "Siemens Mendix Studio Pro",
-      "summary": "View CSAF Summary Mendix Studio Pro contains multiple vulnerabilities in the MCP Server, that could allow an attacker with network access to interact with the server remotely or trick a user's browser into sending unauthorized requests, potentially leading to unauthorized data access, tool execution, or syste",
+      "title": "Siemens Mendix Studio Pro: уразливості сервера MCP",
+      "summary": "Вразливості MCP-сервера можуть дозволити віддалену взаємодію з ним або неавторизовані запити через браузер користувача. Можливі наслідки — доступ до даних, запуск інструментів чи системні дії.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-05"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-05",
+      "originalTitle": "Siemens Mendix Studio Pro",
+      "originalSummary": "View CSAF Summary Mendix Studio Pro contains multiple vulnerabilities in the MCP Server, that could allow an attacker with network access to interact with the server remotely or trick a user's browser into sending unauthorized requests, potentially leading to unauthorized data access, tool execution, or syste",
+      "translation": "uk-v1"
     },
     {
       "id": "b408794a3196e1df425e",
       "source": "CISA",
-      "title": "Siemens RUGGEDCOM APE1808",
-      "summary": "View CSAF Summary Fortinet has published information on a Double Free vulnerability in FortiOS. This advisory lists the related Siemens Industrial products. Siemens recommends to update Fortigate NGFW to V7.6.9 or later following the secure update recommendation procedure. Contact customer support to receive ",
+      "title": "Siemens RUGGEDCOM APE1808: повідомлення щодо FortiOS",
+      "summary": "У повідомленні описано вразливість подвійного звільнення пам’яті у Fortinet FortiOS, що стосується пов’язаних промислових продуктів Siemens. Рекомендовано оновити Fortigate NGFW до версії 7.6.9 або новішої.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-07"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-07",
+      "originalTitle": "Siemens RUGGEDCOM APE1808",
+      "originalSummary": "View CSAF Summary Fortinet has published information on a Double Free vulnerability in FortiOS. This advisory lists the related Siemens Industrial products. Siemens recommends to update Fortigate NGFW to V7.6.9 or later following the secure update recommendation procedure. Contact customer support to receive ",
+      "translation": "uk-v1"
     },
     {
       "id": "986d782997068f3c61b8",
       "source": "CISA",
-      "title": "Dorsett Controls InfoScan",
-      "summary": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to retrieve sensitive system information, access application data without authorization, recover stored credentials, or intercept and manipulate network communications. The following versions of Dorsett Controls InfoSca",
+      "title": "Dorsett Controls InfoScan: низка вразливостей безпеки",
+      "summary": "Вразливості InfoScan можуть призвести до розкриття системної інформації, несанкціонованого доступу до даних, відновлення збережених облікових даних або перехоплення й зміни мережевого трафіку.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-01"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-01",
+      "originalTitle": "Dorsett Controls InfoScan",
+      "originalSummary": "View CSAF Summary Successful exploitation of these vulnerabilities could allow an attacker to retrieve sensitive system information, access application data without authorization, recover stored credentials, or intercept and manipulate network communications. The following versions of Dorsett Controls InfoSca",
+      "translation": "uk-v1"
     },
     {
       "id": "91475641f52fb30dbb22",
       "source": "CISA",
-      "title": "Siemens Industrial Software Products",
-      "summary": "View CSAF Summary On October 21, 2026, the Node.js project released security updates addressing a critical vulnerability in the Brotli decoder bundled with Node.js, commonly referred to as \"Node2Shell\" (tracked as CVE-2026-111497). The vulnerability is an out-of-bounds write that could allow a remote attacker",
+      "title": "Промислове ПЗ Siemens: критична вразливість Node.js/Brotli",
+      "summary": "У компонентах Node.js виявлено критичну проблему декодера Brotli, відому як Node2Shell (CVE-2026-111497). Вона пов’язана із записом за межі буфера; оновлення безпеки опубліковані 21 жовтня 2026 року.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-04"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-04",
+      "originalTitle": "Siemens Industrial Software Products",
+      "originalSummary": "View CSAF Summary On October 21, 2026, the Node.js project released security updates addressing a critical vulnerability in the Brotli decoder bundled with Node.js, commonly referred to as \"Node2Shell\" (tracked as CVE-2026-111497). The vulnerability is an out-of-bounds write that could allow a remote attacker",
+      "translation": "uk-v1"
     },
     {
       "id": "639fac0f8727e01aec6e",
       "source": "CISA",
-      "title": "Siemens .NET Client Library for SIMATIC S7 Webserver API",
-      "summary": "View CSAF Summary .NET Client Library for SIMATIC S7 Webserver API contains multiple vulnerabilities that could allow an attacker to obtain sensitive information or write arbitrary files outside the intended download directory. Siemens has released a new version for .NET Client Library for SIMATIC S7 Webserve",
+      "title": "Siemens .NET Client Library для SIMATIC S7: уразливості безпеки",
+      "summary": "У бібліотеці .NET Client Library для SIMATIC S7 Webserver API виявлено проблеми, які можуть дозволити отримати конфіденційну інформацію або записати файли поза визначеною папкою. Siemens випустив нову версію.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-02"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-02",
+      "originalTitle": "Siemens .NET Client Library for SIMATIC S7 Webserver API",
+      "originalSummary": "View CSAF Summary .NET Client Library for SIMATIC S7 Webserver API contains multiple vulnerabilities that could allow an attacker to obtain sensitive information or write arbitrary files outside the intended download directory. Siemens has released a new version for .NET Client Library for SIMATIC S7 Webserve",
+      "translation": "uk-v1"
     },
     {
       "id": "5b5cf4f017dbab0ebb96",
       "source": "CISA",
-      "title": "Siemens SIMATIC",
-      "summary": "View CSAF Summary The products listed below contain an authentication bypass vulnerability that could allow an on-path attacker to take over the session of a legitimate user and execute arbitrary code with the privileges of the victim user. Siemens is preparing fixes and recommends specific mitigations for pr",
+      "title": "Siemens SIMATIC: можливий обхід автентифікації",
+      "summary": "У деяких продуктах SIMATIC вразливість може дозволити зловмиснику в мережевому шляху перехопити сеанс користувача й виконати код з його правами. Siemens готує виправлення та рекомендує тимчасові заходи захисту.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-08"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-08",
+      "originalTitle": "Siemens SIMATIC",
+      "originalSummary": "View CSAF Summary The products listed below contain an authentication bypass vulnerability that could allow an on-path attacker to take over the session of a legitimate user and execute arbitrary code with the privileges of the victim user. Siemens is preparing fixes and recommends specific mitigations for pr",
+      "translation": "uk-v1"
     },
     {
       "id": "4a756643b0596f8c2c40",
       "source": "CISA",
-      "title": "Siemens ROS#",
-      "summary": "View CSAF Summary ROS# before version 2.3.1 contains a code injection vulnerability that could allow an attacker that is able to pass a crafted message definition file to the user to inject arbitrary code into the generated program. Siemens has released a new version for ROS# and recommends to update to the l",
+      "title": "Siemens ROS#: ризик ін’єкції коду",
+      "summary": "У ROS# до версії 2.3.1 спеціально підготовлений файл опису повідомлення може призвести до вставлення довільного коду в згенеровану програму. Siemens рекомендує оновлення.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-06"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-06",
+      "originalTitle": "Siemens ROS#",
+      "originalSummary": "View CSAF Summary ROS# before version 2.3.1 contains a code injection vulnerability that could allow an attacker that is able to pass a crafted message definition file to the user to inject arbitrary code into the generated program. Siemens has released a new version for ROS# and recommends to update to the l",
+      "translation": "uk-v1"
     },
     {
       "id": "3b573666de1648f8a362",
       "source": "CISA",
-      "title": "Siemens Industrial Automation Software Products",
-      "summary": "View CSAF Summary On October 21, 2026, the Node.js project released security updates addressing a critical vulnerability in the Brotli decoder bundled with Node.js, commonly referred to as \"Node2Shell\" (tracked as CVE-2026-111497). The vulnerability is an out-of-bounds write that could allow a remote attacker",
+      "title": "Промислова автоматизація Siemens: проблема Node.js/Brotli",
+      "summary": "Повідомлення стосується критичної проблеми в декодері Brotli компонента Node.js — Node2Shell (CVE-2026-111497). Вразливість пов’язана із записом поза межами буфера; виправлення опубліковані 21 жовтня 2026 року.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-03"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-03",
+      "originalTitle": "Siemens Industrial Automation Software Products",
+      "originalSummary": "View CSAF Summary On October 21, 2026, the Node.js project released security updates addressing a critical vulnerability in the Brotli decoder bundled with Node.js, commonly referred to as \"Node2Shell\" (tracked as CVE-2026-111497). The vulnerability is an out-of-bounds write that could allow a remote attacker",
+      "translation": "uk-v1"
     },
     {
       "id": "3989b95c68b62c6d091e",
       "source": "CISA",
-      "title": "Siemens Simcenter Femap",
-      "summary": "View CSAF Summary Simcenter Femap is affected by an out of bounds read vulnerability that could be triggered when the application reads files in X_T format. This could allow an attacker to crash the application or execute arbitrary code. Siemens has released a new version for Simcenter Femap and recommends to",
+      "title": "Siemens Simcenter Femap: читання пам’яті поза межами буфера",
+      "summary": "Під час відкриття файлів формату X_T у Simcenter Femap може виникати читання даних за межами буфера. Це може спричинити аварійне завершення програми або виконання довільного коду. Siemens випустив нову версію.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-10"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-10",
+      "originalTitle": "Siemens Simcenter Femap",
+      "originalSummary": "View CSAF Summary Simcenter Femap is affected by an out of bounds read vulnerability that could be triggered when the application reads files in X_T format. This could allow an attacker to crash the application or execute arbitrary code. Siemens has released a new version for Simcenter Femap and recommends to",
+      "translation": "uk-v1"
     },
     {
       "id": "37902359fb183e156991",
       "source": "CISA",
-      "title": "CISA Adds One Known Exploited Vulnerability to Catalog",
-      "summary": "CISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2026-115731 Perforce Puppet Enterprise Deserialization of Untrusted Data Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and",
+      "title": "CISA додало одну експлуатовану вразливість до каталогу KEV",
+      "summary": "До каталогу KEV внесено CVE-2026-115731 у Perforce Puppet Enterprise — проблему десеріалізації недовірених даних. CISA наголошує на ризику її використання зловмисниками.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/alerts/2026/11/17/cisa-adds-one-known-exploited-vulnerability-catalog"
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/17/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "originalTitle": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "originalSummary": "CISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2026-115731 Perforce Puppet Enterprise Deserialization of Untrusted Data Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and",
+      "translation": "uk-v1"
     },
     {
       "id": "2b90ef71fb0880376bf8",
       "source": "CISA",
-      "title": "Critical Java Vulnerability Requires Immediate Patching",
-      "summary": "Purpose CISA strongly urges organizations to immediately patch the recently disclosed Oracle Java vulnerability CVE-2026-114938 . This critical memory-corruption vulnerability, known as “Java4Shell,” affects the Base64 decoder of the x86-64 HotSpot Java Virtual Machine (JVM), which is part of the Java Develop",
+      "title": "CISA закликає терміново усунути критичну вразливість Java",
+      "summary": "CISA рекомендує якнайшвидше встановити виправлення для CVE-2026-114938 (Java4Shell). Критична проблема пошкодження пам’яті стосується декодера Base64 у HotSpot JVM для x86-64.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/alerts/2026/11/17/critical-java-vulnerability-requires-immediate-patching"
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/17/critical-java-vulnerability-requires-immediate-patching",
+      "originalTitle": "Critical Java Vulnerability Requires Immediate Patching",
+      "originalSummary": "Purpose CISA strongly urges organizations to immediately patch the recently disclosed Oracle Java vulnerability CVE-2026-114938 . This critical memory-corruption vulnerability, known as “Java4Shell,” affects the Base64 decoder of the x86-64 HotSpot Java Virtual Machine (JVM), which is part of the Java Develop",
+      "translation": "uk-v1"
     },
     {
       "id": "1e3a8a0a7e3cd062f91c",
       "source": "CISA",
-      "title": "Siemens SIMATIC WinCC",
-      "summary": "View CSAF Summary Graphics Designer of SIMATIC WinCC before V8.2 contains an implicit active content execution vulnerability upon opening files, which could allow an attacker to cause arbitrary code execution on the device. Siemens is preparing fixes and recommends specific mitigations for products where fixe",
+      "title": "Siemens SIMATIC WinCC: можливе виконання коду через файл",
+      "summary": "У Graphics Designer для SIMATIC WinCC до версії V8.2 відкриття спеціального файлу може спричинити виконання активного вмісту й довільного коду. Siemens готує виправлення та рекомендує заходи зниження ризику.",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-09"
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-09",
+      "originalTitle": "Siemens SIMATIC WinCC",
+      "originalSummary": "View CSAF Summary Graphics Designer of SIMATIC WinCC before V8.2 contains an implicit active content execution vulnerability upon opening files, which could allow an attacker to cause arbitrary code execution on the device. Siemens is preparing fixes and recommends specific mitigations for products where fixe",
+      "translation": "uk-v1"
     },
     {
       "id": "aa724a9a8e5dab63e26d",
       "source": "NCSC UK",
-      "title": "Artificial intelligence and cyber intrusion",
-      "summary": "An NCSC assessment that examines current AI-enabled threat trends and projections of the threat landscape to 2028.",
+      "title": "Штучний інтелект і кібервторгнення: оцінка британського NCSC",
+      "summary": "Британський Національний центр кібербезпеки оцінює сучасні тенденції кіберзагроз із використанням штучного інтелекту та прогнозує розвиток таких загроз до 2028 року.",
       "published": "2026-11-03",
-      "url": "https://www.ncsc.gov.uk/report/artificial-intelligence-and-cyber-intrusion"
+      "url": "https://www.ncsc.gov.uk/report/artificial-intelligence-and-cyber-intrusion",
+      "originalTitle": "Artificial intelligence and cyber intrusion",
+      "originalSummary": "An NCSC assessment that examines current AI-enabled threat trends and projections of the threat landscape to 2028.",
+      "translation": "uk-v1"
     },
     {
       "id": "f937d57e3870bf005849",
@@ -160,7 +217,10 @@
       "title": "UAC-0277: ClickFix на скомпрометованих вебсайтах для поширення LUNEXSTEALER",
       "summary": "У вересні 2026 року фахівцями CERT-UA виявлено понад 100 скомпрометованих вебсайтів, до сторінок яких зловмисниками додано шкідливий JavaScript-код. Під час відвідування такого сайту користувачеві демонструвалася підроблена сторінка перевірки Cloudflare, яка під приводом підтвердження того, що відвідувач є лю",
       "published": "2026-09-30",
-      "url": "https://cert.gov.ua/article/6319983"
+      "url": "https://cert.gov.ua/article/6319983",
+      "originalTitle": "UAC-0277: ClickFix на скомпрометованих вебсайтах для поширення LUNEXSTEALER",
+      "originalSummary": "У вересні 2026 року фахівцями CERT-UA виявлено понад 100 скомпрометованих вебсайтів, до сторінок яких зловмисниками додано шкідливий JavaScript-код. Під час відвідування такого сайту користувачеві демонструвалася підроблена сторінка перевірки Cloudflare, яка під приводом підтвердження того, що відвідувач є лю",
+      "translation": "uk-v1"
     },
     {
       "id": "65c599064e5b49fbd964",
@@ -168,7 +228,10 @@
       "title": "Соціальна інженерія у виконанні UAC-0145: компрометація у процесі працевлаштування",
       "summary": "CERT-UA отримано інформацію щодо застосування просунутих методів соціальної інженерії кластером кіберзагроз UAC-0145 (субкластер UAC-0002, також відомий як Sandworm, APT44, Seashell Blizzard). Зокрема, на сайтах пошуку роботи зловмисники, попередньо вивчивши резюме кандидата, від імені ІТ компанії (наприклад,",
       "published": "2026-08-08",
-      "url": "https://cert.gov.ua/article/6318863"
+      "url": "https://cert.gov.ua/article/6318863",
+      "originalTitle": "Соціальна інженерія у виконанні UAC-0145: компрометація у процесі працевлаштування",
+      "originalSummary": "CERT-UA отримано інформацію щодо застосування просунутих методів соціальної інженерії кластером кіберзагроз UAC-0145 (субкластер UAC-0002, також відомий як Sandworm, APT44, Seashell Blizzard). Зокрема, на сайтах пошуку роботи зловмисники, попередньо вивчивши резюме кандидата, від імені ІТ компанії (наприклад,",
+      "translation": "uk-v1"
     },
     {
       "id": "b6ba84745cdc81a329c5",
@@ -176,7 +239,10 @@
       "title": "UAC-0099: LUNCHPOKE, BURNYBEAR, оновлений MATCHBOIL.V2 та використання Notepad++ 8.8.3",
       "summary": "Із середини літа 2026 року CERT-UA відзначено зміну в тактиках, техніках та процедурах кластера кіберзагроз UAC-0099.",
       "published": "2026-07-21",
-      "url": "https://cert.gov.ua/article/6318634"
+      "url": "https://cert.gov.ua/article/6318634",
+      "originalTitle": "UAC-0099: LUNCHPOKE, BURNYBEAR, оновлений MATCHBOIL.V2 та використання Notepad++ 8.8.3",
+      "originalSummary": "Із середини літа 2026 року CERT-UA відзначено зміну в тактиках, техніках та процедурах кластера кіберзагроз UAC-0099.",
+      "translation": "uk-v1"
     },
     {
       "id": "e3772337d689574c02cb",
@@ -184,7 +250,10 @@
       "title": "Вектори первинної компрометації UAC-0145 станом на липень 2026 року",
       "summary": "Дослідження кластера кіберзагроз UAC-0145 (субкластер UAC-0002, також відомий як Sandworm, APT44, Seashell Blizzard).",
       "published": "2026-07-15",
-      "url": "https://cert.gov.ua/article/6318437"
+      "url": "https://cert.gov.ua/article/6318437",
+      "originalTitle": "Вектори первинної компрометації UAC-0145 станом на липень 2026 року",
+      "originalSummary": "Дослідження кластера кіберзагроз UAC-0145 (субкластер UAC-0002, також відомий як Sandworm, APT44, Seashell Blizzard).",
+      "translation": "uk-v1"
     },
     {
       "id": "08921b83fbe6c29915b2",
@@ -192,7 +261,10 @@
       "title": "Оновлений інструментарій UAC-0057: OYSTERFRESH, OYSTERSHUCK та OYSTERBLUES",
       "summary": "Починаючи з весни 2026 року, CERT-UA фіксує численні випадки розсилання електронних листів серед державних організацій із використанням скомпрометованих облікових записів, зокрема із використанням тематики отримання сертифікатів через онлайн-платформу Prometheus.",
       "published": "2026-05-21",
-      "url": "https://cert.gov.ua/article/6315762"
+      "url": "https://cert.gov.ua/article/6315762",
+      "originalTitle": "Оновлений інструментарій UAC-0057: OYSTERFRESH, OYSTERSHUCK та OYSTERBLUES",
+      "originalSummary": "Починаючи з весни 2026 року, CERT-UA фіксує численні випадки розсилання електронних листів серед державних організацій із використанням скомпрометованих облікових записів, зокрема із використанням тематики отримання сертифікатів через онлайн-платформу Prometheus.",
+      "translation": "uk-v1"
     },
     {
       "id": "5ccf1fc7071515480c77",
@@ -200,7 +272,10 @@
       "title": "Лікарні, органи місцевого самоврядування та оператори FPV - у фокусі кластера кіберзагроз UAC-0247 (UAC-0244)",
       "summary": "CERT-UA протягом березня-квітня 2026 року зафіксовано інтенсифікацію кібератак у відношенні органів місцевого самоврядування та, насамперед, комунальних закладів охорони здоров'я, зокрема клінічних лікарень та лікарень екстреної (швидкої) медичної допомоги.",
       "published": "2026-04-15",
-      "url": "https://cert.gov.ua/article/6288271"
+      "url": "https://cert.gov.ua/article/6288271",
+      "originalTitle": "Лікарні, органи місцевого самоврядування та оператори FPV - у фокусі кластера кіберзагроз UAC-0247 (UAC-0244)",
+      "originalSummary": "CERT-UA протягом березня-квітня 2026 року зафіксовано інтенсифікацію кібератак у відношенні органів місцевого самоврядування та, насамперед, комунальних закладів охорони здоров'я, зокрема клінічних лікарень та лікарень екстреної (швидкої) медичної допомоги.",
+      "translation": "uk-v1"
     },
     {
       "id": "2f439faf9cbb7116ff4e",
@@ -208,7 +283,10 @@
       "title": "Кібератака UAC-0255 під виглядом сповіщення від CERT-UA із застосуванням програмного засобу AGEWHEEZE (CERT-UA#21075)",
       "summary": "Національною командою реагування на кіберінциденти, кібератаки, кіберзагрози CERT-UA 26-27 березня 2026 року зафіксовано випадки розповсюдження електронних листів нібито від імені CERT-UA із закликом завантажити з сервісу Files.fm захищений паролем архів (\"CERT_UA_protection_tool.zip\", \"protection_tool.zip\") ",
       "published": "2026-03-28",
-      "url": "https://cert.gov.ua/article/6288047"
+      "url": "https://cert.gov.ua/article/6288047",
+      "originalTitle": "Кібератака UAC-0255 під виглядом сповіщення від CERT-UA із застосуванням програмного засобу AGEWHEEZE (CERT-UA#21075)",
+      "originalSummary": "Національною командою реагування на кіберінциденти, кібератаки, кіберзагрози CERT-UA 26-27 березня 2026 року зафіксовано випадки розповсюдження електронних листів нібито від імені CERT-UA із закликом завантажити з сервісу Files.fm захищений паролем архів (\"CERT_UA_protection_tool.zip\", \"protection_tool.zip\") ",
+      "translation": "uk-v1"
     },
     {
       "id": "831bfddc1b1672c5cf59",
@@ -216,7 +294,10 @@
       "title": "Кібератаки UAC-0252 з використанням стілерів SHADOWSNIFF та SALATSTEALER (CERT-UA#20032)",
       "summary": "Починаючи з січня 2026 року CERT-UA фіксує непоодинокі випадки розповсюдження електронних листів, нібито від імені центральних органів виконавчої влади та обласних адміністрацій із закликом оновити мобільні застосунки широко використовуваних цивільних і військових систем.",
       "published": "2026-03-02",
-      "url": "https://cert.gov.ua/article/6287707"
+      "url": "https://cert.gov.ua/article/6287707",
+      "originalTitle": "Кібератаки UAC-0252 з використанням стілерів SHADOWSNIFF та SALATSTEALER (CERT-UA#20032)",
+      "originalSummary": "Починаючи з січня 2026 року CERT-UA фіксує непоодинокі випадки розповсюдження електронних листів, нібито від імені центральних органів виконавчої влади та обласних адміністрацій із закликом оновити мобільні застосунки широко використовуваних цивільних і військових систем.",
+      "translation": "uk-v1"
     },
     {
       "id": "652b47dce8f0f0822183",
@@ -224,7 +305,10 @@
       "title": "\"Бюлетень небезпеки\": UAC-0001 (APT28) здійснює кібератаки у відношенні України та країн ЄС з використанням експлойту CVE-2026-21509 (CERT-UA#19542)",
       "summary": "Виявлено DOC-файл \"Consultation_Topics_Ukraine(Final).doc\", що містив експлойт CVE-2026-21509 та був присвячений консультаціям Комітету постійних представників при ЄС (COREPER) по ситуації в Україні.",
       "published": "2026-02-01",
-      "url": "https://cert.gov.ua/article/6287250"
+      "url": "https://cert.gov.ua/article/6287250",
+      "originalTitle": "\"Бюлетень небезпеки\": UAC-0001 (APT28) здійснює кібератаки у відношенні України та країн ЄС з використанням експлойту CVE-2026-21509 (CERT-UA#19542)",
+      "originalSummary": "Виявлено DOC-файл \"Consultation_Topics_Ukraine(Final).doc\", що містив експлойт CVE-2026-21509 та був присвячений консультаціям Комітету постійних представників при ЄС (COREPER) по ситуації в Україні.",
+      "translation": "uk-v1"
     }
   ],
   "statistics": [
@@ -320,5 +404,6 @@
       "ok": true,
       "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
     }
-  ]
+  ],
+  "language": "uk"
 }
