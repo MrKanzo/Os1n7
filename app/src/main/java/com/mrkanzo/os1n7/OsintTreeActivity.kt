@@ -84,7 +84,8 @@ class OsintTreeActivity : Activity() {
             e("WHOIS і RDAP", "Доступна реєстраційна інформація та обмеження приватності."),
             e("IP і піддомени", "Карта власних або дозволених інтернет-ресурсів."),
             e("TLS-сертифікати", "Термін дії та шифрування з'єднання.")
-        ), "DNS і HTTPS перевірка", SecurityCenterActivity::class.java),
+        ), "DNS і HTTPS перевірка", SecurityCenterActivity::class.java,
+            "OSINT Інструменти", ToolsActivity::class.java),
         Branch("⛨", "Кіберрозвідка", "Вразливості й індикатори", listOf(
             e("Shodan та Censys", "Пошукові індекси публічної інфраструктури."),
             e("SpiderFoot", "Автоматизація збору й кореляції OSINT."),
@@ -188,9 +189,11 @@ class OsintTreeActivity : Activity() {
         root.requestApplyInsets()
 
         val saved = savedInstanceState?.getInt("branch", -1) ?: -1
-        if (saved in branches.indices) {
-            activeBranch = saved
-            showBranch(saved, false)
+        val requested = intent.getIntExtra("open_branch", -1)
+        val selected = if (saved in branches.indices) saved else requested
+        if (selected in branches.indices) {
+            activeBranch = selected
+            showBranch(selected, false)
         } else showTree()
     }
 
@@ -241,7 +244,20 @@ class OsintTreeActivity : Activity() {
         // This illustrated tree is deliberately ABOVE the scrolling category map,
         // so users see substantial moving cyber graphics immediately on entry.
         val illustratedTree = CyberTreeHeroView(this).apply {
-            contentDescription = "Живе кібердерево OSINT: світлові гілки, рухомі сигнали та основні напрями"
+            contentDescription = "Живе кібердерево OSINT: торкайся вузлів для вибору напрямку"
+            isClickable = true
+            isFocusable = true
+            onBranchSelected = { i ->
+                when (i) {
+                    0 -> animateScene { showBranch(0, true) }
+                    1 -> animateScene { showBranch(3, true) }
+                    2 -> animateScene { showBranch(1, true) }
+                    3 -> openModule(SecurityCenterActivity::class.java)
+                    4 -> animateScene { showBranch(10, true) }
+                    5 -> animateScene { showBranch(11, true) }
+                }
+            }
+            setOnClickListener { scroll.smoothScrollTo(0, dp(420)) }
         }
         layout.addView(illustratedTree, LinearLayout.LayoutParams(-1, dp(246)).apply {
             bottomMargin = dp(12)
