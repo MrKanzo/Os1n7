@@ -35,7 +35,7 @@ class ToolCatalogActivity : Activity() {
   p.addView(TextView(this).apply { text=s;textSize=size;setTextColor(color);if(bold)setTypeface(null,Typeface.BOLD);setPadding(0,dp(7),0,dp(7)) })
  }
  private fun button(p:LinearLayout,s:String,action:()->Unit) {
-  p.addView(Button(this).apply { text=s;isAllCaps=false;setOnClickListener { action() } })
+  p.addView(Os1n7Ui.button(this).apply { text=s;isAllCaps=false;setOnClickListener { action() } })
  }
  private fun page():LinearLayout {
   val root=LinearLayout(this).apply {
