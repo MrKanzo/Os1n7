@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_back">← Назад</string>
+    <string name="settings_title">Налаштування</string>
+    <string name="settings_subtitle">Мова • вигляд • приватність</string>
+    <string name="settings_language">Мова інтерфейсу</string>
+    <string name="settings_language_note">Меню та основні екрани перекладаються. Навчальні статті й частина довідок поки українською.</string>
+    <string name="settings_appearance">Вигляд і зручність</string>
+    <string name="settings_banner">Живий банер</string>
+    <string name="settings_banner_hint">Увімкнено: анімоване дерево і компаньйон. Вимкнено: класичне меню та 2D.</string>
+    <string name="settings_short_descriptions">Короткі описи</string>
+    <string name="settings_short_descriptions_hint">Менше тексту в картках головного екрана.</string>
+    <string name="settings_companion">Показувати компаньйона</string>
+    <string name="settings_companion_hint">Маленький внутрішній помічник без зовнішнього ШІ.</string>
+    <string name="settings_privacy">Приватність</string>
+    <string name="settings_privacy_detail">Вибрані налаштування зберігаються лише на телефоні. Мову можна змінити будь-коли. Звукових ефектів немає.</string>
+    <string name="settings_version">OS1N7 • версія %1$s</string>
+    <string name="settings_cancel">Скасувати</string>
+    <string name="profile_settings_button">⚙ Налаштування</string>
+</resources>
