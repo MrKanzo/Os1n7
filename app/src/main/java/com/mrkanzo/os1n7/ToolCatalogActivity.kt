@@ -10,7 +10,7 @@ import android.view.WindowInsets
 import android.widget.*
 
 /** Educational tool directory. Descriptions are not integrations with third-party services. */
-class ToolCatalogActivity : Activity() {
+class ToolCatalogActivity : Os1n7Activity() {
  private data class Tool(val name:String,val kind:String,val audience:String,val purpose:String,val practice:String,val defense:String)
  private val tools=listOf(
   Tool("SpiderFoot","Автоматизація OSINT","SOC, пентестери з дозволом, аналітики","Збирає та корелює відкриті технічні дані про домени й інфраструктуру.","Навчальний сценарій: перевір домен власного тестового проєкту й порівняй джерела.","Контролюй публічні DNS-записи, прибирай зайві дані та стеж за витоками."),
