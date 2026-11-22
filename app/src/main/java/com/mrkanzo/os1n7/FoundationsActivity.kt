@@ -82,7 +82,7 @@ class FoundationsActivity : Activity() {
   label(p,"🔎 ПРАКТИКА\n"+questions[i])
   val group=RadioGroup(this).apply { orientation=RadioGroup.VERTICAL };p.addView(group)
   answers[i].forEachIndexed { n,a ->
-   group.addView(RadioOs1n7Ui.button(this).apply { id=100+n;text=a;setTextColor(Color.WHITE);buttonTintList=android.content.res.ColorStateList.valueOf(green) })
+   group.addView(RadioButton(this).apply { id=100+n;text=a;setTextColor(Color.WHITE);buttonTintList=android.content.res.ColorStateList.valueOf(green) })
   }
   label(p,"🛡️ ЗАХИСТ\n"+defense[i])
   val cb=CheckBox(this).apply {
