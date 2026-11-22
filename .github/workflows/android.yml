@@ -5,6 +5,9 @@ on:
     paths-ignore:
       - "content/**"
       - "docs/**"
+      - "scripts/**"
+      - "tests/**"
+      - ".github/workflows/cyber-intel.yml"
       - "**/*.md"
   workflow_dispatch:
 concurrency:
