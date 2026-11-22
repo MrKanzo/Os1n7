@@ -15,7 +15,7 @@ import android.view.WindowInsets
 import android.widget.*
 
 /** Dark, native Android UI. Reuses the existing offline LessonLibrary and progress storage. */
-class CategoryLibraryActivity : Activity() {
+class CategoryLibraryActivity : Os1n7Activity() {
     private val bg = Color.rgb(15, 23, 32)
     private val panel = Color.rgb(29, 42, 52)
     private val accent = Color.rgb(98, 230, 173)
