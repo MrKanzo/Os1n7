@@ -35,6 +35,7 @@ class CompanionActivity : Os1n7Activity() {
     private lateinit var progressView: TextView
     private lateinit var progressFill: android.view.View
     private lateinit var progressTrack: FrameLayout
+    private lateinit var orbView: CompanionOrbView
     private var current: CompanionEngine.Answer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,12 +74,13 @@ class CompanionActivity : Os1n7Activity() {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
         }
-        val orb = CompanionOrbView(this).apply {
+        orbView = CompanionOrbView(this).apply {
             skin = profile.getString("companion_style", "neon") ?: "neon"
             live = profile.getBoolean("animated_home", false)
+            CompanionWardrobe.applyTo(this@CompanionActivity, this)
             contentDescription = "Компаньйон у вигляді маленького кіберстворіння"
         }
-        identity.addView(orb, LinearLayout.LayoutParams(dp(68), dp(68)))
+        identity.addView(orbView, LinearLayout.LayoutParams(dp(68), dp(68)))
         val info = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(8), 0, 0, 0)
@@ -103,6 +105,12 @@ class CompanionActivity : Os1n7Activity() {
         }
         progressTrack.addView(progressFill, FrameLayout.LayoutParams(0, dp(7)))
         card.addView(progressTrack, LinearLayout.LayoutParams(-1, dp(7)).apply { topMargin = dp(6) })
+        card.addView(Os1n7Ui.button(this).apply {
+            text = "◈ Гардероб • зміни вигляд"
+            setOnClickListener {
+                startActivity(Intent(this@CompanionActivity, CompanionWardrobeActivity::class.java))
+            }
+        }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(10) })
         body.addView(card, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(11) })
 
         body.addView(text("Запитай про OSINT або обери підказку", 14.5f, Color.WHITE, true).apply {
@@ -196,6 +204,10 @@ class CompanionActivity : Os1n7Activity() {
         super.onResume()
         if (!::progressView.isInitialized) return
         val p = CompanionEngine.progress(this)
+        if (::orbView.isInitialized) {
+            orbView.skin = profile.getString("companion_style", "neon") ?: "neon"
+            CompanionWardrobe.applyTo(this, orbView)
+        }
         progressView.text = "Lv.${p.level} • ${p.rank}   ·   ${p.xp} XP"
         val fraction = if (p.level >= 5) 1f else (p.xp % 100) / 100f
         val update = {
