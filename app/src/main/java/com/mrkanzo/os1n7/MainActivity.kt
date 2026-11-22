@@ -337,6 +337,7 @@ class MainActivity : Os1n7Activity() {
             companionDock.visibility = if (pref.getBoolean("companion_enabled", true)) View.VISIBLE else View.GONE
             companionOrb.live = pref.getBoolean("animated_home", false)
             companionOrb.skin = pref.getString("companion_style", "neon") ?: "neon"
+            CompanionWardrobe.applyTo(this, companionOrb)
             val name = pref.getString("companion_name", "Некс").orEmpty().ifBlank { "Некс" }
             companionTitle.text = "$name  •  Lv.${CompanionEngine.progress(this).level}"
         }
