@@ -29,7 +29,7 @@ import kotlin.math.PI
  * Interactive visual OSINT map. Pure Android views and Canvas, no network requests
  * or remote images. Touch a branch to explore its concepts and open existing labs.
  */
-class OsintTreeActivity : Activity() {
+class OsintTreeActivity : Os1n7Activity() {
     private val bg = Os1n7Ui.background
     private val surface = Os1n7Ui.surface
     private val mint = Os1n7Ui.accent
