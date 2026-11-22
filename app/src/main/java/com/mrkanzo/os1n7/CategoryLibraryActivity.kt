@@ -52,7 +52,7 @@ class CategoryLibraryActivity : Activity() {
             isFocusable = true
             setOnClickListener { action() }
         }
-        holder.addView(text(symbol, 26f, accent), LinearLayout.LayoutParams(dp(42), -2))
+        holder.addView(Os1n7Ui.icon(this, symbol), LinearLayout.LayoutParams(dp(44), dp(44)).apply { rightMargin = dp(12) })
         val labels = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         labels.addView(text(title, 16f, Color.WHITE, true))
         if (subtitle.isNotBlank()) {
@@ -72,6 +72,7 @@ class CategoryLibraryActivity : Activity() {
             setTextColor(if (selected) bg else accent)
             gravity = android.view.Gravity.CENTER
             setPadding(dp(16), dp(12), dp(16), dp(12))
+            minHeight = dp(48)
             background = shape(if (selected) accent else panel, 12)
             isClickable = true
             isFocusable = true
@@ -96,14 +97,7 @@ class CategoryLibraryActivity : Activity() {
             setPadding(dp(18), dp(20), dp(18), dp(12))
             setBackgroundColor(bg)
         }
-        root.addView(text("◈  OS1N7", 27f, accent, true))
-        val sub = text("OSINT LIBRARY  /  ACADEMY", 11f, muted)
-        sub.setPadding(0, dp(3), 0, dp(18))
-        root.addView(sub)
-        root.addView(text(title, 23f, Color.WHITE, true))
-        val info = text(subtitle, 13f, muted)
-        info.setPadding(0, dp(7), 0, dp(18))
-        root.addView(info)
+        Os1n7Ui.pageTitle(this, root, Os1n7Ui.categoryIcon(category ?: "бібліотека"), title, subtitle)
         root.setOnApplyWindowInsetsListener { view, insets ->
             val bars = insets.getInsets(WindowInsets.Type.systemBars())
             view.setPadding(dp(18), bars.top + dp(16), dp(18), bars.bottom + dp(12))
@@ -124,6 +118,7 @@ class CategoryLibraryActivity : Activity() {
         category = null
         screen = "categories"
         start("Напрямки дослідження", "Обирай тему, читай і закріплюй знання на практиці")
+        content.addView(button("← Головне меню", { finish() }), LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(12) })
         val search = EditText(this).apply {
             hint = "⌕  Пошук категорії або уроку"
             setSingleLine(true)
@@ -150,9 +145,8 @@ class CategoryLibraryActivity : Activity() {
                 setPadding(0, 0, 0, dp(16))
             })
             if (categories.isEmpty()) results.addView(text("Нічого не знайдено", 15f, muted))
-            categories.forEachIndexed { index, name ->
+            categories.forEach { name ->
                 val count = LessonLibrary.lessons.count { it.category == name }
-                val symbols = listOf("◎", "⌕", "◈", "◉", "◇", "⬡", "▣", "✧")
                 val holder = LinearLayout(this).apply {
                     orientation = LinearLayout.HORIZONTAL
                     gravity = android.view.Gravity.CENTER_VERTICAL
@@ -162,7 +156,7 @@ class CategoryLibraryActivity : Activity() {
                     isFocusable = true
                     setOnClickListener { category = name; tab = 0; showCategory() }
                 }
-                holder.addView(text(symbols[index % symbols.size], 27f, accent), LinearLayout.LayoutParams(dp(42), -2))
+                holder.addView(Os1n7Ui.icon(this, Os1n7Ui.categoryIcon(name)), LinearLayout.LayoutParams(dp(44), dp(44)).apply { rightMargin = dp(12) })
                 val labels = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
                 labels.addView(text(name, 17f, Color.WHITE, true))
                 labels.addView(text("$count уроків  •  Теорія / Практика / Тести", 12f, muted))
