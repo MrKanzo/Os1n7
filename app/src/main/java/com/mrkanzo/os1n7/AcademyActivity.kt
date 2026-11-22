@@ -17,6 +17,24 @@ class AcademyActivity: Os1n7Activity() {
   listOf("URL і фішинг","HTTPS шифрує з'єднання, але не гарантує чесність сайту. Домен і параметри URL потребують перевірки.","Яка ознака URL викликає підозру?","Пароль у параметрі URL","Довгий шлях","Не відкривай підозрілі посилання; вводь адресу вручну; використовуй MFA."),
   listOf("DNS і домени","A — IP-адреса, MX — поштовий сервер, TXT — текстові дані.","Який DNS-запис визначає поштовий сервер?","MX","A","Захисти реєстратора MFA; перевіряй зміни DNS; обмеж доступ до панелі.")
  )
+ private data class MiniQuiz(val question:String, val options:List<String>, val correct:Int, val why:String)
+ private val quizzes=listOf(
+  MiniQuiz(
+   "Як переконатися, що геомітка справді видалена перед публікацією?",
+   listOf("Змінити назву файлу", "Стиснути зображення без перевірки", "Перевірити EXIF саме готової копії"),
+   2, "Після експорту перевіряй метадані саме того файлу, який публікуєш."
+  ),
+  MiniQuiz(
+   "Що насправді підтверджує значок HTTPS у браузері?",
+   listOf("Сайт точно належить твоєму банку", "З'єднання захищене TLS, але чесність сайту не гарантована", "У посиланні немає небезпечних параметрів"),
+   1, "HTTPS захищає з'єднання, але не підтверджує наміри власника домену."
+  ),
+  MiniQuiz(
+   "Який запис DNS застосовують для текстових даних?",
+   listOf("TXT", "MX", "A"),
+   0, "TXT зберігає текстові дані; MX описує поштові сервери, A — IPv4-адресу."
+  )
+ )
  private var photoResult:TextView?=null
  private var activeLessonIndex:Int?=null
  private val protectionSteps=listOf(
@@ -79,10 +97,19 @@ class AcademyActivity: Os1n7Activity() {
   label(p,"01 • Навчитися\n"+l[0]+"\n"+l[1])
   label(p,"02 • Спробувати\n"+l[2])
   val practice=RadioGroup(this);p.addView(practice)
-  listOf(l[3],l[4]).forEachIndexed { n,s -> practice.addView(RadioButton(this).apply { id=100+n;text=s;setTextColor(Color.WHITE);buttonTintList=ColorStateList.valueOf(Color.rgb(98,230,173)) }) }
+  val practiceChoices = if (i == 1) listOf(l[4], l[3]) else listOf(l[3], l[4])
+  val practiceCorrect = if (i == 1) 101 else 100
+  practiceChoices.forEachIndexed { n,s -> practice.addView(RadioButton(this).apply {
+   id=100+n;text=s;setTextColor(Color.WHITE)
+   buttonTintList=ColorStateList.valueOf(Color.rgb(98,230,173))
+  }) }
   var practiced=false
   val practiceResult=label(p,"Обери відповідь.")
-  btn(p,"Перевірити") { practiced=practice.checkedRadioButtonId==100;practiceResult.text=if(practiced)"✓ Правильно" else "Спробуй ще раз" }
+  practice.setOnCheckedChangeListener { _,_ -> practiced=false }
+  btn(p,"Перевірити") {
+   practiced=practice.checkedRadioButtonId==practiceCorrect
+   practiceResult.text=if(practiced)"✓ Правильно" else "Спробуй ще раз"
+  }
   label(p,"03 • Захиститися\nВідкривай пояснення кожного кроку. Галочка означає, що ти опрацював інструкцію, а не автоматичну зміну налаштувань.")
   val checks=protectionSteps[i].mapIndexed { n,step ->
    val cb=CheckBox(this).apply {
@@ -102,16 +129,25 @@ class AcademyActivity: Os1n7Activity() {
    }
    photoResult=label(p,"Фото не вибрано. Аналіз виконується локально.")
   }
-  label(p,"04 • Тест\nЧи гарантує HTTPS, що сайт безпечний?")
+  val quizData=quizzes[i]
+  label(p,"04 • Тест\n"+quizData.question)
   val quiz=RadioGroup(this);p.addView(quiz)
-  listOf("Ні","Так").forEachIndexed { n,s -> quiz.addView(RadioButton(this).apply { id=200+n;text=s;setTextColor(Color.WHITE);buttonTintList=ColorStateList.valueOf(Color.rgb(98,230,173)) }) }
+  quizData.options.forEachIndexed { n,s -> quiz.addView(RadioButton(this).apply {
+   id=200+n;text=s;setTextColor(Color.WHITE)
+   buttonTintList=ColorStateList.valueOf(Color.rgb(98,230,173))
+  }) }
   val feedback=label(p,"Пройди всі етапи.")
   btn(p,"Завершити урок") {
    feedback.text=when {
     !practiced -> "Спочатку виконай практику."
     checks.any { !it.isChecked } -> "Опрацюй три кроки захисту."
-    quiz.checkedRadioButtonId!=200 -> "Неправильна відповідь на тест."
-    else -> { prefs.edit().putBoolean("done_$i",true).apply();"✓ Урок завершено, прогрес збережено!" }
+    quiz.checkedRadioButtonId!=200+quizData.correct -> "Неправильна відповідь на тест. Перечитай пояснення та спробуй ще."
+    else -> {
+     val alreadyDone=prefs.getBoolean("done_$i",false)
+     if(!alreadyDone) prefs.edit().putBoolean("done_$i",true).apply()
+     "✓ "+quizData.why+"\n"+if(alreadyDone) "Урок уже зарахований — повторний прогрес не нараховується."
+      else "Урок завершено, прогрес збережено!"
+    }
    }
   }
  }
