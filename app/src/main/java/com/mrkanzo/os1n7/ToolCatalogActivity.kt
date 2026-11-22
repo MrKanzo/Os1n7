@@ -47,29 +47,47 @@ class ToolCatalogActivity : Activity() {
   val scroll=ScrollView(this);val body=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL }
   scroll.addView(body);root.addView(scroll);setContentView(root);root.requestApplyInsets();return body
  }
+ private fun detailCard(p:LinearLayout, heading:String, value:String) {
+  val card=LinearLayout(this).apply {
+   orientation=LinearLayout.VERTICAL
+   setPadding(dp(16),dp(11),dp(16),dp(14))
+   background=Os1n7Ui.cardBackground(this@ToolCatalogActivity)
+  }
+  card.addView(Os1n7Ui.sectionHeading(this,heading))
+  card.addView(TextView(this).apply {
+   text=value;textSize=14.5f;setTextColor(Color.WHITE);setLineSpacing(dp(3).toFloat(),1f)
+  })
+  p.addView(card,LinearLayout.LayoutParams(-1,-2).apply { bottomMargin=dp(9) })
+ }
  private fun card(p:LinearLayout,tool:Tool,i:Int) {
   val item=LinearLayout(this).apply {
-   orientation=LinearLayout.VERTICAL;setPadding(dp(15),dp(13),dp(15),dp(13))
-   background=GradientDrawable().apply { setColor(panel);cornerRadius=dp(14).toFloat() }
+   orientation=LinearLayout.VERTICAL;setPadding(dp(13),dp(11),dp(13),dp(11))
+   background=Os1n7Ui.cardBackground(this@ToolCatalogActivity, interactive=true)
    isClickable=true;isFocusable=true;setOnClickListener { detail(i) }
   }
   val heading=LinearLayout(this).apply { orientation=LinearLayout.HORIZONTAL;gravity=android.view.Gravity.CENTER_VERTICAL }
-  heading.addView(Os1n7Ui.icon(this,Os1n7Ui.toolIcon(tool.name)),LinearLayout.LayoutParams(dp(43),dp(43)).apply { rightMargin=dp(12) })
-  heading.addView(TextView(this).apply { text=tool.name+"  ›";textSize=18f;setTextColor(green);setTypeface(null,Typeface.BOLD) })
+  heading.addView(Os1n7Ui.icon(this,Os1n7Ui.toolIcon(tool.name)),LinearLayout.LayoutParams(dp(40),dp(40)).apply { rightMargin=dp(12) })
+  heading.addView(TextView(this).apply {
+   text=tool.name;textSize=16.5f;setTextColor(Color.WHITE);setTypeface(null,Typeface.BOLD)
+  },LinearLayout.LayoutParams(0,-2,1f))
+  heading.addView(TextView(this).apply { text="›";textSize=23f;setTextColor(green) })
   item.addView(heading)
-  text(item,tool.kind+"  •  "+tool.audience,13f,Color.LTGRAY)
-  p.addView(item,LinearLayout.LayoutParams(-1,-2).apply { bottomMargin=dp(10) })
+  text(item,tool.kind+"  •  "+tool.audience,12.5f,Os1n7Ui.muted)
+  p.addView(item,LinearLayout.LayoutParams(-1,-2).apply { bottomMargin=dp(7) })
  }
  override fun onCreate(savedInstanceState:Bundle?) { super.onCreate(savedInstanceState);listing() }
  private fun listing(query:String="") {
   selected=null
   val p=page();Os1n7Ui.pageTitle(this,p,"▦","Каталог OSINT","12 інструментів • призначення • практика • захист")
   button(p,"← Головне меню"){finish()}
-  text(p,"Це довідник, а не вбудовані копії сторонніх сервісів. Для реальних перевірок використовуй лише свої або дозволені ресурси.",14f)
+  text(p,"Довідник інструментів. Перевіряй власні ресурси або працюй із дозволом.",13f,Os1n7Ui.muted)
   val input=EditText(this).apply {
-   hint="⌕ Пошук інструмента";setSingleLine(true);setTextColor(Color.WHITE);setHintTextColor(Color.LTGRAY)
+   hint="⌕ Пошук інструмента";setSingleLine(true);setTextColor(Color.WHITE)
+   setHintTextColor(Os1n7Ui.muted);textSize=14f
+   setPadding(dp(14),dp(11),dp(14),dp(11))
+   background=Os1n7Ui.inputBackground(this@ToolCatalogActivity)
    setText(query)
-  };p.addView(input)
+  };p.addView(input,LinearLayout.LayoutParams(-1,-2).apply { bottomMargin=dp(12) })
   val results=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL };p.addView(results)
   fun draw(q:String) {
    results.removeAllViews()
@@ -89,11 +107,11 @@ class ToolCatalogActivity : Activity() {
   val t=tools[i];val p=page()
   button(p,"← До каталогу"){listing()}
   Os1n7Ui.pageTitle(this,p,Os1n7Ui.toolIcon(t.name),t.name,t.kind)
-  text(p,"🎯 ЩО РОБИТЬ\n"+t.purpose)
-  text(p,"👥 ХТО ВИКОРИСТОВУЄ\n"+t.audience)
-  text(p,"🔎 ПРАКТИКА\n"+t.practice)
-  text(p,"🛡️ ЯК ЗАХИСТИТИСЯ\n"+t.defense)
-  text(p,"ℹ️ Інформаційна картка. Цей екран не запускає "+t.name+" і не звертається до сторонніх серверів.",13f,Color.LTGRAY)
+  detailCard(p,"🎯 Що робить",t.purpose)
+  detailCard(p,"👥 Хто використовує",t.audience)
+  detailCard(p,"🔎 Практика",t.practice)
+  detailCard(p,"🛡 Як захиститися",t.defense)
+  text(p,"Інформаційна картка. OS1N7 не запускає "+t.name+" і не передає запити сторонньому сервісу.",12.5f,Os1n7Ui.muted)
 
  }
  @Deprecated("Legacy Activity back navigation")
