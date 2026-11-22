@@ -41,6 +41,13 @@ Not "a bigger pile of tools." The distinguishing design thesis is to guide users
 
 This list demonstrates *what the references do*, not that they lack any unmentioned capability. Features may change. Avoid superiority or exclusivity claims without broader market verification.
 
+### Community sanity-check (qualitative, not representative market research)
+
+- A public OSINT discussion asks specifically about an end-to-end workflow combining collection, visualization, analysis and case management: https://www.reddit.com/r/OSINT/comments/1odizjv/osint_tool_for_endtoend_workflow/ . This supports focusing on *workflow continuity*, not adding isolated tools.
+- A local-first OSINT investigation workspace called SIERRA was already described by its author: https://www.reddit.com/r/osinttools/comments/1t70q7u/i_built_sierra_a_localfirst_workspace_for_mapping/ . **Therefore local-first graphs alone cannot be claimed as unique**.
+- In a TryHackMe discussion, some learners criticize daily streak pressure: https://www.reddit.com/r/tryhackme/comments/1sgu80c/i_wanna_learn_5_days_a_week_only_and_streaks_are/ . Avoid forced daily streaks or penalizing missed days.
+- Community advice often emphasizes method before tools: https://www.reddit.com/r/osinttools/comments/1xu2k0u/what_osint_skills_are_worth_learning_before/ . These are anecdotes, not quantified user research.
+
 ## 3. Evidence-based OS1N7 snapshot
 
 Current baseline inspected in the repository:
