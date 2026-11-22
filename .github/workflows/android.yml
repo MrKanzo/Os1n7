@@ -62,7 +62,7 @@ jobs:
           TAG="v$VERSION"
           APK="app/build/outputs/apk/release/app-release.apk"
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "$APK" --clobber
+            echo "Release $TAG already exists; preserving its published APK."
           else
             gh release create "$TAG" "$APK" --title "OS1N7 $TAG" --notes "Signed Android release APK" --target "$GITHUB_SHA"
           fi
