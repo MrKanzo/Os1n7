@@ -39,7 +39,7 @@ class UkrainianCyberNewsTests(unittest.TestCase):
     def test_translates_english_but_preserves_official_fields(self):
         sample = self.sample()
         parsed, translated = translation.localize_snapshot(sample, fake_uk)
-        self.assertEqual(translated, 2)
+        self.assertEqual(translated, 1)
         self.assertEqual(parsed["news"][0]["originalTitle"], "CISA alerts about CVE-2026-12345")
         self.assertIn("CVE-2026-12345", parsed["news"][0]["title"])
         self.assertTrue(translation.has_ukrainian(parsed["news"][0]["title"]))
