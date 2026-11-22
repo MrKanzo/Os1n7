@@ -460,7 +460,7 @@ class MainActivity : Activity() {
         val academyPrefs = getSharedPreferences("academy", Context.MODE_PRIVATE)
         val labPrefs = getSharedPreferences("os1n7_lab", Context.MODE_PRIVATE)
         val casePrefs = getSharedPreferences("os1n7_cases", Context.MODE_PRIVATE)
-        val total = LessonLibrary.lessons.size + 14
+        val total = LessonLibrary.lessons.size + 15
         val progress = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(17), dp(17), dp(17), dp(17))
@@ -491,7 +491,7 @@ class MainActivity : Activity() {
             val library = LessonLibrary.lessons.count { libraryPrefs.getBoolean("practice:" + it.title, false) }
             val academy = (0..2).count { academyPrefs.getBoolean("done_" + it, false) }
             val lab = listOf("mission_phishing", "mission_footprint").count { labPrefs.getBoolean(it, false) }
-            val cases = listOf("case001", "case001_defense").count { casePrefs.getBoolean(it, false) }
+            val cases = listOf("case001", "case001_defense", "case001_mirror").count { casePrefs.getBoolean(it, false) }
             val foundationsPrefs = getSharedPreferences("os1n7_foundations", Context.MODE_PRIVATE)
             val foundations = (0..6).count { foundationsPrefs.getBoolean("step_" + it, false) }
             val finished = library + academy + lab + cases + foundations
