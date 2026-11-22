@@ -216,7 +216,25 @@ def generate(previous=None):
             news.extend(item for item in old_news if isinstance(item, dict) and item.get("source") == source)
             states.append({"name": source, "ok": False, "url": feed})
             print(f"WARNING {source}: {exc}")
-    news = sorted({item["id"]: item for item in news if item.get("id")}.values(),
+    # Reuse verified Ukrainian headlines on the next 6-hour update.
+    # An identical official headline/description should never consume translation work twice.
+    previous_by_id = {entry["id"]: entry for entry in old_news
+                      if isinstance(entry, dict) and entry.get("id")}
+    localized = []
+    for item in news:
+        old = previous_by_id.get(item.get("id"))
+        if (old and old.get("translation") == "uk-v1"
+                and old.get("originalTitle") == item.get("title")
+                and old.get("originalSummary") == item.get("summary")):
+            item.update({
+                "title": old["title"],
+                "summary": old["summary"],
+                "originalTitle": old["originalTitle"],
+                "originalSummary": old["originalSummary"],
+                "translation": "uk-v1",
+            })
+        localized.append(item)
+    news = sorted({item["id"]: item for item in localized if item.get("id")}.values(),
                   key=lambda item: (item["published"], item["id"]), reverse=True)[:42]
     old_statistics = previous.get("statistics", [])
     old_kev = next((item for item in old_statistics if isinstance(item, dict) and item.get("id") == "cisa-kev"), None)
