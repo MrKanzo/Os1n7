@@ -104,7 +104,7 @@ class ServerLibraryActivity : Activity() {
             view.setPadding(dp(18), bars.top + dp(16), dp(18), bars.bottom + dp(12))
             insets
         }
-        root.addView(Button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
+        root.addView(Os1n7Ui.button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
         root.addView(text("◈  OS1N7", 27f, accent, true))
         val subtitle = text("СЕРВЕРНА БІБЛІОТЕКА", 12f, muted)
         subtitle.setPadding(0, dp(4), 0, dp(18))
@@ -113,7 +113,7 @@ class ServerLibraryActivity : Activity() {
         help = text("Хмарна бібліотека: оновлення статей із GitHub без завантаження APK.", 13f, muted)
         help.setPadding(0, dp(9), 0, dp(12))
         root.addView(help)
-        sourceMode = Button(this).apply {
+        sourceMode = Os1n7Ui.button(this).apply {
             isAllCaps = false
             setOnClickListener {
                 generation++
@@ -138,7 +138,7 @@ class ServerLibraryActivity : Activity() {
             setText(prefs.getString("base_url", "http://127.0.0.1:8765"))
         }
         root.addView(address)
-        sync = Button(this).apply {
+        sync = Os1n7Ui.button(this).apply {
             text = "↻  Синхронізувати"
             isAllCaps = false
             setTextColor(bg)
