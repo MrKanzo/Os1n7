@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 /** Passive domain DNS lookup and on-device privacy checklist. */
-class SecurityCenterActivity:Activity() {
+class SecurityCenterActivity: Os1n7Activity() {
  private var requestGeneration=0
  private val green=Color.rgb(98,230,173)
  private val bg=Color.rgb(15,23,32)
