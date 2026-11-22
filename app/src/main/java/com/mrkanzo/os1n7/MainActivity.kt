@@ -249,6 +249,8 @@ class MainActivity : Activity() {
         }
         heading.addView(label("OS1N7", 23f, Color.WHITE, true))
         heading.addView(label("OSINT • Цифрова бібліотека", 12f, muted))
+        val installedVersion = packageManager.getPackageInfo(packageName, 0).versionName ?: "?"
+        heading.addView(label("Версія: $installedVersion", 11f, green))
         topBar.addView(heading, LinearLayout.LayoutParams(0, -2, 1f))
         val cloudShortcut = label("☁", 23f, muted).apply {
             gravity = android.view.Gravity.CENTER
@@ -281,6 +283,12 @@ class MainActivity : Activity() {
             topMargin = dp(16)
             bottomMargin = dp(14)
         })
+        if (!ValueAnimator.areAnimatorsEnabled()) {
+            body.addView(label(
+                "⚠ Анімації вимкнено у налаштуваннях Android — картинка лишається нерухомою.",
+                12f, muted
+            ).apply { setPadding(0, 0, 0, dp(10)) })
+        }
 
         body.addView(label("Досліджуй. Перевіряй. Навчайся.", 22f, Color.WHITE, true))
         val description = label("Усі матеріали в одному місці — без повторів і зайвих екранів.", 14f, muted)
