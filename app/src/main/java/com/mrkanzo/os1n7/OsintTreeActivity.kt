@@ -204,8 +204,11 @@ class OsintTreeActivity : Activity() {
     }
 
     private fun goBack() {
-        if (activeBranch == null) finish()
-        else animateScene { showTree() }
+        if (activeBranch == null) {
+            finish()
+            @Suppress("DEPRECATION")
+            overridePendingTransition(R.anim.os1n7_return_enter, R.anim.os1n7_return_exit)
+        } else animateScene { showTree() }
     }
 
     private fun showTree() {
@@ -384,7 +387,7 @@ class OsintTreeActivity : Activity() {
     private fun openModule(activity: Class<out Activity>) {
         startActivity(Intent(this, activity))
         @Suppress("DEPRECATION")
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        overridePendingTransition(R.anim.os1n7_enter, R.anim.os1n7_exit)
     }
 
     override fun onPause() {
@@ -394,7 +397,7 @@ class OsintTreeActivity : Activity() {
 
     @Deprecated("Legacy activity back navigation")
     override fun onBackPressed() {
-        if (activeBranch != null) goBack() else super.onBackPressed()
+        goBack()
     }
 
     private inner class BranchCanvas(
