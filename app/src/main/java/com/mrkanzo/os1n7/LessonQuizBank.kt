@@ -238,13 +238,13 @@ object LessonQuizBank {
         if (known.toSet() != bank.keys) errors.add("Lesson/quiz catalogue mismatch")
         val seen = mutableSetOf<String>()
         bank.forEach { (title, questions) ->
-            if (questions.size != 2) errors.add("$"+"title: expected 2 questions")
+            if (questions.size != 2) errors.add("$title: expected 2 questions")
             questions.forEach { item ->
-                if (!seen.add(item.prompt.trim().lowercase())) errors.add("Repeated question: $"+"{item.prompt}")
+                if (!seen.add(item.prompt.trim().lowercase())) errors.add("Repeated question: ${item.prompt}")
                 if (item.options.size != 4 || item.options.distinct().size != 4)
-                    errors.add("Repeated or missing options: $"+"{item.prompt}")
+                    errors.add("Repeated or missing options: ${item.prompt}")
                 if (item.correctIndex !in item.options.indices)
-                    errors.add("Invalid answer: $"+"{item.prompt}")
+                    errors.add("Invalid answer: ${item.prompt}")
             }
         }
         return errors
