@@ -265,6 +265,23 @@ class MainActivity : Activity() {
         })
         body.addView(topBar)
 
+        // A real, always-visible OSINT cyber-tree visual — not a static icon.
+        // Drawn locally with Canvas, it animates while this Activity is visible.
+        val animatedTree = CyberTreeHeroView(this).apply {
+            isClickable = true
+            isFocusable = true
+            contentDescription = "Живе дерево OSINT. Відкрити інтерактивні 13 напрямків"
+            setOnClickListener {
+                startActivity(Intent(this@MainActivity, OsintTreeActivity::class.java))
+                @Suppress("DEPRECATION")
+                overridePendingTransition(R.anim.os1n7_enter, R.anim.os1n7_exit)
+            }
+        }
+        body.addView(animatedTree, LinearLayout.LayoutParams(-1, dp(238)).apply {
+            topMargin = dp(16)
+            bottomMargin = dp(14)
+        })
+
         body.addView(label("Досліджуй. Перевіряй. Навчайся.", 22f, Color.WHITE, true))
         val description = label("Усі матеріали в одному місці — без повторів і зайвих екранів.", 14f, muted)
         description.setPadding(0, dp(8), 0, dp(23))
