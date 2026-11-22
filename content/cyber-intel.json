@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "",
+  "news": [],
+  "statistics": [
+    {
+      "id": "fbi-ic3",
+      "title": "FBI IC3: заяви про інтернет-злочини, США",
+      "unit": "звернень",
+      "description": "Офіційні річні звернення до FBI IC3, зокрема про шахрайство й інші кіберзлочини. Це НЕ кількість підтверджених успішних зламів. Дані 2020–2025 звірено зі щорічними звітами; нові роки додаються після перевірки звіту.",
+      "source": "FBI Internet Crime Complaint Center (IC3)",
+      "sourceUrl": "https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf",
+      "sourceUpdated": "2026-04-06",
+      "years": [
+        {
+          "year": 2020,
+          "count": 791790
+        },
+        {
+          "year": 2021,
+          "count": 847376
+        },
+        {
+          "year": 2022,
+          "count": 800944
+        },
+        {
+          "year": 2023,
+          "count": 880418
+        },
+        {
+          "year": 2024,
+          "count": 859532
+        },
+        {
+          "year": 2025,
+          "count": 1008597
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "name": "CERT-UA",
+      "ok": false,
+      "url": "https://cert.gov.ua/api/articles/rss"
+    },
+    {
+      "name": "CISA",
+      "ok": false,
+      "url": "https://www.cisa.gov/cybersecurity-advisories/all.xml"
+    },
+    {
+      "name": "NCSC UK",
+      "ok": false,
+      "url": "https://www.ncsc.gov.uk/api/1/services/v1/report-rss-feed.xml"
+    },
+    {
+      "name": "CISA KEV",
+      "ok": false,
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+    }
+  ]
+}
