@@ -53,15 +53,18 @@ class ToolCatalogActivity : Activity() {
    background=GradientDrawable().apply { setColor(panel);cornerRadius=dp(14).toFloat() }
    isClickable=true;isFocusable=true;setOnClickListener { detail(i) }
   }
-  text(item,tool.name+"   ›",18f,green,true)
+  val heading=LinearLayout(this).apply { orientation=LinearLayout.HORIZONTAL;gravity=android.view.Gravity.CENTER_VERTICAL }
+  heading.addView(Os1n7Ui.icon(this,Os1n7Ui.toolIcon(tool.name)),LinearLayout.LayoutParams(dp(43),dp(43)).apply { rightMargin=dp(12) })
+  heading.addView(TextView(this).apply { text=tool.name+"  ›";textSize=18f;setTextColor(green);setTypeface(null,Typeface.BOLD) })
+  item.addView(heading)
   text(item,tool.kind+"  •  "+tool.audience,13f,Color.LTGRAY)
   p.addView(item,LinearLayout.LayoutParams(-1,-2).apply { bottomMargin=dp(10) })
  }
  override fun onCreate(savedInstanceState:Bundle?) { super.onCreate(savedInstanceState);listing() }
  private fun listing(query:String="") {
   selected=null
-  val p=page();text(p,"◈ КАТАЛОГ OSINT",26f,green,true)
-  text(p,"12 інструментів • призначення • користувачі • практика • захист",13f,Color.LTGRAY)
+  val p=page();Os1n7Ui.pageTitle(this,p,"▦","Каталог OSINT","12 інструментів • призначення • практика • захист")
+  button(p,"← Головне меню"){finish()}
   text(p,"Це довідник, а не вбудовані копії сторонніх сервісів. Для реальних перевірок використовуй лише свої або дозволені ресурси.",14f)
   val input=EditText(this).apply {
    hint="⌕ Пошук інструмента";setSingleLine(true);setTextColor(Color.WHITE);setHintTextColor(Color.LTGRAY)
@@ -85,14 +88,13 @@ class ToolCatalogActivity : Activity() {
   selected=i
   val t=tools[i];val p=page()
   button(p,"← До каталогу"){listing()}
-  text(p,t.name,26f,green,true)
-  text(p,t.kind,14f,Color.LTGRAY)
+  Os1n7Ui.pageTitle(this,p,Os1n7Ui.toolIcon(t.name),t.name,t.kind)
   text(p,"🎯 ЩО РОБИТЬ\n"+t.purpose)
   text(p,"👥 ХТО ВИКОРИСТОВУЄ\n"+t.audience)
   text(p,"🔎 ПРАКТИКА\n"+t.practice)
   text(p,"🛡️ ЯК ЗАХИСТИТИСЯ\n"+t.defense)
   text(p,"ℹ️ Інформаційна картка. Цей екран не запускає "+t.name+" і не звертається до сторонніх серверів.",13f,Color.LTGRAY)
-  button(p,"← Назад до списку"){listing()}
+
  }
  @Deprecated("Legacy Activity back navigation")
  override fun onBackPressed() { if(selected!=null)listing() else super.onBackPressed() }
