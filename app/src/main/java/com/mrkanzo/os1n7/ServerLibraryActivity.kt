@@ -103,6 +103,8 @@ class ServerLibraryActivity : Activity() {
         sourceMode = Button(this).apply {
             isAllCaps = false
             setOnClickListener {
+                generation++
+                sync.isEnabled = true
                 cloud = !cloud
                 prefs.edit().putBoolean("use_cloud", cloud).apply()
                 updateSource()
@@ -235,7 +237,7 @@ class ServerLibraryActivity : Activity() {
                 }
             } catch (e: Exception) {
                 runOnUiThread {
-                    if (request != generation || isFinishing || isDestroyed) return@runOnUiThread
+                    if (request != generation || cloud != modeCloud || isFinishing || isDestroyed) return@runOnUiThread
                     val cached = prefs.contains(snapshotKey())
                     status.text = if (cached) "○ Немає з’єднання • показано офлайн-копію" else
                         if (modeCloud) "○ GitHub недоступний • перевір інтернет" else "○ Сервер недоступний • запусти server.py у Termux"
