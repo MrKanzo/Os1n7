@@ -10,6 +10,16 @@ The cloud library opens **Cyber Intelligence** through "Кіберновини" 
 
 Each item retains its original title, published date, source, short feed description and link. In-feed links are accepted only for the expected official HTTPS domain. The app does not invent article summaries or translate official article text. Failed feeds retain their last good items, which must continue to show their original dates.
 
+## Ukrainian localization (no APK update for new news)
+The published JSON uses Ukrainian `title` and `summary` fields so existing OS1N7 app versions render Ukrainian news automatically. `originalTitle` and `originalSummary` retain the exact RSS metadata for auditability; original HTTPS source URLs and dates do not change.
+
+- CERT-UA advisories already published in Ukrainian remain in the source language.
+- English CISA and NCSC UK headlines/short descriptions are localized to Ukrainian with an offline Argos Translate en→uk model on GitHub Actions; the first snapshot was also editorially translated.
+- No user account or paid translator API is needed, and no article text is sent to an online translation provider.
+- Previously translated items are reused, instead of repeatedly rephrasing the same official headline every 6 hours.
+- If automatic translation cannot run, the workflow fails before publishing new English-language headlines; the last approved Ukrainian snapshot remains available.
+- **Machine translations can contain errors.** Treat them as short informational summaries and follow the official link for legally/technically significant wording, CVE IDs, patch instructions, and product versions.
+
 ## Yearly statistics — read these labels carefully
 - **CISA KEV:** Number of vulnerabilities **added to the Known Exploited Vulnerabilities catalog in each calendar year** (`dateAdded`), computed from CISA's official GitHub mirror: https://github.com/cisagov/kev-data and https://www.cisa.gov/known-exploited-vulnerabilities-catalog . An exploited vulnerability is not a confirmed count of compromises or breached systems.
 - **FBI IC3:** Number of **complaints alleging internet crime received by FBI IC3**, not confirmed hacks. Source: FBI Internet Crime Reports: https://www.ic3.gov/annualreport/reports . Verified historic snapshot (2020–2025) is maintained in `scripts/sync_cyber_intel.py`. Year 2025: 1,008,597 complaints (FBI press release April 6, 2026). 2024: 859,532; 2023: 880,418; 2022: 800,944; 2021: 847,376; 2020: 791,790. This series is updated upon a new, independently verified FBI report; it is not automatically scraped.
