@@ -196,9 +196,15 @@ class GraphActivity : Activity() {
   return b.toString()
  }
  private fun copyReport() {
-  val clip=getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-  clip.setPrimaryClip(ClipData.newPlainText("OS1N7 Graph Report",report()))
-  Toast.makeText(this,"Звіт скопійовано",Toast.LENGTH_SHORT).show()
+  android.app.AlertDialog.Builder(this)
+   .setTitle("Скопіювати звіт?")
+   .setMessage("До буфера обміну Android потрапить увесь звіт, включно з іменами, нотатками та джерелами. Інші застосунки або попередній перегляд буфера можуть зробити його видимим. Не копіюй персональні дані сторонніх осіб без законної підстави.")
+   .setNegativeButton("Скасувати", null)
+   .setPositiveButton("Скопіювати") { _, _ ->
+    val clip=getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    clip.setPrimaryClip(ClipData.newPlainText("OS1N7 Graph Report", report()))
+    Toast.makeText(this,"Звіт скопійовано",Toast.LENGTH_SHORT).show()
+   }.show()
  }
  private fun confirmDelete() {
   android.app.AlertDialog.Builder(this).setTitle("Видалити справу назавжди?")
