@@ -20,6 +20,38 @@ object CompanionEngine {
         val lessonTitle: String? = null
     )
 
+    private fun deeper(level: Int, kind: String): String = when (kind) {
+        "catalog" -> when {
+            level >= 5 -> "\n\nПоглиблено: порівняй результати двох інструментів і опиши обмеження у звіті."
+            level >= 4 -> "\n\nАналіз: відділи первинні докази від автоматичних припущень."
+            level >= 3 -> "\n\nПрактика: підготуй навчальний сценарій для власного тестового домену."
+            level >= 2 -> "\n\nПорада: починай з опису мети та дозволених джерел."
+            else -> ""
+        }
+        "tools" -> when {
+            level >= 5 -> "\n\nПоглиблено: порівняй DNS, URL та EXIF як різні типи доказів."
+            level >= 4 -> "\n\nАналіз: поясни, які дані підтверджені, а які — лише ознаки ризику."
+            level >= 3 -> "\n\nПрактика: пройди дві симуляції та порівняй результати."
+            level >= 2 -> "\n\nПорада: почни з тестового example.com."
+            else -> ""
+        }
+        "security" -> when {
+            level >= 5 -> "\n\nПоглиблено: склади власний план регулярної перевірки ризиків."
+            level >= 4 -> "\n\nАналіз: визнач, які дані розкриває кожне налаштування приватності."
+            level >= 3 -> "\n\nПрактика: виконай три пункти Privacy Shield на своєму пристрої."
+            level >= 2 -> "\n\nПорада: перевір 2FA й дозволи застосунків."
+            else -> ""
+        }
+        "case" -> when {
+            level >= 5 -> "\n\nПоглиблено: перевір альтернативне пояснення кожного зв’язку."
+            level >= 4 -> "\n\nАналіз: познач сильні та слабкі докази."
+            level >= 3 -> "\n\nПрактика: збери три докази та запиши, чого бракує."
+            level >= 2 -> "\n\nПорада: порівнюй джерела й час публікації."
+            else -> ""
+        }
+        else -> ""
+    }
+
     val prompts = listOf(
         "З чого почати?", "Підкажи урок", "Як перевіряти джерела?",
         "Які інструменти?", "Як захиститися?", "Мій рівень"
@@ -60,24 +92,24 @@ object CompanionEngine {
         }
 
         if (listOf("інструмент", "spiderfoot", "maltego", "shodan", "censys", "каталог").any { q.contains(it) }) {
-            val advanced = if (progress.level >= 3) "\n\nРекомендація: спочатку запиши мету, обери лише дозволені джерела й збережи докази." else ""
+            val advanced = deeper(progress.level, "catalog")
             return Answer("У каталозі OS1N7 є довідки про SpiderFoot, Maltego, Shodan та інші інструменти. " +
                 "Я підкажу їх призначення, але не запускаю зовнішні сервіси.$advanced",
                 ToolCatalogActivity::class.java)
         }
         if (listOf("dns", "url", "exif", "симулятор").any { q.contains(it) }) {
             return Answer("В OSINT Інструментах є вбудовані вправи з DNS, URL та EXIF. " +
-                "Вони навчають аналізу на тестових даних і не виконують прихованих перевірок.",
-                ToolsActivity::class.java)
+                "Вони навчають аналізу на тестових даних і не виконують прихованих перевірок." +
+                    deeper(progress.level, "tools"), ToolsActivity::class.java)
         }
         if (listOf("граф", "справ", "case").any { q.contains(it) }) {
-            return Answer("Спробуй навчальні Case Files: зберігай докази, перевіряй зв’язки й не плутай припущення з фактами.",
-                CaseFilesActivity::class.java)
+            return Answer("Спробуй навчальні Case Files: зберігай докази, перевіряй зв’язки й не плутай припущення з фактами." +
+                deeper(progress.level, "case"), CaseFilesActivity::class.java)
         }
         if (listOf("захист", "безпек", "приват", "парол", "2fa", "mfa").any { q.contains(it) }) {
             return Answer("У Security Center можна перевірити власний домен та пройти локальний чекліст приватності. " +
-                "Не публікуй персональні дані й використовуй двофакторний захист.",
-                SecurityCenterActivity::class.java)
+                "Не публікуй персональні дані й використовуй двофакторний захист." +
+                    deeper(progress.level, "security"), SecurityCenterActivity::class.java)
         }
 
         val lesson: Lesson? = when {
