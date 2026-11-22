@@ -37,20 +37,34 @@ class AcademyActivity:Activity() {
   )
  )
  private val prefs by lazy { getSharedPreferences("academy",Context.MODE_PRIVATE) }
+ private fun dp(value:Int)=(value*resources.displayMetrics.density).toInt()
  private fun page():LinearLayout {
-  val root=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL;setBackgroundColor(Color.rgb(15,23,32));setPadding(24,24,24,24) }
+  val root=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL;setBackgroundColor(Color.rgb(15,23,32));setPadding(dp(16),dp(12),dp(16),dp(16)) }
   root.setOnApplyWindowInsetsListener { v,ins ->
    val bars=ins.getInsets(WindowInsets.Type.systemBars())
-   v.setPadding(24,bars.top+24,24,bars.bottom+24);ins
+   v.setPadding(dp(16),bars.top+dp(12),dp(16),bars.bottom+dp(16));ins
   }
   val body=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL }
   val scroll=ScrollView(this);scroll.addView(body);root.addView(scroll);setContentView(root);root.requestApplyInsets()
   return body
  }
  private fun label(p:LinearLayout,s:String):TextView {
-  val v=TextView(this).apply { text=s;textSize=17f;setTextColor(Color.WHITE);setPadding(4,15,4,15) };p.addView(v);return v
+  val section=s.startsWith("01 •")||s.startsWith("02 •")||s.startsWith("03 •")||s.startsWith("04 •")
+  val v=TextView(this).apply {
+   text=s;textSize=if(section)15.5f else 14f
+   setTextColor(if(section)Color.WHITE else Os1n7Ui.muted)
+   setLineSpacing(dp(3).toFloat(),1f)
+   setPadding(dp(if(section)15 else 4),dp(12),dp(if(section)15 else 4),dp(12))
+   if(section)background=Os1n7Ui.cardBackground(this@AcademyActivity)
+  }
+  p.addView(v,LinearLayout.LayoutParams(-1,-2).apply { bottomMargin=dp(if(section)8 else 3) })
+  return v
  }
- private fun btn(p:LinearLayout,s:String,action:()->Unit) { p.addView(Os1n7Ui.button(this).apply { text=s;isAllCaps=false;setOnClickListener { action() } }) }
+ private fun btn(p:LinearLayout,s:String,action:()->Unit) {
+  p.addView(Os1n7Ui.button(this).apply {
+   text=s;setOnClickListener { action() }
+  },LinearLayout.LayoutParams(-1,-2).apply { bottomMargin=dp(6) })
+ }
  override fun onCreate(savedInstanceState:Bundle?) { super.onCreate(savedInstanceState);home() }
  private fun home() {
   activeLessonIndex=null
