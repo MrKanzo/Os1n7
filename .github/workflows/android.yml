@@ -2,7 +2,14 @@ name: Build Android APK
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "content/**"
+      - "docs/**"
+      - "**/*.md"
   workflow_dispatch:
+concurrency:
+  group: android-build-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,8 +24,19 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Build debug APK
-        run: gradle :app:assembleDebug --no-daemon
+      - name: Build debug APK (capture errors)
+        run: |
+          set -o pipefail
+          gradle :app:assembleDebug --no-daemon --stacktrace --console=plain 2>&1 | tee "$RUNNER_TEMP/os1n7-gradle.log"
+      - name: Summarize Gradle failure
+        if: failure()
+        run: |
+          echo "## OS1N7 Android build failed" >> "$GITHUB_STEP_SUMMARY"
+          echo "Look in **Build debug APK (capture errors)** for Kotlin `e:` lines or **What went wrong**." >> "$GITHUB_STEP_SUMMARY"
+          echo 'Error excerpts:' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          grep -E '(^e: |^> |^\* What went wrong:|Compilation error|FAILURE:|Unresolved reference|error: )' "$RUNNER_TEMP/os1n7-gradle.log" | tail -35 >> "$GITHUB_STEP_SUMMARY" || true
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         with:
           name: Os1n7-debug-apk
