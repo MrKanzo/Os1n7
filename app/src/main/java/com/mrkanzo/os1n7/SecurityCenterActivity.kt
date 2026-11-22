@@ -38,7 +38,7 @@ class SecurityCenterActivity:Activity() {
   p.addView(v);return v
  }
  private fun button(p:LinearLayout,s:String,action:()->Unit) {
-  p.addView(Button(this).apply { text=s;isAllCaps=false;setOnClickListener { action() } })
+  p.addView(Os1n7Ui.button(this).apply { text=s;isAllCaps=false;setOnClickListener { action() } })
  }
  override fun onCreate(savedInstanceState:Bundle?) {
   super.onCreate(savedInstanceState)
