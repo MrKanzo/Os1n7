@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_back">← رجوع</string>
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_subtitle">اللغة • المظهر • الخصوصية</string>
+    <string name="settings_language">لغة الواجهة</string>
+    <string name="settings_language_note">القوائم والشاشات الرئيسية مترجمة. الدروس وبعض صفحات المساعدة ما زالت بالأوكرانية.</string>
+    <string name="settings_appearance">المظهر والراحة</string>
+    <string name="settings_banner">الواجهة المتحركة</string>
+    <string name="settings_banner_hint">تشغيل: شجرة ومرافق متحركان. إيقاف: قائمة كلاسيكية ورسم ثنائي الأبعاد ثابت.</string>
+    <string name="settings_short_descriptions">أوصاف مختصرة</string>
+    <string name="settings_short_descriptions_hint">نصوص أقل في بطاقات الشاشة الرئيسية.</string>
+    <string name="settings_companion">إظهار المرافق</string>
+    <string name="settings_companion_hint">دليل داخلي صغير دون ذكاء اصطناعي خارجي.</string>
+    <string name="settings_privacy">الخصوصية</string>
+    <string name="settings_privacy_detail">تُحفظ الإعدادات على هذا الجهاز فقط. يمكنك تغيير اللغة في أي وقت. لا مؤثرات صوتية.</string>
+    <string name="settings_version">OS1N7 • الإصدار %1$s</string>
+    <string name="settings_cancel">إلغاء</string>
+    <string name="profile_settings_button">⚙ الإعدادات</string>
+</resources>
