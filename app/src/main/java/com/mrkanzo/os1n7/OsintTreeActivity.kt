@@ -41,6 +41,7 @@ class OsintTreeActivity : Activity() {
     private var grow: ValueAnimator? = null
     private var flowing: ValueAnimator? = null
     private var currentCanvas: BranchCanvas? = null
+    private var currentTiles: List<View> = emptyList()
     private var currentHero: View? = null
     private var currentPulseLabel: TextView? = null
     private val rowHeight = 112
@@ -225,6 +226,7 @@ class OsintTreeActivity : Activity() {
         grow?.cancel()
         flowing?.cancel()
         currentCanvas = null
+        currentTiles = emptyList()
         currentHero = null
         currentPulseLabel = null
         scene.removeAllViews()
@@ -316,6 +318,7 @@ class OsintTreeActivity : Activity() {
             tile.translationY = if (ValueAnimator.areAnimatorsEnabled()) dp(23).toFloat() else 0f
             tiles.add(tile)
         }
+        currentTiles = tiles
         scroll.post {
             if (activeBranch != null || isFinishing || isDestroyed) return@post
             replayTree()
@@ -418,6 +421,20 @@ class OsintTreeActivity : Activity() {
         canvas.progress = if (ValueAnimator.areAnimatorsEnabled()) 0f else 1f
         canvas.flowPhase = 0f
         canvas.invalidate()
+        currentTiles.forEachIndexed { index, tile ->
+            tile.animate().cancel()
+            if (ValueAnimator.areAnimatorsEnabled()) {
+                tile.alpha = 0f
+                tile.translationY = dp(22).toFloat()
+                tile.animate().alpha(1f).translationY(0f)
+                    .setStartDelay((index * 110).toLong().coerceAtMost(1250))
+                    .setDuration(520)
+                    .setInterpolator(DecelerateInterpolator()).start()
+            } else {
+                tile.alpha = 1f
+                tile.translationY = 0f
+            }
+        }
         if (!ValueAnimator.areAnimatorsEnabled()) {
             currentHero?.alpha = 1f
             currentPulseLabel?.alpha = 1f
