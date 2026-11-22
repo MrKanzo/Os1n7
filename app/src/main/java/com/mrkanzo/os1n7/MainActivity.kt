@@ -275,6 +275,9 @@ class MainActivity : Activity() {
         addAction(body, "OSINT Інструменти", "DNS • URL • EXIF • Захист", "⚒") {
             startActivity(Intent(this, ToolsActivity::class.java))
         }
+        addAction(body, "Відгуки та підтримка", "Повідомити про помилку • Запропонувати ідею", "✉") {
+            startActivity(Intent(this, FeedbackActivity::class.java))
+        }
         addAction(body, "Перевірити оновлення", "Знайти нову версію APK на GitHub", "↻") { checkForUpdates() }
 
         val libraryPrefs = getSharedPreferences("os1n7_learning", Context.MODE_PRIVATE)
