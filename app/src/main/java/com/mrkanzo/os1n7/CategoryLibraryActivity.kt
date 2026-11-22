@@ -47,13 +47,13 @@ class CategoryLibraryActivity : Activity() {
         val holder = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = android.view.Gravity.CENTER_VERTICAL
-            setPadding(dp(16), dp(18), dp(14), dp(18))
-            background = shape(panel)
+            setPadding(dp(13), dp(12), dp(12), dp(12))
+            background = Os1n7Ui.cardBackground(this@CategoryLibraryActivity, interactive = true)
             isClickable = true
             isFocusable = true
             setOnClickListener { action() }
         }
-        holder.addView(Os1n7Ui.icon(this, symbol), LinearLayout.LayoutParams(dp(44), dp(44)).apply { rightMargin = dp(12) })
+        holder.addView(Os1n7Ui.icon(this, symbol), LinearLayout.LayoutParams(dp(40), dp(40)).apply { rightMargin = dp(12) })
         val labels = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         labels.addView(text(title, 16f, Color.WHITE, true))
         if (subtitle.isNotBlank()) {
@@ -62,32 +62,31 @@ class CategoryLibraryActivity : Activity() {
             labels.addView(secondary)
         }
         holder.addView(labels, LinearLayout.LayoutParams(0, -2, 1f))
-        holder.addView(text("›", 27f, accent))
-        content.addView(holder, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(10) })
+        holder.addView(text("›", 22f, accent))
+        content.addView(holder, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(7) })
     }
     private fun button(value: String, action: () -> Unit, selected: Boolean = false) =
         TextView(this).apply {
             text = value
-            textSize = 14f
+            textSize = 13.5f
             setTypeface(null, Typeface.BOLD)
             setTextColor(if (selected) bg else accent)
             gravity = android.view.Gravity.CENTER
             setPadding(dp(16), dp(12), dp(16), dp(12))
             minHeight = dp(48)
-            background = shape(if (selected) accent else panel, 12)
+            background = if (selected) shape(accent, 12)
+                else Os1n7Ui.cardBackground(this@CategoryLibraryActivity, interactive = true)
             isClickable = true
             isFocusable = true
             setOnClickListener { action() }
         }
     private fun heading(value: String) {
-        val v = text(value, 14f, accent, true)
-        v.setPadding(0, dp(18), 0, dp(12))
-        content.addView(v)
+        content.addView(Os1n7Ui.sectionHeading(this, value))
     }
     private fun paragraph(value: String) {
         val v = text(value, 16f)
         v.setPadding(dp(16), dp(16), dp(16), dp(16))
-        v.background = shape(panel)
+        v.background = Os1n7Ui.cardBackground(this)
         content.addView(v, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(10) })
     }
     private fun start(title: String, subtitle: String) {
@@ -133,7 +132,7 @@ class CategoryLibraryActivity : Activity() {
             setTextColor(Color.WHITE)
             setHintTextColor(muted)
             setPadding(dp(16), dp(12), dp(16), dp(12))
-            background = shape(panel)
+            background = Os1n7Ui.inputBackground(this@CategoryLibraryActivity)
             setText(query)
             setSelection(query.length)
         }
@@ -157,19 +156,19 @@ class CategoryLibraryActivity : Activity() {
                 val holder = LinearLayout(this).apply {
                     orientation = LinearLayout.HORIZONTAL
                     gravity = android.view.Gravity.CENTER_VERTICAL
-                    setPadding(dp(16), dp(19), dp(14), dp(19))
-                    background = shape(panel)
+                    setPadding(dp(13), dp(12), dp(12), dp(12))
+                    background = Os1n7Ui.cardBackground(this@CategoryLibraryActivity, interactive = true)
                     isClickable = true
                     isFocusable = true
                     setOnClickListener { category = name; tab = 0; showCategory() }
                 }
-                holder.addView(Os1n7Ui.icon(this, Os1n7Ui.categoryIcon(name)), LinearLayout.LayoutParams(dp(44), dp(44)).apply { rightMargin = dp(12) })
+                holder.addView(Os1n7Ui.icon(this, Os1n7Ui.categoryIcon(name)), LinearLayout.LayoutParams(dp(40), dp(40)).apply { rightMargin = dp(12) })
                 val labels = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
                 labels.addView(text(name, 17f, Color.WHITE, true))
                 labels.addView(text("$count уроків  •  Теорія / Практика / Тести", 12f, muted))
                 holder.addView(labels, LinearLayout.LayoutParams(0, -2, 1f))
-                holder.addView(text("›", 27f, accent))
-                results.addView(holder, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(10) })
+                holder.addView(text("›", 22f, accent))
+                results.addView(holder, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(7) })
             }
         }
         search.addTextChangedListener(object : TextWatcher {
