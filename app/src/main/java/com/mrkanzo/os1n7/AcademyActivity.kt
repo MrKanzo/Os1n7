@@ -11,7 +11,7 @@ import android.content.res.ColorStateList
 import android.view.View
 import android.view.WindowInsets
 
-class AcademyActivity:Activity() {
+class AcademyActivity: Os1n7Activity() {
  private val lessons=listOf(
   listOf("EXIF і фотографії","EXIF може містити GPS і дату зйомки.","GPS-мітка на фото може розкрити:","Місце зйомки","Пароль","Вимкни геотеги в камері; видаляй GPS перед публікацією; перевіряй метадані після експорту."),
   listOf("URL і фішинг","HTTPS шифрує з'єднання, але не гарантує чесність сайту. Домен і параметри URL потребують перевірки.","Яка ознака URL викликає підозру?","Пароль у параметрі URL","Довгий шлях","Не відкривай підозрілі посилання; вводь адресу вручну; використовуй MFA."),
