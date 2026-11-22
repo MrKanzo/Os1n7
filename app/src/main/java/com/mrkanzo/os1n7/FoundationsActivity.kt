@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.widget.*
 
 /** Offline guided investigation using invented profiles and documentation-only domains. */
-class FoundationsActivity : Activity() {
+class FoundationsActivity : Os1n7Activity() {
  private val bg=Color.rgb(15,23,32)
  private var activeStage:Int?=null
  private var viewingReport=false
