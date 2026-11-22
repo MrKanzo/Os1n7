@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_back">← Retour</string>
+    <string name="settings_title">Paramètres</string>
+    <string name="settings_subtitle">Langue • apparence • confidentialité</string>
+    <string name="settings_language">Langue de l’interface</string>
+    <string name="settings_language_note">Les menus et les écrans principaux sont traduits. Les leçons et certaines aides restent en ukrainien.</string>
+    <string name="settings_appearance">Apparence et confort</string>
+    <string name="settings_banner">Bannière animée</string>
+    <string name="settings_banner_hint">Activée : arbre et compagnon animés. Désactivée : menu classique et 2D statique.</string>
+    <string name="settings_short_descriptions">Descriptions courtes</string>
+    <string name="settings_short_descriptions_hint">Moins de texte sur les cartes d’accueil.</string>
+    <string name="settings_companion">Afficher le compagnon</string>
+    <string name="settings_companion_hint">Petit guide intégré sans IA externe.</string>
+    <string name="settings_privacy">Confidentialité</string>
+    <string name="settings_privacy_detail">Les préférences restent sur cet appareil. Langue modifiable à tout moment. Aucun effet sonore.</string>
+    <string name="settings_version">OS1N7 • version %1$s</string>
+    <string name="settings_cancel">Annuler</string>
+    <string name="profile_settings_button">⚙ Paramètres</string>
+</resources>
