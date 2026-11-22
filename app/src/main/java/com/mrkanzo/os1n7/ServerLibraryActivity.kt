@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.WindowInsets
 import android.widget.*
 import org.json.JSONObject
@@ -21,6 +23,8 @@ class ServerLibraryActivity : Activity() {
     private val prefs by lazy { getSharedPreferences("os1n7_server", Context.MODE_PRIVATE) }
     private lateinit var list: LinearLayout
     private lateinit var status: TextView
+    private lateinit var search: EditText
+    private var displayedPayload: String? = null
     private lateinit var address: EditText
     private lateinit var sync: Button
     private lateinit var sourceMode: Button
@@ -63,10 +67,16 @@ class ServerLibraryActivity : Activity() {
         list.addView(card, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(11) })
     }
     private fun render(payload: String): Int {
+        displayedPayload = payload
         val array = JSONObject(payload).getJSONArray("articles")
+        val filter = if (::search.isInitialized) search.text.toString().trim() else ""
         list.removeAllViews()
+        var matches = 0
         for (i in 0 until array.length()) {
             val article = array.getJSONObject(i)
+            if (filter.isNotEmpty() && !listOf("title", "category", "summary", "content")
+                    .any { article.optString(it).contains(filter, ignoreCase = true) }) continue
+            matches++
             addCard(
                 article.optString("title", "Без назви"),
                 article.optString("category", "Матеріали"),
@@ -74,7 +84,10 @@ class ServerLibraryActivity : Activity() {
                 article.optString("content")
             )
         }
-        if (array.length() == 0) list.addView(text("Сервер поки не містить статей.", 15f, muted))
+        if (matches == 0) list.addView(text(
+            if (filter.isNotEmpty()) "За запитом нічого не знайдено." else "Каталог поки не містить статей.",
+            15f, muted
+        ))
         return array.length()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -133,6 +146,23 @@ class ServerLibraryActivity : Activity() {
             setOnClickListener { loadArticles() }
         }
         root.addView(sync)
+        search = EditText(this).apply {
+            hint = "⌕ Пошук за назвою, категорією або текстом"
+            setSingleLine(true)
+            textSize = 14f
+            setTextColor(Color.WHITE)
+            setHintTextColor(muted)
+            setPadding(dp(14), dp(12), dp(14), dp(12))
+            background = shape(panel)
+            addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    displayedPayload?.let { try { render(it) } catch (_: Exception) {} }
+                }
+                override fun afterTextChanged(s: Editable?) {}
+            })
+        }
+        root.addView(search)
         status = text("Перевірка збережених матеріалів…", 13f, muted)
         status.setPadding(0, dp(5), 0, dp(15))
         root.addView(status)
@@ -154,6 +184,7 @@ class ServerLibraryActivity : Activity() {
     private fun snapshotKey() = if (cloud) "cloud_articles_json" else "articles_json"
     private fun showSnapshot() {
         val cached = prefs.getString(snapshotKey(), null)
+        displayedPayload = null
         list.removeAllViews()
         if (cached != null) {
             try {
@@ -186,7 +217,7 @@ class ServerLibraryActivity : Activity() {
             prefs.edit().putString("base_url", base).apply()
             "$base/api/articles"
         }
-        status.text = "Підключення до сервера…"
+        status.text = if (modeCloud) "Перевіряємо каталог GitHub…" else "Підключення до Termux…"
         sync.isEnabled = false
         val request = ++generation
         Thread {
