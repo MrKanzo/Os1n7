@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
@@ -219,6 +220,19 @@ class ProfileActivity : Activity() {
             "Профіль локальний: нікнейм, аватар, обрані матеріали та прогрес залишаються на телефоні. " +
                 "Це не онлайн-акаунт. Видалення програми може стерти ці дані.",
             13f, muted
+        ))
+        action(about, "🔐 Політика приватності") {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(
+                    "https://github.com/MrKanzo/Os1n7/blob/main/docs/PRIVACY_POLICY_UK.md"
+                )))
+            } catch (_: Exception) {
+                Toast.makeText(this, "Не вдалося відкрити політику приватності", Toast.LENGTH_SHORT).show()
+            }
+        }
+        about.addView(label(
+            "Локальні дані можна очистити в налаштуваннях Android: Програми → OSINT Бібліотека → Сховище → Очистити дані. Це також видалить навчальний прогрес і справи.",
+            12f, muted
         ))
         val version = packageManager.getPackageInfo(packageName, 0).versionName ?: "?"
         about.addView(label("OS1N7 • версія $version", 12f, accent))
