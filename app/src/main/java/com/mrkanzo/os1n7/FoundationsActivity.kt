@@ -58,7 +58,7 @@ class FoundationsActivity : Activity() {
   p.addView(v);return v
  }
  private fun button(p:LinearLayout,s:String,click:()->Unit) {
-  p.addView(Button(this).apply { text=s;isAllCaps=false;setOnClickListener { click() } })
+  p.addView(Os1n7Ui.button(this).apply { text=s;isAllCaps=false;setOnClickListener { click() } })
  }
  private fun page():LinearLayout {
   val root=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL;setBackgroundColor(bg);setPadding(dp(18),dp(18),dp(18),dp(18)) }
@@ -82,7 +82,7 @@ class FoundationsActivity : Activity() {
   label(p,"🔎 ПРАКТИКА\n"+questions[i])
   val group=RadioGroup(this).apply { orientation=RadioGroup.VERTICAL };p.addView(group)
   answers[i].forEachIndexed { n,a ->
-   group.addView(RadioButton(this).apply { id=100+n;text=a;setTextColor(Color.WHITE);buttonTintList=android.content.res.ColorStateList.valueOf(green) })
+   group.addView(RadioOs1n7Ui.button(this).apply { id=100+n;text=a;setTextColor(Color.WHITE);buttonTintList=android.content.res.ColorStateList.valueOf(green) })
   }
   label(p,"🛡️ ЗАХИСТ\n"+defense[i])
   val cb=CheckBox(this).apply {
