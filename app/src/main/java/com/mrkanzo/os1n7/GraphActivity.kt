@@ -38,7 +38,7 @@ class GraphActivity : Activity() {
   p.addView(t);return t
  }
  private fun button(p:LinearLayout,s:String,action:()->Unit) {
-  p.addView(Button(this).apply { text=s;isAllCaps=false;setOnClickListener { action() } })
+  p.addView(Os1n7Ui.button(this).apply { text=s;isAllCaps=false;setOnClickListener { action() } })
  }
  private fun page():LinearLayout {
   val root=LinearLayout(this).apply {
