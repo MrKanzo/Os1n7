@@ -11,11 +11,13 @@ import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.Typeface
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.LinearInterpolator
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.min
+import kotlin.math.hypot
 import kotlin.math.sin
 
 /**
@@ -34,6 +36,8 @@ class CyberTreeHeroView @JvmOverloads constructor(
     private val white = Color.WHITE
     private var animator: ValueAnimator? = null
     private var phase = 0f
+    /** Optional selection handler for the six glowing navigation nodes. */
+    var onBranchSelected: ((Int) -> Unit)? = null
     private val branches = listOf(
         Branch(0.16f, 0.24f, "ПОШУК", neon),
         Branch(0.82f, 0.21f, "МЕРЕЖІ", cyan),
@@ -61,15 +65,49 @@ class CyberTreeHeroView @JvmOverloads constructor(
     override fun onWindowVisibilityChanged(visibility: Int) {
         super.onWindowVisibilityChanged(visibility)
         if (visibility == VISIBLE) startMotion()
-        else {
-            animator?.cancel()
-            animator = null
+        else stopMotion()
+    }
+    override fun onVisibilityAggregated(isVisible: Boolean) {
+        super.onVisibilityAggregated(isVisible)
+        if (isVisible) startMotion() else stopMotion()
+    }
+    private fun stopMotion() {
+        animator?.cancel()
+        animator = null
+    }
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (!isEnabled) return super.onTouchEvent(event)
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> return true
+            MotionEvent.ACTION_UP -> {
+                val px = event.x * 360f / width.coerceAtLeast(1)
+                val py = event.y * 256f / height.coerceAtLeast(1)
+                val selected = branches.indices.minByOrNull { i ->
+                    val b = branches[i]
+                    hypot(px - b.x * 360f, py - b.y * 256f)
+                }
+                if (selected != null) {
+                    val b = branches[selected]
+                    if (hypot(px - b.x * 360f, py - b.y * 256f) <= 37f &&
+                        onBranchSelected != null) {
+                        onBranchSelected?.invoke(selected)
+                        return true
+                    }
+                }
+                return performClick()
+            }
+            MotionEvent.ACTION_CANCEL -> return true
         }
+        return super.onTouchEvent(event)
+    }
+    override fun performClick(): Boolean {
+        super.performClick()
+        return true
     }
     private fun startMotion() {
         animator?.cancel()
         animator = null
-        if (!isAttachedToWindow || !ValueAnimator.areAnimatorsEnabled()) {
+        if (!isAttachedToWindow || !isShown || !ValueAnimator.areAnimatorsEnabled()) {
             phase = 0f
             invalidate()
             return
