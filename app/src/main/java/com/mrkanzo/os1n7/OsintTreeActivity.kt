@@ -15,12 +15,15 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowInsets
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.LinearInterpolator
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import kotlin.math.min
+import kotlin.math.sin
+import kotlin.math.PI
 
 /**
  * Interactive visual OSINT map. Pure Android views and Canvas, no network requests
@@ -36,6 +39,10 @@ class OsintTreeActivity : Activity() {
     private lateinit var backButton: Button
     private var activeBranch: Int? = null
     private var grow: ValueAnimator? = null
+    private var flowing: ValueAnimator? = null
+    private var currentCanvas: BranchCanvas? = null
+    private var currentHero: View? = null
+    private var currentPulseLabel: TextView? = null
     private val rowHeight = 112
 
     private data class Entry(val name: String, val detail: String)
@@ -193,6 +200,7 @@ class OsintTreeActivity : Activity() {
 
     private fun animateScene(action: () -> Unit) {
         grow?.cancel()
+        flowing?.cancel()
         scene.animate().cancel()
         scene.animate().alpha(0f).translationX(-dp(14).toFloat())
             .setDuration(130).withEndAction {
@@ -214,6 +222,11 @@ class OsintTreeActivity : Activity() {
     private fun showTree() {
         activeBranch = null
         backButton.text = "← Головне меню"
+        grow?.cancel()
+        flowing?.cancel()
+        currentCanvas = null
+        currentHero = null
+        currentPulseLabel = null
         scene.removeAllViews()
         val scroll = ScrollView(this).apply {
             isFillViewport = false
@@ -234,7 +247,23 @@ class OsintTreeActivity : Activity() {
             gravity = Gravity.CENTER
             setPadding(0, dp(6), 0, 0)
         })
+        val pulseLabel = text("● ЖИВА МЕРЕЖА  •  13 ГІЛОК", 12f, mint, true).apply {
+            gravity = Gravity.CENTER
+            setPadding(0, dp(11), 0, 0)
+        }
+        hero.addView(pulseLabel)
+        currentHero = hero
+        currentPulseLabel = pulseLabel
         layout.addView(hero, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(11) })
+        val replay = button("▶  Показати анімацію ще раз") {
+            if (ValueAnimator.areAnimatorsEnabled()) replayTree() else {
+                android.widget.Toast.makeText(this, "У системі Android вимкнено анімації. Перевір налаштування доступності.", android.widget.Toast.LENGTH_LONG).show()
+            }
+        }
+        layout.addView(replay, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(10) })
+        if (!ValueAnimator.areAnimatorsEnabled()) {
+            layout.addView(text("Рух вимкнений налаштуваннями Android. Увімкни системні анімації, щоб побачити ефекти.", 12f, muted))
+        }
         layout.addView(text(
             "Вибери напрямок на дереві. Гілки плавно розгортаються у теми й ведуть до справжніх розділів OS1N7.",
             13f, muted
@@ -253,6 +282,7 @@ class OsintTreeActivity : Activity() {
         layout.addView(map, LinearLayout.LayoutParams(-1, treeHeight))
 
         val canvas = BranchCanvas(this, branches.size, rowPx, topPx)
+        currentCanvas = canvas
         map.addView(canvas, FrameLayout.LayoutParams(-1, -1))
         val tiles = mutableListOf<View>()
         branches.forEachIndexed { index, branch ->
@@ -282,27 +312,13 @@ class OsintTreeActivity : Activity() {
                 if (left) leftMargin = dp(8) else rightMargin = dp(8)
             }
             map.addView(tile, pos)
-            tile.alpha = 0f
-            tile.translationY = dp(23).toFloat()
+            tile.alpha = if (ValueAnimator.areAnimatorsEnabled()) 0f else 1f
+            tile.translationY = if (ValueAnimator.areAnimatorsEnabled()) dp(23).toFloat() else 0f
             tiles.add(tile)
         }
         scroll.post {
             if (activeBranch != null || isFinishing || isDestroyed) return@post
-            grow?.cancel()
-            grow = ValueAnimator.ofFloat(0f, 1f).apply {
-                duration = 1050
-                interpolator = DecelerateInterpolator()
-                addUpdateListener {
-                    canvas.progress = it.animatedValue as Float
-                    canvas.invalidate()
-                }
-                start()
-            }
-            tiles.forEachIndexed { i, tile ->
-                tile.animate().alpha(1f).translationY(0f)
-                    .setStartDelay((i * 55).toLong().coerceAtMost(540))
-                    .setDuration(390).setInterpolator(DecelerateInterpolator()).start()
-            }
+            replayTree()
         }
         layout.addView(text(
             "Навігаційна схема — не сканер: сама карта не виконує пошук чи мережеві запити.",
@@ -311,6 +327,10 @@ class OsintTreeActivity : Activity() {
     }
 
     private fun showBranch(index: Int, animateRows: Boolean) {
+        flowing?.cancel()
+        currentCanvas = null
+        currentHero = null
+        currentPulseLabel = null
         activeBranch = index
         backButton.text = "← До дерева OSINT"
         scene.removeAllViews()
@@ -390,9 +410,72 @@ class OsintTreeActivity : Activity() {
         overridePendingTransition(R.anim.os1n7_enter, R.anim.os1n7_exit)
     }
 
+    private fun replayTree() {
+        if (activeBranch != null) return
+        val canvas = currentCanvas ?: return
+        grow?.cancel()
+        flowing?.cancel()
+        canvas.progress = if (ValueAnimator.areAnimatorsEnabled()) 0f else 1f
+        canvas.flowPhase = 0f
+        canvas.invalidate()
+        if (!ValueAnimator.areAnimatorsEnabled()) {
+            currentHero?.alpha = 1f
+            currentPulseLabel?.alpha = 1f
+            return
+        }
+        grow = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 2200L
+            interpolator = DecelerateInterpolator()
+            addUpdateListener {
+                canvas.progress = it.animatedValue as Float
+                canvas.invalidate()
+            }
+            start()
+        }
+        startFlow()
+    }
+
+    private fun startFlow() {
+        flowing?.cancel()
+        val canvas = currentCanvas ?: return
+        if (activeBranch != null || !ValueAnimator.areAnimatorsEnabled()) return
+        flowing = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 2700L
+            repeatCount = ValueAnimator.INFINITE
+            interpolator = LinearInterpolator()
+            addUpdateListener {
+                if (activeBranch != null || isFinishing || isDestroyed) return@addUpdateListener
+                val t = it.animatedValue as Float
+                canvas.flowPhase = t
+                canvas.invalidate()
+                val brightness = (0.5f + 0.5f * sin(2.0 * PI * t).toFloat())
+                currentHero?.let { hero ->
+                    hero.scaleX = 1f + 0.012f * brightness
+                    hero.scaleY = 1f + 0.012f * brightness
+                }
+                currentPulseLabel?.alpha = 0.45f + 0.55f * brightness
+            }
+            start()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (activeBranch == null && currentCanvas != null && flowing?.isRunning != true) startFlow()
+    }
+
     override fun onPause() {
         grow?.cancel()
+        flowing?.cancel()
+        currentHero?.scaleX = 1f
+        currentHero?.scaleY = 1f
         super.onPause()
+    }
+
+    override fun onDestroy() {
+        grow?.cancel()
+        flowing?.cancel()
+        super.onDestroy()
     }
 
     @Deprecated("Legacy activity back navigation")
@@ -407,6 +490,7 @@ class OsintTreeActivity : Activity() {
         private val startY: Int
     ) : View(context) {
         var progress: Float = 1f
+        var flowPhase: Float = 0f
         private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
         override fun onDraw(canvas: Canvas) {
             super.onDraw(canvas)
@@ -439,6 +523,33 @@ class OsintTreeActivity : Activity() {
             paint.style = Paint.Style.FILL
             paint.color = mint
             canvas.drawCircle(center, min(length, maxY), dp(5).toFloat(), paint)
+            if (progress > 0.08f) {
+                // Persistent visible signal: several neon sparks travel through
+                // the trunk, so motion remains apparent while scrolling.
+                val spacing = dp(230).toFloat()
+                for (spark in 0..9) {
+                    val y = ((flowPhase * spacing * 2.5f + spark * spacing) % maxY)
+                    if (y > length || y < 0f) continue
+                    paint.color = Color.argb(62, 98, 230, 173)
+                    canvas.drawCircle(center, y, dp(12).toFloat(), paint)
+                    paint.color = Color.WHITE
+                    canvas.drawCircle(center, y, dp(3).toFloat(), paint)
+                }
+                // Each branch has its own moving bright particle.
+                for (i in 0 until count) {
+                    val y = startY + i * row.toFloat() + dp(59)
+                    if (y > length) break
+                    val endX = if (i % 2 == 0) dp(21).toFloat() else width - dp(21).toFloat()
+                    val t = (flowPhase + i * 0.17f) % 1f
+                    val eased = t * t * (3f - 2f * t)
+                    val bx = center + (endX - center) * eased
+                    val by = y - dp(28) + dp(28) * eased
+                    paint.color = Color.argb(72, 76, 213, 236)
+                    canvas.drawCircle(bx, by, dp(10).toFloat(), paint)
+                    paint.color = Color.WHITE
+                    canvas.drawCircle(bx, by, dp(3).toFloat(), paint)
+                }
+            }
         }
     }
 }
