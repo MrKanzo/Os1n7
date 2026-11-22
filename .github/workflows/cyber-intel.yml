@@ -7,7 +7,9 @@ on:
     branches: [main]
     paths:
       - "scripts/sync_cyber_intel.py"
+      - "scripts/translate_cyber_intel.py"
       - "tests/test_cyber_intel.py"
+      - "tests/test_cyber_translation.py"
       - ".github/workflows/cyber-intel.yml"
 
 permissions:
@@ -25,10 +27,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Test feed validation and date handling
-        run: python -m unittest discover -s tests -p "test_cyber_intel.py" -v
+      - name: Test feeds and Ukrainian translation logic
+        run: python -m unittest discover -s tests -p "test_cyber*.py" -v
+      - name: Install offline English-to-Ukrainian translator
+        run: python -m pip install "argostranslate>=1.10,<2"
       - name: Fetch official cybersecurity sources
         run: python scripts/sync_cyber_intel.py
+      - name: Translate headlines and summaries into Ukrainian
+        timeout-minutes: 15
+        run: python scripts/translate_cyber_intel.py
       - name: Update hosted JSON snapshot, if changed
         run: |
           if git diff --quiet -- content/cyber-intel.json; then
