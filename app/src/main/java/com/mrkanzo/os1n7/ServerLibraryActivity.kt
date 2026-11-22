@@ -106,6 +106,25 @@ class ServerLibraryActivity : Activity() {
         }
         root.addView(Os1n7Ui.button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
         Os1n7Ui.pageTitle(this,root,"☁","Хмарна бібліотека","GitHub • офлайн • Termux")
+        val intelBar = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        intelBar.addView(Os1n7Ui.button(this).apply {
+            text = "📰 Кіберновини"
+            setOnClickListener {
+                startActivity(android.content.Intent(this@ServerLibraryActivity, CyberIntelActivity::class.java)
+                    .putExtra("tab", "news"))
+            }
+        }, LinearLayout.LayoutParams(0, -2, 1f).apply { rightMargin = dp(6) })
+        intelBar.addView(Os1n7Ui.button(this).apply {
+            text = "▥ Статистика"
+            setOnClickListener {
+                startActivity(android.content.Intent(this@ServerLibraryActivity, CyberIntelActivity::class.java)
+                    .putExtra("tab", "statistics"))
+            }
+        }, LinearLayout.LayoutParams(0, -2, 1f))
+        root.addView(intelBar, LinearLayout.LayoutParams(-1, -2).apply {
+            topMargin = dp(8)
+            bottomMargin = dp(13)
+        })
         root.addView(text("Джерело матеріалів", 21f, Color.WHITE, true))
         help = text("Хмарна бібліотека: оновлення статей із GitHub без завантаження APK.", 13f, muted)
         help.setPadding(0, dp(9), 0, dp(12))
