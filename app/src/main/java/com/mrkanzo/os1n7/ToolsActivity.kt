@@ -6,7 +6,7 @@ import android.view.WindowInsets
 import android.widget.*
 import java.net.URI
 
-class ToolsActivity : Activity() {
+class ToolsActivity : Os1n7Activity() {
     private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
