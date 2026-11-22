@@ -105,10 +105,7 @@ class ServerLibraryActivity : Activity() {
             insets
         }
         root.addView(Os1n7Ui.button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
-        root.addView(text("◈  OS1N7", 27f, accent, true))
-        val subtitle = text("СЕРВЕРНА БІБЛІОТЕКА", 12f, muted)
-        subtitle.setPadding(0, dp(4), 0, dp(18))
-        root.addView(subtitle)
+        Os1n7Ui.pageTitle(this,root,"☁","Хмарна бібліотека","GitHub • офлайн • Termux")
         root.addView(text("Джерело матеріалів", 21f, Color.WHITE, true))
         help = text("Хмарна бібліотека: оновлення статей із GitHub без завантаження APK.", 13f, muted)
         help.setPadding(0, dp(9), 0, dp(12))
