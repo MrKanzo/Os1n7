@@ -7,34 +7,50 @@ import android.widget.*
 import java.net.URI
 
 class ToolsActivity : Activity() {
+    private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val root=LinearLayout(this).apply {
             orientation=LinearLayout.VERTICAL
-            setPadding(24,24,24,24)
+            setPadding(dp(16),dp(12),dp(16),dp(16))
             setBackgroundColor(Color.rgb(15,23,32))
             setOnApplyWindowInsetsListener { v, ins ->
                 val bars=ins.getInsets(WindowInsets.Type.systemBars())
-                v.setPadding(24,bars.top+24,24,bars.bottom+24); ins
+                v.setPadding(dp(16),bars.top+dp(12),dp(16),bars.bottom+dp(16)); ins
             }
         }
         val scroll=ScrollView(this)
         val body=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL }
         scroll.addView(body);root.addView(scroll);setContentView(root);root.requestApplyInsets()
-        fun label(value:String):TextView=TextView(this).apply {
-            text=value;textSize=16f;setTextColor(Color.WHITE);setPadding(0,12,0,12)
+        fun label(value:String, muted:Boolean=false):TextView=TextView(this).apply {
+            text=value;textSize=if(muted)13f else 14.5f
+            setTextColor(if(muted)Os1n7Ui.muted else Color.WHITE)
+            setPadding(0,dp(7),0,dp(8))
+            setLineSpacing(dp(2).toFloat(),1f)
         }
         fun exercise(title:String,example:String,defense:String,calc:(String)->String) {
-            body.addView(label(title))
-            val input=EditText(this).apply { setSingleLine(true);setText(example);setTextColor(Color.WHITE) }
-            body.addView(input)
-            val result=label("Введи дані й натисни перевірити.")
-            body.addView(Os1n7Ui.button(this).apply {
-                text="▶ Перевірити";isAllCaps=false
+            val card=LinearLayout(this).apply {
+                orientation=LinearLayout.VERTICAL
+                setPadding(dp(15),dp(13),dp(15),dp(15))
+                background=Os1n7Ui.cardBackground(this@ToolsActivity)
+            }
+            card.addView(Os1n7Ui.sectionHeading(this,title))
+            val input=EditText(this).apply {
+                setSingleLine(true);setText(example);textSize=14f
+                setTextColor(Color.WHITE);setPadding(dp(12),dp(11),dp(12),dp(11))
+                background=Os1n7Ui.inputBackground(this@ToolsActivity)
+            }
+            card.addView(input)
+            val result=label("Введи дані й натисни «Перевірити».")
+            card.addView(Os1n7Ui.button(this).apply {
+                text="▶ Перевірити"
                 setOnClickListener { result.text=calc(input.text.toString().trim()) }
+            },LinearLayout.LayoutParams(-1,-2).apply { topMargin=dp(8) })
+            card.addView(result)
+            card.addView(label("🛡 Захист: "+defense,true))
+            body.addView(card,LinearLayout.LayoutParams(-1,-2).apply {
+                topMargin=dp(8);bottomMargin=dp(5)
             })
-            body.addView(result)
-            body.addView(label("🛡️ Захист: "+defense))
         }
         body.addView(Os1n7Ui.button(this).apply { text="← Головне меню";isAllCaps=false;setOnClickListener { finish() } })
         Os1n7Ui.pageTitle(this,body,"⚒","OSINT Інструменти","DNS • URL • EXIF • захист")
