@@ -36,15 +36,30 @@ jobs:
       - name: Translate headlines and summaries into Ukrainian
         timeout-minutes: 15
         run: python scripts/translate_cyber_intel.py
-      - name: Update hosted JSON snapshot, if changed
+      - name: Publish official news without overwriting concurrent commits
         run: |
-          if git diff --quiet -- content/cyber-intel.json; then
-            echo "No changed cyber-intelligence data"
-            exit 0
-          fi
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add content/cyber-intel.json
-          git commit -m "data: refresh official cyber intelligence and yearly statistics"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          # Always recompute against the latest main. A parallel edit to the
+          # published snapshot must never cause an unresolved rebase conflict.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            python scripts/sync_cyber_intel.py
+            python scripts/translate_cyber_intel.py
+            git add content/cyber-intel.json
+            if git diff --cached --quiet; then
+              echo "Official cyber data unchanged"
+              exit 0
+            fi
+            git commit -m "data: refresh official cyber intelligence and yearly statistics"
+            if git push origin HEAD:main; then
+              echo "Cyber intelligence updated successfully"
+              exit 0
+            fi
+            echo "Concurrent update detected, retrying on latest main: $attempt/3"
+            sleep "$(( attempt * 2 ))"
+          done
+          echo "::error::Unable to publish news due to concurrent updates"
+          exit 1
