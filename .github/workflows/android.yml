@@ -67,16 +67,9 @@ jobs:
             gh release create "$TAG" "$APK" --title "OS1N7 $TAG" --notes "Signed Android release APK" --target "$GITHUB_SHA"
           fi
 
-      - name: Publish test APK while signing is not configured
+      - name: Explain missing signing key
         if: steps.signing.outputs.ready != 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
-          VERSION=$(grep 'versionName = ' app/build.gradle.kts | head -1 | sed -E 's/.*"([^"]+)".*/\1/')
-          TAG="v$VERSION"
-          APK="app/build/outputs/apk/debug/app-debug.apk"
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            echo "Release $TAG already exists; refusing to replace its APK"
-          else
-            gh release create "$TAG" "$APK" --title "OS1N7 $TAG (test)" --notes "Temporary debug APK. Android may require uninstalling an earlier debug build because signing keys can differ." --target "$GITHUB_SHA"
-          fi
+          echo "::warning::No stable release signing key configured. Debug APK is available only as a workflow artifact."
+          echo "::warning::Configure OS1N7_KEYSTORE_BASE64, OS1N7_STORE_PASSWORD, OS1N7_KEY_ALIAS and OS1N7_KEY_PASSWORD for in-place updates."
+          echo "A new random GitHub runner debug key cannot update an APK signed by a previous runner."
