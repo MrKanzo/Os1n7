@@ -133,10 +133,10 @@ class ProfileActivity : Activity() {
         val quizzes = LessonLibrary.lessons.count { library.getBoolean("quiz:${it.title}", false) }
         val academy = (0..2).count { academyPrefs.getBoolean("done_$it", false) }
         val lab = listOf("mission_phishing", "mission_footprint").count { labPrefs.getBoolean(it, false) }
-        val cases = listOf("case001", "case001_defense").count { casePrefs.getBoolean(it, false) }
+        val cases = listOf("case001", "case001_defense", "case001_mirror").count { casePrefs.getBoolean(it, false) }
         val foundations = (0..6).count { foundationPrefs.getBoolean("step_$it", false) }
         val done = practices + academy + lab + cases + foundations
-        val total = LessonLibrary.lessons.size + 14
+        val total = LessonLibrary.lessons.size + 15
         val level = 1 + done / 5
         val levelTitles = listOf("Новачок", "Спостерігач", "Дослідник", "Аналітик", "Експерт")
         val levelTitle = levelTitles.getOrElse((level - 1).coerceAtMost(levelTitles.lastIndex)) { "Експерт" }
@@ -296,7 +296,7 @@ class ProfileActivity : Activity() {
         track.post { syncProgress() }
         progress.addView(label("Практика: $practices  •  Тести: $quizzes", 13f, muted))
         progress.addView(label("Academy: $academy/3  •  Lab: $lab/2", 13f, muted))
-        progress.addView(label("Case Files: $cases/2  •  OSINT з нуля: $foundations/7", 13f, muted))
+        progress.addView(label("Case Files: $cases/3  •  OSINT з нуля: $foundations/7", 13f, muted))
         progress.addView(label("До наступного рівня: ${5 - done % 5} завдань", 13f, accent))
         action(progress, "▣ Перейти до уроків") {
             startActivity(Intent(this, CategoryLibraryActivity::class.java))
