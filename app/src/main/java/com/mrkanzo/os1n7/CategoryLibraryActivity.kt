@@ -21,6 +21,7 @@ class CategoryLibraryActivity : Activity() {
     private val accent = Color.rgb(98, 230, 173)
     private val muted = Color.rgb(166, 183, 196)
     private val prefs by lazy { getSharedPreferences("os1n7_learning", Context.MODE_PRIVATE) }
+    private val profilePrefs by lazy { getSharedPreferences("os1n7_profile", Context.MODE_PRIVATE) }
     private lateinit var content: LinearLayout
     private var category: String? = null
     private var tab = 0
@@ -112,7 +113,13 @@ class CategoryLibraryActivity : Activity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        showCategories()
+        val lessonTitle = intent?.getStringExtra("open_lesson")
+        val lesson = LessonLibrary.lessons.firstOrNull { it.title == lessonTitle }
+        if (lesson != null) {
+            category = lesson.category
+            tab = 0
+            showLesson(lesson, false)
+        } else showCategories()
     }
     private fun showCategories(query: String = "") {
         category = null
@@ -217,6 +224,13 @@ class CategoryLibraryActivity : Activity() {
         activePractice = practice
         start(lesson.title, lesson.summary)
         content.addView(button("← Назад", { showCategory() }))
+        val isFavorite = profilePrefs.getStringSet("favorites", emptySet()).orEmpty().contains(lesson.title)
+        content.addView(button(if (isFavorite) "★ В обраному — прибрати" else "☆ Додати в обране", {
+            val updated = profilePrefs.getStringSet("favorites", emptySet()).orEmpty().toMutableSet()
+            if (!updated.add(lesson.title)) updated.remove(lesson.title)
+            profilePrefs.edit().putStringSet("favorites", updated).apply()
+            showLesson(lesson, practice)
+        }), LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(8) })
         heading("01  ТЕОРІЯ")
         paragraph(lesson.explanation)
         heading("02  ПРИКЛАД")
