@@ -24,6 +24,7 @@ class MainActivity : Activity() {
     private val muted = Color.rgb(166, 183, 196)
     private var profileShortcut: TextView? = null
     private var introCardIndex = 0
+    private var refreshHomeMode: (() -> Unit)? = null
     private fun dp(n: Int) = (n * resources.displayMetrics.density).toInt()
     private fun shape(color: Int, radius: Int = 16) = GradientDrawable().apply {
         setColor(color)
@@ -41,26 +42,26 @@ class MainActivity : Activity() {
         val box = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = android.view.Gravity.CENTER_VERTICAL
-            setPadding(dp(17), dp(18), dp(16), dp(18))
+            setPadding(dp(12), dp(9), dp(11), dp(9))
             background = shape(panel)
             isClickable = true
             isFocusable = true
             setOnClickListener { click() }
         }
-        box.addView(Os1n7Ui.icon(this, glyph), LinearLayout.LayoutParams(dp(46), dp(46)).apply { rightMargin = dp(12) })
+        box.addView(Os1n7Ui.icon(this, glyph).apply { textSize = 18f }, LinearLayout.LayoutParams(dp(38), dp(38)).apply { rightMargin = dp(10) })
         val column = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-        column.addView(label(title, 17f, Color.WHITE, true))
-        val small = label(detail, 13f, muted)
-        small.setPadding(0, dp(5), 0, 0)
+        column.addView(label(title, 15.5f, Color.WHITE, true))
+        val small = label(detail, 11.5f, muted)
+        small.setPadding(0, dp(2), 0, 0)
         column.addView(small)
         box.addView(column, LinearLayout.LayoutParams(0, -2, 1f))
-        box.addView(label("›", 26f, green))
+        box.addView(label("›", 21f, green))
         return box
     }
     private fun addAction(parent: LinearLayout, title: String, detail: String, glyph: String, click: () -> Unit) {
         val tile = action(title, detail, glyph, click)
         parent.addView(tile, LinearLayout.LayoutParams(-1, -2).apply {
-            bottomMargin = dp(11)
+            bottomMargin = dp(7)
         })
         if (ValueAnimator.areAnimatorsEnabled()) {
             tile.alpha = 0f
@@ -267,71 +268,129 @@ class MainActivity : Activity() {
         })
         body.addView(topBar)
 
-        // A real, always-visible OSINT cyber-tree visual — not a static icon.
-        // Drawn locally with Canvas, it animates while this Activity is visible.
+        // Two independent home layouts. Only one is visible at a time.
+        // Both modes retain the top profile/avatar and cloud shortcut.
+        val animatedPanel = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            visibility = View.GONE
+        }
+        val classicPanel = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            visibility = View.VISIBLE
+        }
+        body.addView(animatedPanel)
+        body.addView(classicPanel)
+
+        fun openTree(branch: Int? = null) {
+            val intent = Intent(this, OsintTreeActivity::class.java)
+            if (branch != null) intent.putExtra("open_branch", branch)
+            startActivity(intent)
+            @Suppress("DEPRECATION")
+            overridePendingTransition(R.anim.os1n7_enter, R.anim.os1n7_exit)
+        }
+
+        animatedPanel.addView(label("OSINT  //  ЖИВА НАВІГАЦІЯ", 14f, green, true).apply {
+            setPadding(dp(3), dp(20), 0, dp(4))
+        })
+        animatedPanel.addView(label("Обери гілку дослідження", 23f, Color.WHITE, true))
+        animatedPanel.addView(label(
+            "Натисни на світловий вузол або в центр дерева, щоб відкрити всі 13 напрямків.",
+            13f, muted
+        ).apply { setPadding(0, dp(5), 0, dp(9)) })
+
         val animatedTree = CyberTreeHeroView(this).apply {
             isClickable = true
             isFocusable = true
-            contentDescription = "Живе дерево OSINT. Відкрити інтерактивні 13 напрямків"
-            setOnClickListener {
-                startActivity(Intent(this@MainActivity, OsintTreeActivity::class.java))
-                @Suppress("DEPRECATION")
-                overridePendingTransition(R.anim.os1n7_enter, R.anim.os1n7_exit)
+            contentDescription = "Живе дерево OSINT. Торкнися вузла для переходу до напрямку або центру для всіх 13 гілок."
+            onBranchSelected = { index ->
+                when (index) {
+                    0 -> openTree(0) // Search
+                    1 -> openTree(3) // Network
+                    2 -> openTree(1) // Profiles
+                    3 -> startActivity(Intent(this@MainActivity, SecurityCenterActivity::class.java))
+                    4 -> openTree(10) // Analytics
+                    5 -> openTree(11) // Law
+                }
             }
+            setOnClickListener { openTree() }
         }
-        body.addView(animatedTree, LinearLayout.LayoutParams(-1, dp(238)).apply {
-            topMargin = dp(16)
-            bottomMargin = dp(14)
+        animatedPanel.addView(animatedTree, LinearLayout.LayoutParams(-1, dp(280)).apply {
+            topMargin = dp(9)
+            bottomMargin = dp(10)
         })
-        if (!ValueAnimator.areAnimatorsEnabled()) {
-            body.addView(label(
-                "⚠ Анімації вимкнено у налаштуваннях Android — картинка лишається нерухомою.",
-                12f, muted
-            ).apply { setPadding(0, 0, 0, dp(10)) })
+        val explore = Os1n7Ui.button(this).apply {
+            text = "✦  ВІДКРИТИ ВСІ 13 НАПРЯМКІВ"
+            setTextColor(bg)
+            backgroundTintList = android.content.res.ColorStateList.valueOf(green)
+            setOnClickListener { openTree() }
         }
+        animatedPanel.addView(explore, LinearLayout.LayoutParams(-1, -2))
+        val quickRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, dp(10), 0, 0)
+        }
+        quickRow.addView(Os1n7Ui.button(this).apply {
+            text = "✉ Підтримка"
+            setOnClickListener { startActivity(Intent(this@MainActivity, FeedbackActivity::class.java)) }
+        }, LinearLayout.LayoutParams(0, -2, 1f).apply { rightMargin = dp(5) })
+        quickRow.addView(Os1n7Ui.button(this).apply {
+            text = "↻ Оновлення"
+            setOnClickListener { checkForUpdates() }
+        }, LinearLayout.LayoutParams(0, -2, 1f))
+        animatedPanel.addView(quickRow)
+        if (!ValueAnimator.areAnimatorsEnabled()) {
+            animatedPanel.addView(label(
+                "⚠ Android вимкнув рух. Карту можна використовувати, але анімація не відтворюватиметься.",
+                12f, muted
+            ).apply { setPadding(0, dp(10), 0, 0) })
+        }
+        animatedPanel.addView(label(
+            "Режим можна змінити в особистому профілі ◈",
+            12f, muted
+        ).apply { setPadding(0, dp(15), 0, dp(18)) })
 
-        body.addView(label("Досліджуй. Перевіряй. Навчайся.", 22f, Color.WHITE, true))
+        classicPanel.addView(label("Досліджуй. Перевіряй. Навчайся.", 20f, Color.WHITE, true))
         val description = label("Усі матеріали в одному місці — без повторів і зайвих екранів.", 14f, muted)
         description.setPadding(0, dp(8), 0, dp(23))
-        body.addView(description)
+        classicPanel.addView(description)
 
-        addAction(body, "Живе дерево OSINT", "13 гілок • Неонова карта • Плавна анімація", "◈") {
+        addAction(classicPanel, "Живе дерево OSINT", "13 гілок • Неонова карта • Плавна анімація", "◈") {
             startActivity(Intent(this, OsintTreeActivity::class.java))
             @Suppress("DEPRECATION")
             overridePendingTransition(R.anim.os1n7_enter, R.anim.os1n7_exit)
         }
-        addAction(body, "Категорії та уроки", "Теорія • Книжки • Практика • Тести", "▣") { openLibrary() }
-        addAction(body, "OSINT Лабораторія", "Термінал • Симуляції • Практичні місії", "⌘") {
+        addAction(classicPanel, "Категорії та уроки", "Теорія • Книжки • Практика • Тести", "▣") { openLibrary() }
+        addAction(classicPanel, "OSINT Лабораторія", "Термінал • Симуляції • Практичні місії", "⌘") {
             startActivity(Intent(this, LabActivity::class.java))
         }
-        addAction(body, "OSINT Case Files", "Розслідування • Докази • Захист", "▤") {
+        addAction(classicPanel, "OSINT Case Files", "Розслідування • Докази • Захист", "▤") {
             startActivity(Intent(this, CaseFilesActivity::class.java))
         }
-        addAction(body, "OSINT з нуля", "7 етапів • Розслідування • Звіт • Захист", "✦") {
+        addAction(classicPanel, "OSINT з нуля", "7 етапів • Розслідування • Звіт • Захист", "✦") {
             startActivity(Intent(this, FoundationsActivity::class.java))
         }
-        addAction(body, "OS1N7 Academy", "Навчитися • Спробувати • Захист • Тест", "◈") {
+        addAction(classicPanel, "OS1N7 Academy", "Навчитися • Спробувати • Захист • Тест", "◈") {
             startActivity(Intent(this, AcademyActivity::class.java))
         }
-        addAction(body, "OSINT Graph", "Власні справи • Об'єкти • Зв'язки • Звіти", "◎") {
+        addAction(classicPanel, "OSINT Graph", "Власні справи • Об'єкти • Зв'язки • Звіти", "◎") {
             startActivity(Intent(this, GraphActivity::class.java))
         }
-        addAction(body, "Security Center", "Реальний DNS • Privacy Shield • Чекліст", "⬡") {
+        addAction(classicPanel, "Security Center", "Реальний DNS • Privacy Shield • Чекліст", "⬡") {
             startActivity(Intent(this, SecurityCenterActivity::class.java))
         }
-        addAction(body, "Каталог OSINT-інструментів", "SpiderFoot • Maltego • Shodan • 12 довідок", "▦") {
+        addAction(classicPanel, "Каталог OSINT-інструментів", "SpiderFoot • Maltego • Shodan • 12 довідок", "▦") {
             startActivity(Intent(this, ToolCatalogActivity::class.java))
         }
-        addAction(body, "OSINT Інструменти", "DNS • URL • EXIF • Захист", "⚒") {
+        addAction(classicPanel, "OSINT Інструменти", "DNS • URL • EXIF • Захист", "⚒") {
             startActivity(Intent(this, ToolsActivity::class.java))
         }
-        addAction(body, "Кіберправо України", "Закони • Межі OSINT • Статті КК • Покарання", "⚖") {
+        addAction(classicPanel, "Кіберправо України", "Закони • Межі OSINT • Статті КК • Покарання", "⚖") {
             startActivity(Intent(this, CyberLawActivity::class.java))
         }
-        addAction(body, "Відгуки та підтримка", "Повідомити про помилку • Запропонувати ідею", "✉") {
+        addAction(classicPanel, "Відгуки та підтримка", "Повідомити про помилку • Запропонувати ідею", "✉") {
             startActivity(Intent(this, FeedbackActivity::class.java))
         }
-        addAction(body, "Перевірити оновлення", "Знайти нову версію APK на GitHub", "↻") { checkForUpdates() }
+        addAction(classicPanel, "Перевірити оновлення", "Знайти нову версію APK на GitHub", "↻") { checkForUpdates() }
 
         val libraryPrefs = getSharedPreferences("os1n7_learning", Context.MODE_PRIVATE)
         val academyPrefs = getSharedPreferences("academy", Context.MODE_PRIVATE)
@@ -353,7 +412,7 @@ class MainActivity : Activity() {
         val bar = View(this).apply { background = shape(green, 8) }
         track.addView(bar, FrameLayout.LayoutParams(0, dp(9)))
         progress.addView(track, LinearLayout.LayoutParams(-1, dp(9)).apply { topMargin = dp(12) })
-        body.addView(progress, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(15) })
+        classicPanel.addView(progress, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(12) })
         dashboardRefresh = {
             val library = LessonLibrary.lessons.count { libraryPrefs.getBoolean("practice:" + it.title, false) }
             val academy = (0..2).count { academyPrefs.getBoolean("done_" + it, false) }
@@ -372,7 +431,20 @@ class MainActivity : Activity() {
         dashboardRefresh()
         val footer = label("OS1N7  •  Навчання OSINT з повагою до приватності", 11f, muted)
         footer.setPadding(0, dp(22), 0, dp(8))
-        body.addView(footer)
+        classicPanel.addView(footer)
+        // Profile settings can be changed and applied without restarting the app.
+        var shownMode: Boolean? = null
+        refreshHomeMode = {
+            val animated = getSharedPreferences("os1n7_profile", Context.MODE_PRIVATE)
+                .getBoolean("animated_home", false)
+            classicPanel.visibility = if (animated) View.GONE else View.VISIBLE
+            animatedPanel.visibility = if (animated) View.VISIBLE else View.GONE
+            if (shownMode != animated) {
+                shownMode = animated
+                scroll.scrollTo(0, 0)
+            }
+        }
+        refreshHomeMode?.invoke()
         checkUpdatesOnLaunch()
     }
 
@@ -382,6 +454,7 @@ class MainActivity : Activity() {
         if (::dashboardRefresh.isInitialized) dashboardRefresh.invoke()
         profileShortcut?.text = getSharedPreferences("os1n7_profile", Context.MODE_PRIVATE)
             .getString("avatar", "◈").orEmpty().ifBlank { "◈" }
+        refreshHomeMode?.invoke()
     }
     private lateinit var dashboardRefresh: () -> Unit
 }
