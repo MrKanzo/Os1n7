@@ -28,6 +28,7 @@ class MainActivity : Os1n7Activity() {
     private var introCardIndex = 0
     private var refreshHomeMode: (() -> Unit)? = null
     private var refreshCompanion: (() -> Unit)? = null
+    private var compactDescriptionsAtCreation = false
     private fun dp(n: Int) = (n * resources.displayMetrics.density).toInt()
     private fun shape(color: Int, radius: Int = 16) = GradientDrawable().apply {
         setColor(color)
@@ -59,9 +60,11 @@ class MainActivity : Os1n7Activity() {
         box.addView(Os1n7Ui.icon(this, glyph).apply { textSize = 17f }, LinearLayout.LayoutParams(dp(36), dp(36)).apply { rightMargin = dp(10) })
         val column = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         column.addView(label(title, 15.5f, Color.WHITE, true))
-        val small = label(detail, 11.5f, muted)
-        small.setPadding(0, dp(2), 0, 0)
-        column.addView(small)
+        if (!compactDescriptionsAtCreation) {
+            val small = label(detail, 11.5f, muted)
+            small.setPadding(0, dp(2), 0, 0)
+            column.addView(small)
+        }
         box.addView(column, LinearLayout.LayoutParams(0, -2, 1f))
         box.addView(label("›", 21f, green))
         return box
@@ -226,6 +229,7 @@ class MainActivity : Os1n7Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        compactDescriptionsAtCreation = Os1n7Preferences.shortDescriptions(this)
         window.statusBarColor = bg
         window.navigationBarColor = bg
         val root = LinearLayout(this).apply {
@@ -268,9 +272,9 @@ class MainActivity : Os1n7Activity() {
             setPadding(dp(12), 0, 0, 0)
         }
         heading.addView(label("OS1N7", 23f, Color.WHITE, true))
-        heading.addView(label("OSINT • Цифрова бібліотека", 12f, muted))
+        heading.addView(label(getString(R.string.home_subtitle), 12f, muted))
         val installedVersion = packageManager.getPackageInfo(packageName, 0).versionName ?: "?"
-        heading.addView(label("Версія: $installedVersion", 11f, green))
+        heading.addView(label(getString(R.string.home_version, installedVersion), 11f, green))
         topBar.addView(heading, LinearLayout.LayoutParams(0, -2, 1f))
         val cloudShortcut = label("☁", 23f, muted).apply {
             gravity = android.view.Gravity.CENTER
@@ -285,6 +289,16 @@ class MainActivity : Os1n7Activity() {
         topBar.addView(cloudShortcut, LinearLayout.LayoutParams(dp(48), dp(48)).apply {
             leftMargin = dp(8)
         })
+        topBar.addView(label("⚙", 22f, green).apply {
+            gravity = android.view.Gravity.CENTER
+            background = shape(panel, 12)
+            contentDescription = getString(R.string.home_settings_description)
+            isClickable = true
+            isFocusable = true
+            setOnClickListener {
+                startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+            }
+        }, LinearLayout.LayoutParams(dp(44), dp(48)).apply { leftMargin = dp(7) })
         body.addView(topBar)
 
         // A single low-height companion dock serves both home modes; the avatar
@@ -311,7 +325,7 @@ class MainActivity : Os1n7Activity() {
         }
         val companionTitle = label("", 13.5f, Color.WHITE, true)
         companionText.addView(companionTitle)
-        companionText.addView(label("Внутрішня допомога • без мережі", 11f, muted))
+        companionText.addView(label(getString(R.string.home_companion_help), 11f, muted))
         companionDock.addView(companionText, LinearLayout.LayoutParams(0, -2, 1f))
         companionDock.addView(label("›", 22f, green))
         body.addView(companionDock, LinearLayout.LayoutParams(-1, -2).apply {
@@ -349,12 +363,12 @@ class MainActivity : Os1n7Activity() {
             overridePendingTransition(R.anim.os1n7_enter, R.anim.os1n7_exit)
         }
 
-        animatedPanel.addView(label("OSINT  //  ЖИВА НАВІГАЦІЯ", 14f, green, true).apply {
+        animatedPanel.addView(label(getString(R.string.home_live_label), 14f, green, true).apply {
             setPadding(dp(3), dp(20), 0, dp(4))
         })
-        animatedPanel.addView(label("Обери гілку дослідження", 23f, Color.WHITE, true))
+        animatedPanel.addView(label(getString(R.string.home_live_choose), 23f, Color.WHITE, true))
         animatedPanel.addView(label(
-            "Натисни на світловий вузол або в центр дерева, щоб відкрити всі 13 напрямків.",
+            getString(R.string.home_live_hint),
             13f, muted
         ).apply { setPadding(0, dp(5), 0, dp(9)) })
 
@@ -379,7 +393,7 @@ class MainActivity : Os1n7Activity() {
             bottomMargin = dp(10)
         })
         val explore = Os1n7Ui.button(this).apply {
-            text = "✦  ВІДКРИТИ ВСІ 13 НАПРЯМКІВ"
+            text = getString(R.string.home_live_open)
             setTextColor(bg)
             backgroundTintList = android.content.res.ColorStateList.valueOf(green)
             setOnClickListener { openTree() }
@@ -390,71 +404,71 @@ class MainActivity : Os1n7Activity() {
             setPadding(0, dp(10), 0, 0)
         }
         quickRow.addView(Os1n7Ui.button(this).apply {
-            text = "✉ Підтримка"
+            text = getString(R.string.home_live_support)
             setOnClickListener { startActivity(Intent(this@MainActivity, FeedbackActivity::class.java)) }
         }, LinearLayout.LayoutParams(0, -2, 1f).apply { rightMargin = dp(5) })
         quickRow.addView(Os1n7Ui.button(this).apply {
-            text = "↻ Оновлення"
+            text = getString(R.string.home_live_updates)
             setOnClickListener { checkForUpdates() }
         }, LinearLayout.LayoutParams(0, -2, 1f))
         animatedPanel.addView(quickRow)
         if (!ValueAnimator.areAnimatorsEnabled()) {
             animatedPanel.addView(label(
-                "⚠ Android вимкнув рух. Карту можна використовувати, але анімація не відтворюватиметься.",
+                getString(R.string.home_banner_warning),
                 12f, muted
             ).apply { setPadding(0, dp(10), 0, 0) })
         }
         animatedPanel.addView(label(
-            "Режим можна змінити в особистому профілі ◈",
+            getString(R.string.home_live_tip),
             12f, muted
         ).apply { setPadding(0, dp(15), 0, dp(18)) })
 
-        classicPanel.addView(label("Досліджуй. Перевіряй. Навчайся.", 20f, Color.WHITE, true))
-        val description = label("Усі матеріали в одному місці — без повторів і зайвих екранів.", 14f, muted)
+        classicPanel.addView(label(getString(R.string.home_classic_title), 20f, Color.WHITE, true))
+        val description = label(getString(R.string.home_classic_description), 14f, muted)
         description.setPadding(0, dp(8), 0, dp(23))
         classicPanel.addView(description)
 
-        sectionHeader(classicPanel, "НАВІГАЦІЯ")
-        addAction(classicPanel, "Живе дерево OSINT", "13 гілок • Неонова карта • Плавна анімація", "◈") {
+        sectionHeader(classicPanel, getString(R.string.home_group_nav))
+        addAction(classicPanel, getString(R.string.home_tree), getString(R.string.home_tree_detail), "◈") {
             startActivity(Intent(this, OsintTreeActivity::class.java))
             @Suppress("DEPRECATION")
             overridePendingTransition(R.anim.os1n7_enter, R.anim.os1n7_exit)
         }
-        addAction(classicPanel, "Категорії та уроки", "Теорія • Книжки • Практика • Тести", "▣") { openLibrary() }
-        sectionHeader(classicPanel, "НАВЧАННЯ ТА ПРАКТИКА")
-        addAction(classicPanel, "OSINT Лабораторія", "Термінал • Симуляції • Практичні місії", "⌘") {
+        addAction(classicPanel, getString(R.string.home_library), getString(R.string.home_library_detail), "▣") { openLibrary() }
+        sectionHeader(classicPanel, getString(R.string.home_group_learning))
+        addAction(classicPanel, getString(R.string.home_lab), getString(R.string.home_lab_detail), "⌘") {
             startActivity(Intent(this, LabActivity::class.java))
         }
-        addAction(classicPanel, "OSINT Case Files", "Розслідування • Докази • Захист", "▤") {
+        addAction(classicPanel, getString(R.string.home_case), getString(R.string.home_case_detail), "▤") {
             startActivity(Intent(this, CaseFilesActivity::class.java))
         }
-        addAction(classicPanel, "OSINT з нуля", "7 етапів • Розслідування • Звіт • Захист", "✦") {
+        addAction(classicPanel, getString(R.string.home_basics), getString(R.string.home_basics_detail), "✦") {
             startActivity(Intent(this, FoundationsActivity::class.java))
         }
-        addAction(classicPanel, "OS1N7 Academy", "Навчитися • Спробувати • Захист • Тест", "◈") {
+        addAction(classicPanel, getString(R.string.home_academy), getString(R.string.home_academy_detail), "◈") {
             startActivity(Intent(this, AcademyActivity::class.java))
         }
-        sectionHeader(classicPanel, "ІНСТРУМЕНТИ Й АНАЛІЗ")
-        addAction(classicPanel, "OSINT Graph", "Власні справи • Об'єкти • Зв'язки • Звіти", "◎") {
+        sectionHeader(classicPanel, getString(R.string.home_group_tools))
+        addAction(classicPanel, getString(R.string.home_graph), getString(R.string.home_graph_detail), "◎") {
             startActivity(Intent(this, GraphActivity::class.java))
         }
-        addAction(classicPanel, "Security Center", "Реальний DNS • Privacy Shield • Чекліст", "⬡") {
+        addAction(classicPanel, getString(R.string.home_security), getString(R.string.home_security_detail), "⬡") {
             startActivity(Intent(this, SecurityCenterActivity::class.java))
         }
-        addAction(classicPanel, "Каталог OSINT-інструментів", "SpiderFoot • Maltego • Shodan • 12 довідок", "▦") {
+        addAction(classicPanel, getString(R.string.home_catalog), getString(R.string.home_catalog_detail), "▦") {
             startActivity(Intent(this, ToolCatalogActivity::class.java))
         }
-        addAction(classicPanel, "OSINT Інструменти", "DNS • URL • EXIF • Захист", "⚒") {
+        addAction(classicPanel, getString(R.string.home_tools), getString(R.string.home_tools_detail), "⚒") {
             startActivity(Intent(this, ToolsActivity::class.java))
         }
-        addAction(classicPanel, "Кіберправо України", "Закони • Межі OSINT • Статті КК • Покарання", "⚖") {
+        addAction(classicPanel, getString(R.string.home_law), getString(R.string.home_law_detail), "⚖") {
             startActivity(Intent(this, CyberLawActivity::class.java))
         }
-        sectionHeader(classicPanel, "НАЛАШТУВАННЯ ТА ДОПОМОГА")
-        addAction(classicPanel, "Відгуки та підтримка", "Повідомити про помилку • Запропонувати ідею", "✉") {
+        sectionHeader(classicPanel, getString(R.string.home_group_misc))
+        addAction(classicPanel, getString(R.string.home_feedback), getString(R.string.home_feedback_detail), "✉") {
             startActivity(Intent(this, FeedbackActivity::class.java))
         }
-        addAction(classicPanel, "Перевірити оновлення", "Знайти нову версію APK на GitHub", "↻") { checkForUpdates() }
+        addAction(classicPanel, getString(R.string.home_update), getString(R.string.home_update_detail), "↻") { checkForUpdates() }
 
         val libraryPrefs = getSharedPreferences("os1n7_learning", Context.MODE_PRIVATE)
         val academyPrefs = getSharedPreferences("academy", Context.MODE_PRIVATE)
@@ -466,7 +480,7 @@ class MainActivity : Os1n7Activity() {
             setPadding(dp(17), dp(17), dp(17), dp(17))
             background = shape(panel)
         }
-        progress.addView(label("ТВІЙ ПРОГРЕС", 13f, green, true))
+        progress.addView(label(getString(R.string.home_progress), 13f, green, true))
         val summary = label("", 14f, Color.WHITE)
         summary.setPadding(0, dp(12), 0, dp(12))
         progress.addView(summary)
@@ -495,13 +509,13 @@ class MainActivity : Os1n7Activity() {
             val foundationsPrefs = getSharedPreferences("os1n7_foundations", Context.MODE_PRIVATE)
             val foundations = (0..6).count { foundationsPrefs.getBoolean("step_" + it, false) }
             val finished = library + academy + lab + cases + foundations
-            summary.text = finished.toString() + " із " + total + " завдань виконано"
+            summary.text = getString(R.string.home_progress_count, finished, total)
             breakdown.text = "Бібліотека: " + library + "  •  Academy: " + academy + "  •  Лабораторія: " + lab + "  •  Case Files: " + cases + "  •  OSINT з нуля: " + foundations
             progressRatio = if (total == 0) 0f else (finished.toFloat() / total).coerceIn(0f, 1f)
             track.post { syncProgressBar() }
         }
         dashboardRefresh()
-        val footer = label("OS1N7  •  Навчання OSINT з повагою до приватності", 11f, muted)
+        val footer = label(getString(R.string.home_footer), 11f, muted)
         footer.setPadding(0, dp(22), 0, dp(8))
         classicPanel.addView(footer)
         // Profile settings can be changed and applied without restarting the app.
@@ -523,6 +537,10 @@ class MainActivity : Os1n7Activity() {
 
     override fun onResume() {
         super.onResume()
+        if (compactDescriptionsAtCreation != Os1n7Preferences.shortDescriptions(this)) {
+            recreate()
+            return
+        }
         // Refresh the dashboard after returning from completed lessons.
         if (::dashboardRefresh.isInitialized) dashboardRefresh.invoke()
         profileShortcut?.text = getSharedPreferences("os1n7_profile", Context.MODE_PRIVATE)
