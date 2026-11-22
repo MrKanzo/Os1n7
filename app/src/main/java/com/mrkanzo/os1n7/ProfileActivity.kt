@@ -204,6 +204,79 @@ class ProfileActivity : Activity() {
         }
         action(appearance, "✓ Повернутися до головного екрана") { finish() }
 
+        val companion = section("МІЙ КОМПАНЬЙОН")
+        val companionName = profile.getString("companion_name", "Некс").orEmpty().ifBlank { "Некс" }
+        val currentStyle = profile.getString("companion_style", "neon") ?: "neon"
+        val companionProgress = CompanionEngine.progress(this)
+        val companionRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
+        companionRow.addView(CompanionOrbView(this).apply {
+            skin = currentStyle
+            live = profile.getBoolean("animated_home", false)
+            contentDescription = "Компаньйон $companionName"
+        }, LinearLayout.LayoutParams(dp(60), dp(60)).apply { rightMargin = dp(10) })
+        val companionInfo = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        companionInfo.addView(label("$companionName • Lv.${companionProgress.level}", 17f, Color.WHITE, true))
+        companionInfo.addView(label(
+            "${companionProgress.rank} • ${companionProgress.xp} XP", 13f, accent
+        ))
+        companionRow.addView(companionInfo, LinearLayout.LayoutParams(0, -2, 1f))
+        companion.addView(companionRow)
+        companion.addView(label(
+            "Із живим банером — м’яка анімація. У класичному режимі — статичний 2D. " +
+                "Підказки завжди працюють лише з матеріалами OS1N7.",
+            12.5f, muted
+        ).apply { setPadding(0, dp(8), 0, dp(4)) })
+        val companionSwitch = Switch(this).apply {
+            text = "Показувати компаньйона"
+            textSize = 14f
+            setTextColor(Color.WHITE)
+            isChecked = profile.getBoolean("companion_enabled", true)
+            thumbTintList = android.content.res.ColorStateList.valueOf(accent)
+            setOnCheckedChangeListener { _, checked ->
+                profile.edit().putBoolean("companion_enabled", checked).apply()
+            }
+        }
+        companion.addView(companionSwitch)
+        action(companion, "✎ Змінити ім’я") {
+            val input = EditText(this).apply {
+                setSingleLine(true)
+                setText(companionName)
+                setSelection(text.length)
+                filters = arrayOf(android.text.InputFilter.LengthFilter(18))
+            }
+            AlertDialog.Builder(this)
+                .setTitle("Ім’я компаньйона")
+                .setView(input)
+                .setNegativeButton("Скасувати", null)
+                .setPositiveButton("Зберегти") { _, _ ->
+                    val next = input.text.toString().trim()
+                    if (next.isNotBlank()) {
+                        profile.edit().putString("companion_name", next).apply()
+                        render()
+                    }
+                }.show()
+        }
+        val styleNames = arrayOf("Неоновий", "Привид", "Вогник")
+        val styleIds = arrayOf("neon", "ghost", "ember")
+        val styleIndex = styleIds.indexOf(currentStyle).coerceAtLeast(0)
+        action(companion, "◈ Стиль: ${styleNames[styleIndex]}") {
+            AlertDialog.Builder(this)
+                .setTitle("Стиль компаньйона")
+                .setSingleChoiceItems(styleNames, styleIndex) { dialog, which ->
+                    profile.edit().putString("companion_style", styleIds[which]).apply()
+                    dialog.dismiss()
+                    render()
+                }
+                .setNegativeButton("Закрити", null)
+                .show()
+        }
+        action(companion, "▣ Відкрити внутрішнього помічника") {
+            startActivity(Intent(this, CompanionActivity::class.java))
+        }
+
         val progress = section("НАВЧАЛЬНИЙ ПРОГРЕС")
         progress.addView(label("$done із $total основних завдань", 18f, Color.WHITE, true))
         val track = FrameLayout(this).apply { background = shape(Color.rgb(54, 70, 81), 8) }
