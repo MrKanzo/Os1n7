@@ -176,6 +176,7 @@ class ProfileActivity : Os1n7Activity() {
         companionRow.addView(CompanionOrbView(this).apply {
             skin = currentStyle
             live = profile.getBoolean("animated_home", false)
+            CompanionWardrobe.applyTo(this@ProfileActivity, this)
             contentDescription = "Компаньйон $companionName"
         }, LinearLayout.LayoutParams(dp(60), dp(60)).apply { rightMargin = dp(10) })
         val companionInfo = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
@@ -222,6 +223,9 @@ class ProfileActivity : Os1n7Activity() {
                 }
                 .setNegativeButton("Закрити", null)
                 .show()
+        }
+        action(companion, "◈ Гардероб • рівні та речі") {
+            startActivity(Intent(this, CompanionWardrobeActivity::class.java))
         }
         action(companion, "▣ Відкрити внутрішнього помічника") {
             startActivity(Intent(this, CompanionActivity::class.java))
