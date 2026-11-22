@@ -39,6 +39,72 @@ class CaseFilesActivity : Activity() {
             setOnClickListener { run() }
         }, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(6) })
     }
+    /**
+     * Original OS1N7 feature: a compact self-critique of the evidence chain.
+     * It opens on demand instead of adding another large screen or home card.
+     */
+    private fun showEvidenceMirror(parent: LinearLayout) {
+        val mirror = card(parent, "◈ Дзеркало доказів")
+        mirror.addView(text(
+            "Чи не перетворилися збіги на вигадану впевненість? " +
+                "4 запитання про слабкі місця твого висновку.",
+            13f, Color.LTGRAY
+        ))
+        val status = text(
+            if (prefs.getBoolean("case001_mirror", false))
+                "✓ Аналіз власних висновків уже пройдено"
+            else "Без автоматичного пошуку • без реальних людей",
+            13f, accent
+        )
+        status.setPadding(0, dp(8), 0, dp(5))
+        mirror.addView(status)
+        val details = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            visibility = android.view.View.GONE
+        }
+        action(mirror, "▣ Відкрити / сховати розбір") {
+            details.visibility = if (details.visibility == android.view.View.VISIBLE)
+                android.view.View.GONE else android.view.View.VISIBLE
+        }
+        val selections = mutableMapOf<Int, Int>()
+        EvidenceMirror.checks.forEachIndexed { index, item ->
+            val heading = text(item.question, 14f, Color.WHITE, true).apply {
+                setPadding(0, dp(11), 0, dp(8))
+            }
+            details.addView(heading)
+            val group = RadioGroup(this).apply { orientation = RadioGroup.VERTICAL }
+            val optionIds = item.options.mapIndexed { optionIndex, option ->
+                val id = android.view.View.generateViewId()
+                group.addView(RadioButton(this).apply {
+                    this.id = id
+                    text = option
+                    textSize = 13.5f
+                    setTextColor(Color.WHITE)
+                    buttonTintList = android.content.res.ColorStateList.valueOf(accent)
+                    setPadding(0, dp(5), 0, dp(5))
+                })
+                id to optionIndex
+            }.toMap()
+            group.setOnCheckedChangeListener { _, checkedId ->
+                optionIds[checkedId]?.let { selections[index] = it }
+            }
+            details.addView(group)
+        }
+        val verdict = text("Висновок з'явиться після перевірки.", 13.5f, accent).apply {
+            setLineSpacing(dp(3).toFloat(), 1f)
+        }
+        action(details, "✓ Перевірити логіку") {
+            val review = EvidenceMirror.review(selections)
+            verdict.text = "${review.headline}\n\n${review.explanation}\n\n${review.nextStep}"
+            if (review.passed) {
+                prefs.edit().putBoolean("case001_mirror", true).apply()
+                status.text = "✓ Дзеркало доказів пройдено"
+            }
+        }
+        details.addView(verdict)
+        mirror.addView(details)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = bg
@@ -133,6 +199,7 @@ class CaseFilesActivity : Activity() {
             }
         }
         defense.addView(defenseResult)
+        showEvidenceMirror(body)
     }
 }
 
