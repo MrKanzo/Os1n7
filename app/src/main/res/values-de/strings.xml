@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_back">← Zurück</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_subtitle">Sprache • Ansicht • Datenschutz</string>
+    <string name="settings_language">Sprache der Oberfläche</string>
+    <string name="settings_language_note">Menüs und Hauptseiten sind übersetzt. Lektionen und einige Hilfetexte sind noch auf Ukrainisch.</string>
+    <string name="settings_appearance">Darstellung und Komfort</string>
+    <string name="settings_banner">Animiertes Banner</string>
+    <string name="settings_banner_hint">An: animierter Baum und Begleiter. Aus: klassisches Menü und statisches 2D.</string>
+    <string name="settings_short_descriptions">Kurze Beschreibungen</string>
+    <string name="settings_short_descriptions_hint">Weniger Text auf den Karten des Startbildschirms.</string>
+    <string name="settings_companion">Begleiter anzeigen</string>
+    <string name="settings_companion_hint">Kleiner integrierter Helfer ohne externe KI.</string>
+    <string name="settings_privacy">Datenschutz</string>
+    <string name="settings_privacy_detail">Einstellungen bleiben auf diesem Gerät. Die Sprache ist jederzeit änderbar. Keine Soundeffekte.</string>
+    <string name="settings_version">OS1N7 • Version %1$s</string>
+    <string name="settings_cancel">Abbrechen</string>
+    <string name="profile_settings_button">⚙ Einstellungen</string>
+</resources>
