@@ -17,6 +17,12 @@
 - [ ] Security Center: DNS error reporting, privacy checklist, and back navigation.
 - [ ] Cloud Library: GitHub ⇄ Termux toggle, search, offline copy, synchronization state.
 - [ ] Android light/dark system theme: text must remain readable in the app's dark theme.
+- [ ] Profile: tap the upper-left avatar; the upper-right cloud shortcut remains unchanged.
+- [ ] Edit nickname (1–24 characters) and choose a built-in avatar; both persist after reopening.
+- [ ] Profile progress uses existing lesson, academy, lab, case, and foundation keys without resetting data.
+- [ ] Bookmark a lesson, return to profile, open it from Favorites, then unbookmark it.
+- [ ] Achievements unlock only at their stated thresholds.
+- [ ] Profile is local-only: no login, user upload, or new permission.
 - [ ] APK update: signed release installs over the prior signed release without clearing local progress.
 - [ ] Rotate or background/restore where supported; avoid duplicate update prompts.
 
