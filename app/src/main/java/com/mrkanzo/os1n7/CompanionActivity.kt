@@ -15,7 +15,7 @@ import android.widget.*
  * Compact offline guide: a controlled help interface, not a cloud AI chatbot.
  * Suggestions and responses are based on built-in OS1N7 educational material.
  */
-class CompanionActivity : Activity() {
+class CompanionActivity : Os1n7Activity() {
     private val bg = Os1n7Ui.background
     private val muted = Os1n7Ui.muted
     private val accent = Os1n7Ui.accent
