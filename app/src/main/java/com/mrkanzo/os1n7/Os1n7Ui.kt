@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.RippleDrawable
 import android.view.Gravity
 import android.view.animation.DecelerateInterpolator
 import android.widget.Button
@@ -30,11 +31,21 @@ object Os1n7Ui {
 
     fun button(context: Context): Button = Button(context).apply {
         isAllCaps = false
-        textSize = 14f
+        textSize = 13.5f
         minHeight = dp(context, 48)
+        minimumHeight = dp(context, 48)
         setTextColor(accent)
-        backgroundTintList = ColorStateList.valueOf(surface)
-        setPadding(dp(context, 14), dp(context, 9), dp(context, 14), dp(context, 9))
+        backgroundTintList = null
+        val backgroundShape = rounded(context, surface, 14).apply {
+            setStroke(dp(context, 1), Color.rgb(49, 72, 82))
+        }
+        background = RippleDrawable(
+            ColorStateList.valueOf(Color.argb(52, 98, 230, 173)),
+            backgroundShape, null
+        )
+        setPadding(dp(context, 14), dp(context, 10), dp(context, 14), dp(context, 10))
+        elevation = 0f
+        stateListAnimator = null
     }
 
     fun icon(context: Context, symbol: String): TextView = TextView(context).apply {
@@ -43,7 +54,9 @@ object Os1n7Ui {
         gravity = Gravity.CENTER
         setTextColor(accent)
         typeface = Typeface.DEFAULT_BOLD
-        background = rounded(context, Color.rgb(42, 63, 72), 12)
+        background = rounded(context, Color.rgb(36, 58, 66), 12).apply {
+            setStroke(dp(context, 1), Color.rgb(51, 85, 86))
+        }
         contentDescription = null
     }
 
@@ -108,7 +121,7 @@ object Os1n7Ui {
         }
         labels.addView(TextView(context).apply {
             text = title
-            textSize = 23f
+            textSize = 21f
             typeface = Typeface.DEFAULT_BOLD
             setTextColor(Color.WHITE)
         })
