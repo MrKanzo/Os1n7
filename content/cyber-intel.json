@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-22T20:59:17Z",
+  "updatedAt": "2026-11-22T21:02:25Z",
   "news": [
     {
       "id": "b22eec5809ce5c9c44d6",
@@ -225,118 +225,6 @@
       "summary": "Виявлено DOC-файл \"Consultation_Topics_Ukraine(Final).doc\", що містив експлойт CVE-2026-21509 та був присвячений консультаціям Комітету постійних представників при ЄС (COREPER) по ситуації в Україні.",
       "published": "2026-02-01",
       "url": "https://cert.gov.ua/article/6287250"
-    },
-    {
-      "id": "f6942e01c3eb0174a5f4",
-      "source": "NCSC UK",
-      "title": "Impact of AI on cyber threat from now to 2027",
-      "summary": "An NCSC assessment highlighting the impacts on cyber threat from AI developments between now and 2027.",
-      "published": "2025-05-07",
-      "url": "https://www.ncsc.gov.uk/report/impact-ai-cyber-threat-now-2027"
-    },
-    {
-      "id": "847e52390bad64c34264",
-      "source": "NCSC UK",
-      "title": "A method to assess 'forgivable' vs 'unforgivable' vulnerabilities",
-      "summary": "Research from the NCSC designed to eradicate vulnerability classes and make the top-level mitigations easier to implement.",
-      "published": "2025-01-28",
-      "url": "https://www.ncsc.gov.uk/report/a-method-to-assess-forgivable-vs-unforgivable-vulnerabilities"
-    },
-    {
-      "id": "8ef507ff76964015b3cd",
-      "source": "NCSC UK",
-      "title": "The near-term impact of AI on the cyber threat",
-      "summary": "An NCSC assessment focusing on how AI will impact the efficacy of cyber operations and the implications for the cyber threat over the next two years.",
-      "published": "2024-01-24",
-      "url": "https://www.ncsc.gov.uk/report/impact-of-ai-on-cyber-threat"
-    },
-    {
-      "id": "d4ad6423ca41160fa7f3",
-      "source": "NCSC UK",
-      "title": "ACD - The Sixth Year",
-      "summary": "Key findings and full report from the 6th year of the Active Cyber Defence (ACD) programme.",
-      "published": "2023-07-06",
-      "url": "https://www.ncsc.gov.uk/report/acd-the-sixth-year"
-    },
-    {
-      "id": "98c42ad11e875c70ca8a",
-      "source": "NCSC UK",
-      "title": "Cyber Threat Report: UK Legal Sector",
-      "summary": "An updated report from the NCSC explaining how UK law firms - of all sizes - can protect themselves from common cyber threats.",
-      "published": "2023-06-22",
-      "url": "https://www.ncsc.gov.uk/report/cyber-threat-report-uk-legal-sector"
-    },
-    {
-      "id": "d0ad991822c4918f4655",
-      "source": "NCSC UK",
-      "title": "The threat from commercial cyber proliferation",
-      "summary": "Report informing readers about the threat to UK industry and society from commercial cyber tools and services.",
-      "published": "2023-04-19",
-      "url": "https://www.ncsc.gov.uk/report/commercial-cyber-proliferation-assessment"
-    },
-    {
-      "id": "cf6f39aa0736f85ecafc",
-      "source": "NCSC UK",
-      "title": "Organisational use of Enterprise Connected Devices",
-      "summary": "Assessing the cyber security threat to UK organisations using Enterprise Connected Devices.",
-      "published": "2022-05-10",
-      "url": "https://www.ncsc.gov.uk/report/organisational-use-of-enterprise-connected-devices"
-    },
-    {
-      "id": "c1c9d8bbfe7f35ce9f1b",
-      "source": "NCSC UK",
-      "title": "ACD - The Fifth Year",
-      "summary": "Key findings from the 5th year of the Active Cyber Defence (ACD) programme.",
-      "published": "2022-05-10",
-      "url": "https://www.ncsc.gov.uk/report/acd-the-fifth-year"
-    },
-    {
-      "id": "0e739646e83f5090c4a0",
-      "source": "NCSC UK",
-      "title": "Threat report on application stores",
-      "summary": "This report outlines the risks associated with the use of official and third party app stores.",
-      "published": "2022-05-04",
-      "url": "https://www.ncsc.gov.uk/report/threat-report-on-application-stores"
-    },
-    {
-      "id": "86314c8c88a260d80825",
-      "source": "NCSC UK",
-      "title": "Malware analysis report on SparrowDoor malware",
-      "summary": "A technical analysis of a new variant of the SparrowDoor malware.",
-      "published": "2022-04-25",
-      "url": "https://www.ncsc.gov.uk/report/mar-sparrowdoor"
-    },
-    {
-      "id": "054f43b6427ac153fb47",
-      "source": "NCSC UK",
-      "title": "Vendor Security Assessment",
-      "summary": "Assessing the security of network equipment.",
-      "published": "2022-03-22",
-      "url": "https://www.ncsc.gov.uk/report/vendor-security-assessment"
-    },
-    {
-      "id": "aa83d74bd3e3cf591c3d",
-      "source": "NCSC UK",
-      "title": "Decrypting diversity: Diversity and inclusion in cyber security report 2021",
-      "summary": "The 2nd joint report between the NCSC and KPMG UK benchmarks against the 2020 findings to gauge what progress has been made.",
-      "published": "2021-11-23",
-      "url": "https://www.ncsc.gov.uk/report/decrypting-diversity-2021-diversity-and-inclusion-in-cyber-security"
-    },
-    {
-      "id": "8d63e90d19ab24655f78",
-      "source": "NCSC UK",
-      "title": "Active Cyber Defence (ACD) - the fourth year",
-      "summary": "The year four report covers 2020 and aims to highlight the achievements and efforts made by the Active Cyber Defence programme.",
-      "published": "2021-05-10",
-      "url": "https://www.ncsc.gov.uk/report/acd-report-year-four"
-    },
-    {
-      "id": "00f3608014675f5417db",
-      "source": "NCSC UK",
-      "title": "Active Cyber Defence (ACD) - The Third Year",
-      "summary": "The year three report covers 2019 and aims to highlight the achievements and efforts made by the Active Cyber Defence programme.",
-      "published": "2021-02-19",
-      "url": "https://www.ncsc.gov.uk/report/acd-report-year-three"
     }
   ],
   "statistics": [
