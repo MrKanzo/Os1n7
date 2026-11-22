@@ -39,9 +39,11 @@ class ProfileActivity : Activity() {
         val box = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(16), dp(15), dp(16), dp(15))
-            background = shape()
+            background = shape().apply {
+                setStroke(dp(1), Color.rgb(46, 68, 76))
+            }
         }
-        box.addView(label(title, 17f, accent, true))
+        box.addView(label(title, 16f, accent, true))
         content.addView(box, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(13) })
         return box
     }
@@ -159,24 +161,34 @@ class ProfileActivity : Activity() {
         action(identity, "◈ Вибрати аватар") { showAvatarEditor() }
 
         val appearance = section("ВИГЛЯД ГОЛОВНОГО ЕКРАНА")
-        val modeDescription = label("", 13f, muted)
+        appearance.addView(label(
+            "Обирай зручний вигляд — налаштування застосовується одразу.",
+            12.5f, muted
+        ).apply { setPadding(0, dp(4), 0, dp(8)) })
+        val modeDescription = label("", 12.5f, muted)
         val animatedToggle = Switch(this).apply {
-            text = "Увімкнути анімований режим"
-            textSize = 15f
+            text = "Живе дерево на головній"
+            textSize = 14.5f
             setTextColor(Color.WHITE)
             isChecked = profile.getBoolean("animated_home", false)
             isSaveEnabled = false
-            thumbTintList = android.content.res.ColorStateList.valueOf(accent)
-            setPadding(0, dp(8), 0, dp(7))
+            minHeight = dp(52)
+            thumbTintList = android.content.res.ColorStateList(
+                arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
+                intArrayOf(accent, Color.rgb(188, 201, 207))
+            )
+            trackTintList = android.content.res.ColorStateList(
+                arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
+                intArrayOf(Color.rgb(35, 113, 91), Color.rgb(66, 82, 92))
+            )
+            setPadding(0, dp(6), 0, dp(6))
         }
         appearance.addView(animatedToggle, LinearLayout.LayoutParams(-1, -2))
         fun explainMode(enabled: Boolean) {
             modeDescription.text = if (enabled) {
-                "🌳 Анімований: велике живе дерево замість довгого списку. " +
-                    "Торкнися гілки або центру, щоб відкрити розділи. Профіль і хмара залишаються доступними."
+                "Анімований режим: інтерактивне дерево замість списку. Натискай гілки для переходу."
             } else {
-                "▦ Класичний: компактне меню всіх розділів без банера. " +
-                    "«Живе дерево OSINT» доступне окремим пунктом."
+                "Класичний режим: усі розділи в компактних списках. Дерево доступне окремо."
             }
         }
         explainMode(animatedToggle.isChecked)
@@ -201,11 +213,14 @@ class ProfileActivity : Activity() {
             topMargin = dp(13)
             bottomMargin = dp(9)
         })
-        track.post {
-            filled.layoutParams = FrameLayout.LayoutParams(
-                if (total == 0) 0 else (track.width * done / total).coerceIn(0, track.width), dp(9)
-            )
+        val syncProgress = {
+            val width = if (total == 0) 0 else (track.width * done / total).coerceIn(0, track.width)
+            if (filled.layoutParams.width != width) {
+                filled.layoutParams = FrameLayout.LayoutParams(width, dp(9))
+            }
         }
+        track.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> syncProgress() }
+        track.post { syncProgress() }
         progress.addView(label("Практика: $practices  •  Тести: $quizzes", 13f, muted))
         progress.addView(label("Academy: $academy/3  •  Lab: $lab/2", 13f, muted))
         progress.addView(label("Case Files: $cases/2  •  OSINT з нуля: $foundations/7", 13f, muted))
