@@ -251,6 +251,7 @@ def generate(previous=None):
         statistics.insert(0, kev)
     new_data = {
         "schemaVersion": 1,
+        "language": previous.get("language", "uk"),
         "updatedAt": previous.get("updatedAt", ""),
         "news": news,
         "statistics": statistics,
