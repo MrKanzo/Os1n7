@@ -12,6 +12,7 @@
         <activity android:name=".LabActivity" android:exported="false"/>
         <activity android:name=".CategoryLibraryActivity" android:exported="false"/>
         <activity android:name=".ServerLibraryActivity" android:exported="false"/>
+        <activity android:name=".CyberIntelActivity" android:exported="false"/>
         <activity android:name=".ProfileActivity" android:exported="false"/>
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
