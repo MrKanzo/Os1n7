@@ -101,6 +101,9 @@ class CompanionWardrobeActivity : Os1n7Activity() {
             }
         }
         progressTrack.addView(progressFill, FrameLayout.LayoutParams(0, dp(7)))
+        progressTrack.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            syncProgressWidth()
+        }
         previewCard.addView(progressTrack, LinearLayout.LayoutParams(-1, dp(7)).apply {
             topMargin = dp(6)
         })
@@ -175,12 +178,16 @@ class CompanionWardrobeActivity : Os1n7Activity() {
         val look = CompanionWardrobe.state(this)
         progressLabel.text = "Lv.${p.level} • ${p.xp} XP\n" +
             (if (look.auto) "Автоматичний вигляд" else "Твій власний стиль")
+        progressTrack.post { syncProgressWidth() }
+    }
+
+    private fun syncProgressWidth() {
+        if (!::progressTrack.isInitialized || progressTrack.width <= 0) return
+        val p = CompanionEngine.progress(this)
         val ratio = if (p.level >= 5) 1f else (p.xp % 100) / 100f
-        progressTrack.post {
-            val width = (progressTrack.width * ratio).toInt().coerceIn(0, progressTrack.width)
-            if (progressFill.layoutParams.width != width) {
-                progressFill.layoutParams = FrameLayout.LayoutParams(width, dp(7))
-            }
+        val width = (progressTrack.width * ratio).toInt().coerceIn(0, progressTrack.width)
+        if (progressFill.layoutParams.width != width) {
+            progressFill.layoutParams = FrameLayout.LayoutParams(width, dp(7))
         }
     }
 
