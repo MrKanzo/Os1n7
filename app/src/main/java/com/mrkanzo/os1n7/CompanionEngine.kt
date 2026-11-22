@@ -68,7 +68,7 @@ object CompanionEngine {
         val done = practices +
             (0..2).count { academy.getBoolean("done_$it", false) } +
             listOf("mission_phishing", "mission_footprint").count { lab.getBoolean(it, false) } +
-            listOf("case001", "case001_defense").count { cases.getBoolean(it, false) } +
+            listOf("case001", "case001_defense", "case001_mirror").count { cases.getBoolean(it, false) } +
             (0..6).count { basics.getBoolean("step_$it", false) }
         // XP is derived from existing saved achievements: no farming by tapping.
         val xp = done * 20 + quizzes * 10
@@ -102,8 +102,8 @@ object CompanionEngine {
                 "Вони навчають аналізу на тестових даних і не виконують прихованих перевірок." +
                     deeper(progress.level, "tools"), ToolsActivity::class.java)
         }
-        if (listOf("граф", "справ", "case").any { q.contains(it) }) {
-            return Answer("Спробуй навчальні Case Files: зберігай докази, перевіряй зв’язки й не плутай припущення з фактами." +
+        if (listOf("граф", "справ", "case", "дзеркал", "доказ", "припущенн").any { q.contains(it) }) {
+            return Answer("Спробуй навчальні Case Files: зберігай докази, перевіряй зв’язки, а у «Дзеркалі доказів» шукай слабкі місця висновку." +
                 deeper(progress.level, "case"), CaseFilesActivity::class.java)
         }
         if (listOf("захист", "безпек", "приват", "парол", "2fa", "mfa").any { q.contains(it) }) {
