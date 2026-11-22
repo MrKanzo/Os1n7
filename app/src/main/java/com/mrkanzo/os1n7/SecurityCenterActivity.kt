@@ -53,7 +53,7 @@ class SecurityCenterActivity:Activity() {
   val scroll=ScrollView(this);scroll.addView(body);root.addView(scroll)
   setContentView(root);root.requestApplyInsets()
   button(body,"← Головне меню"){finish()}
-  text(body,"◈ OS1N7 SECURITY CENTER",24f)
+  Os1n7Ui.pageTitle(this,body,"⬡","Security Center","DNS • конфіденційність • захист")
   text(body,"🔎 Scanner • DNS власних і дозволених доменів",18f)
   text(body,"Введи домен без https:// і шляху. Перевірка виконує лише DNS-запит, не сканує порти та не відвідує сайт.",14f)
   val input=EditText(this).apply {
