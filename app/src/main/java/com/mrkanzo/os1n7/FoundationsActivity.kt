@@ -29,20 +29,30 @@ class FoundationsActivity : Os1n7Activity() {
   "Яке завдання є прикладом OSINT?",
   "Що доводить однаковий нік?",
   "Що може розкрити EXIF?",
-  "Який запис відповідає за пошту?",
-  "Як оцінити збіг предмета на двох фото?",
-  "Який зв'язок найсильніший?",
-  "Який висновок коректний?"
+  "Який DNS-запис вказує IPv4-адресу домену?",
+  "Як перевірити незалежність кількох зачіпок?",
+  "Навіщо будувати граф у навчальній справі?",
+  "Як описати у звіті оголошення з радіо R17?"
  )
  private val answers=listOf(
   listOf("Перевірка публічних відомостей","Злам акаунта"),
   listOf("Можливий зв'язок профілів","Точну тотожність людей"),
   listOf("GPS місця зйомки","Пароль Wi-Fi"),
-  listOf("MX","A"),
-  listOf("Непрямий доказ","Беззаперечний доказ"),
-  listOf("Однаковий нік плюс спільний контекст","Однаковий колір предмета"),
-  listOf("Імовірний зв'язок із застереженнями","Усі профілі точно належать одній людині")
+  listOf("A","MX"),
+  listOf("З'ясувати походження та дати появи кожної зачіпки","Порахувати кількість репостів"),
+  listOf("Візуально показати об'єкти, джерела та типи зв'язків","Автоматично встановити реальну особу"),
+  listOf("Зв'язок з автором оголошення поки не підтверджений","Власник оголошення точно відомий")
  )
+ private val extraDistractors=listOf(
+  "Використання чужого пароля для входу",
+  "Автоматичне підтвердження адреси проживання",
+  "Текст приватного повідомлення",
+  "Назву поштового клієнта",
+  "Вважати повтори одного сайту незалежними доказами",
+  "Гарантувати достовірність кожного вузла",
+  "Вказати точні персональні дані без підтвердження"
+ )
+ private val correctPositions=listOf(1,0,2,1,0,2,1)
  private val defense=listOf(
   "Вивчай тільки дозволені відкриті джерела; відділяй факти від припущень.",
   "Використовуй різні ніки для особистих і публічних профілів.",
@@ -81,8 +91,14 @@ class FoundationsActivity : Os1n7Activity() {
   label(p,"📖 ТЕОРІЯ\n"+lessons[i])
   label(p,"🔎 ПРАКТИКА\n"+questions[i])
   val group=RadioGroup(this).apply { orientation=RadioGroup.VERTICAL };p.addView(group)
-  answers[i].forEachIndexed { n,a ->
-   group.addView(RadioButton(this).apply { id=100+n;text=a;setTextColor(Color.WHITE);buttonTintList=android.content.res.ColorStateList.valueOf(green) })
+  val correctPosition=correctPositions[i]
+  val choices=mutableListOf(answers[i][1],extraDistractors[i])
+  choices.add(correctPosition,answers[i][0])
+  choices.forEachIndexed { n,a ->
+   group.addView(RadioButton(this).apply {
+    id=100+n;text=a;setTextColor(Color.WHITE)
+    buttonTintList=android.content.res.ColorStateList.valueOf(green)
+   })
   }
   label(p,"🛡️ ЗАХИСТ\n"+defense[i])
   val cb=CheckBox(this).apply {
@@ -92,7 +108,8 @@ class FoundationsActivity : Os1n7Activity() {
   val status=label(p,if(prefs.getBoolean("step_$i",false))"✓ Етап уже пройдено" else "Виконай вправу й познач захист.",14f)
   button(p,"Перевірити та завершити") {
    status.text=when {
-    group.checkedRadioButtonId!=100 -> "Відповідь неправильна. Прочитай теорію ще раз."
+    group.checkedRadioButtonId==-1 -> "Спочатку обери відповідь."
+    group.checkedRadioButtonId!=100+correctPosition -> "Відповідь неправильна. Прочитай теорію ще раз."
     !cb.isChecked -> "Спочатку ознайомся з порадою захисту."
     else -> { prefs.edit().putBoolean("step_$i",true).apply();"✓ Етап пройдено! Прогрес збережено." }
    }
