@@ -34,7 +34,7 @@ class CaseFilesActivity : Activity() {
         return group
     }
     private fun action(parent: LinearLayout, title: String, run: () -> Unit) {
-        parent.addView(Button(this).apply { text = title; isAllCaps = false; setOnClickListener { run() } })
+        parent.addView(Os1n7Ui.button(this).apply { text = title; isAllCaps = false; setOnClickListener { run() } })
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,7 @@ class CaseFilesActivity : Activity() {
         root.addView(scroll)
         setContentView(root)
         root.requestApplyInsets()
-        body.addView(Button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
+        body.addView(Os1n7Ui.button(this).apply { text = "← Головне меню"; isAllCaps = false; setOnClickListener { finish() } })
         body.addView(text("◈  CASE FILES", 27f, accent, true))
         body.addView(text("СПРАВА 001 • ТІНЬОВИЙ ПРОФІЛЬ", 13f, Color.LTGRAY))
         val intro = card(body, "Завдання")
@@ -94,7 +94,7 @@ class CaseFilesActivity : Activity() {
         answer.addView(text("Які два профілі мають найсильніший зв'язок?"))
         val choices = RadioGroup(this).apply { orientation = RadioGroup.VERTICAL }
         listOf("Форум і фотоблог", "Форум і маркетплейс", "Усі три точно належать одній людині").forEachIndexed { index, option ->
-            choices.addView(RadioButton(this).apply { id = 300 + index; text = option; setTextColor(Color.WHITE) })
+            choices.addView(RadioOs1n7Ui.button(this).apply { id = 300 + index; text = option; setTextColor(Color.WHITE) })
         }
         answer.addView(choices)
         val result = text(if (prefs.getBoolean("case001", false)) "✓ Розслідування завершено" else "Поки не завершено", 14f, accent)
