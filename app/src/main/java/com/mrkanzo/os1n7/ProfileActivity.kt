@@ -76,7 +76,7 @@ class ProfileActivity : Os1n7Activity() {
                 if (name.isNotEmpty()) {
                     profile.edit().putString("nickname", name).apply()
                     render()
-                } else Toast.makeText(this, "Введи нікнейм", Toast.LENGTH_SHORT).show()
+                } else showLocalizedToast("Введи нікнейм", android.widget.Toast.LENGTH_SHORT)
             }.show().also { translateDialog(it) }
     }
     private fun showAvatarEditor() {
@@ -303,7 +303,7 @@ class ProfileActivity : Os1n7Activity() {
                     "https://github.com/MrKanzo/Os1n7/blob/main/docs/PRIVACY_POLICY_UK.md"
                 )))
             } catch (_: Exception) {
-                Toast.makeText(this, "Не вдалося відкрити політику приватності", Toast.LENGTH_SHORT).show()
+                showLocalizedToast("Не вдалося відкрити політику приватності", android.widget.Toast.LENGTH_SHORT)
             }
         }
         about.addView(label(
