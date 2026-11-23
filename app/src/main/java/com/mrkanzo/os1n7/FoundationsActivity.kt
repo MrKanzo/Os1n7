@@ -136,7 +136,7 @@ class FoundationsActivity : Os1n7Activity() {
   button(p,"Копіювати звіт") {
    val clip=getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
    clip.setPrimaryClip(ClipData.newPlainText("OS1N7 Report",reportText()))
-   Toast.makeText(this,"Звіт скопійовано",Toast.LENGTH_SHORT).show()
+   showLocalizedToast("Звіт скопійовано", android.widget.Toast.LENGTH_SHORT)
   }
  }
  @Deprecated("Legacy Activity back navigation")
