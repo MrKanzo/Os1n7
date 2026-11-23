@@ -2,6 +2,8 @@
 import importlib.util
 import pathlib
 import unittest
+from datetime import datetime, timezone
+from email.utils import format_datetime
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("sync_ai_news", ROOT / "scripts/sync_ai_news.py")
@@ -9,7 +11,8 @@ ai = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ai)
 
 
-def rss(link="https://openai.com/index/demo", date="Sun, 22 Nov 2026 12:00:00 GMT"):
+def rss(link="https://openai.com/index/demo", date=None):
+    date = date or format_datetime(datetime.now(timezone.utc))
     return f"""<rss version="2.0"><channel><item>
         <title>Demo AI research publication</title>
         <link>{link}</link>
@@ -28,7 +31,7 @@ class AiNewsFeedTests(unittest.TestCase):
         parsed = ai.parse_feed(rss(), "OpenAI")
         self.assertEqual(len(parsed), 1)
         self.assertEqual(parsed[0]["source"], "OpenAI")
-        self.assertEqual(parsed[0]["published"], "2026-11-22")
+        self.assertEqual(parsed[0]["published"], datetime.now(timezone.utc).date().isoformat())
         self.assertEqual(parsed[0]["url"], "https://openai.com/index/demo")
 
     def test_source_isolation_and_fallback(self):
