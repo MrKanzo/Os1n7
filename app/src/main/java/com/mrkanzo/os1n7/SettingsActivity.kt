@@ -188,6 +188,6 @@ class SettingsActivity : Os1n7Activity() {
                 recreate()
             }
             .setNegativeButton(getString(R.string.settings_cancel), null)
-            .show()
+            .show().also { translateDialog(it) }
     }
 }
