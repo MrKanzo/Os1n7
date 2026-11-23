@@ -196,7 +196,7 @@ class CyberLawActivity : Os1n7Activity() {
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         } catch (_: Exception) {
-            Toast.makeText(this, "Не вдалося відкрити офіційний сайт", Toast.LENGTH_LONG).show()
+            showLocalizedToast("Не вдалося відкрити офіційний сайт", android.widget.Toast.LENGTH_LONG)
         }
     }
     private fun detail(item: Topic) {
@@ -210,7 +210,7 @@ class CyberLawActivity : Os1n7Activity() {
             .setMessage(message)
             .setNegativeButton("Назад", null)
             .setPositiveButton("Читати закон ↗") { _, _ -> openOfficial(item.url) }
-            .show()
+            .show().also { translateDialog(it) }
     }
     private fun render() {
         if (!::content.isInitialized) return
