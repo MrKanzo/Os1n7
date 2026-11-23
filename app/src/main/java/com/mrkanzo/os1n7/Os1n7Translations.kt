@@ -200,6 +200,9 @@ object Os1n7Translations {
         }
 
         private fun scanTree(view: View) {
+            // A tagged source document/record is never machine translated;
+            // only its surrounding navigation and explanatory UI may change.
+            if (view.tag == "os1n7_original") return
             if (view.visibility != View.VISIBLE) return
             if (view is EditText) {
                 // NEVER translate a person's typed data, searches, URLs or evidence.
