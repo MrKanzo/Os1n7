@@ -45,7 +45,7 @@
 - `scripts/sync_ai_news.py` збирає RSS першоджерел OpenAI, Google DeepMind і Hugging Face раз на 6 годин разом з наявною GitHub Actions синхронізацією. HTTPS allowlist, дата, недубльовані URL; роздільні збої та остання валідна копія. `scripts/translate_ai_news.py` перекладає через вже встановлений локальний Argos, зберігаючи оригінали і посилання.
 - `content/ai-news.json` — нові дані без APK; кеш `os1n7_cyber_intel/ai_snapshot` на телефоні окремий від `snapshot` кіберновин. Три джерела фільтруються на екрані, відкриваються тільки перевірені URL.
 - На першому синхронізуванні RSS отримано 30 дійсних публікацій (15 OpenAI, 15 Hugging Face); DeepMind RSS тимчасово відхилено через некоректну XML-відповідь. Не заявляти, що DeepMind уже наповнений, поки його RSS не виправлено.
-- Тести `tests/test_ai_news.py` у GitHub Actions пройшли; Android debug APK у CI пройшов, підписаний release v0.8.6 — перевірити завершення перед публікацією фінальної версії.
+- Тести `tests/test_ai_news.py` у GitHub Actions пройшли; Android debug і підписаний release **v0.8.6 успішно зібрані та опубліковані**: https://github.com/MrKanzo/Os1n7/releases/tag/v0.8.6. На фізичному телефоні ще не перевірено.
 - Докладно: `docs/AI_NEWS.md`. Ручний тест на телефоні ще не виконаний.
 
 ## Мета
