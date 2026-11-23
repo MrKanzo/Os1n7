@@ -29,6 +29,8 @@ jobs:
           gradle-version: '8.9'
       - name: Verify OSINT quiz and practice catalogue (offline)
         run: python3 scripts/validate_quizzes.py
+      - name: Verify multilingual interface resources (offline)
+        run: python3 scripts/validate_localization.py
       - name: Build debug APK (capture errors)
         run: |
           set -o pipefail
