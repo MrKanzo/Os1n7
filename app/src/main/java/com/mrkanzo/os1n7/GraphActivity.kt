@@ -77,7 +77,7 @@ class GraphActivity : Os1n7Activity() {
    .setNegativeButton("Скасувати",null).setPositiveButton("Зберегти"){_,_->
     val v=field.text.toString().trim()
     if(v.isNotEmpty())action(v) else Toast.makeText(this,"Введи значення",Toast.LENGTH_SHORT).show()
-   }.show()
+   }.show().also { translateDialog(it) }
  }
  private fun createCase() {
   ask("Нова справа","Назва дослідження") { name ->
@@ -149,7 +149,7 @@ class GraphActivity : Os1n7Activity() {
      save();render()
     }
    }
-  }.show()
+  }.show().also { translateDialog(it) }
  }
  private fun addLink() {
   if(nodes.size<2) { Toast.makeText(this,"Спочатку додай два об'єкти",Toast.LENGTH_SHORT).show();return }
@@ -159,8 +159,8 @@ class GraphActivity : Os1n7Activity() {
     if(a!=b && links.none { (it.first==nodes[a].id && it.second==nodes[b].id) || (it.first==nodes[b].id && it.second==nodes[a].id) }) {
      links.add(nodes[a].id to nodes[b].id);save();render()
     } else Toast.makeText(this,"Такий зв'язок уже є або обрано той самий вузол",Toast.LENGTH_SHORT).show()
-   }.show()
-  }.show()
+   }.show().also { translateDialog(it) }
+  }.show().also { translateDialog(it) }
  }
  private fun showNode(id:String) {
   val n=nodes.firstOrNull { it.id==id }?:return
@@ -179,8 +179,8 @@ class GraphActivity : Os1n7Activity() {
      .setNegativeButton("Скасувати",null).setPositiveButton("Видалити"){_,_->
       nodes.removeAll { it.id==id };links.removeAll { it.first==id || it.second==id }
       selected=null;save();render()
-     }.show()
-   }.show()
+     }.show().also { translateDialog(it) }
+   }.show().also { translateDialog(it) }
  }
  private fun report():String {
   val b=StringBuilder("OS1N7 • Локальний звіт\nСправа: "+caseName+"\n\nОб'єкти:\n")
@@ -204,7 +204,7 @@ class GraphActivity : Os1n7Activity() {
     val clip=getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     clip.setPrimaryClip(ClipData.newPlainText("OS1N7 Graph Report", report()))
     Toast.makeText(this,"Звіт скопійовано",Toast.LENGTH_SHORT).show()
-   }.show()
+   }.show().also { translateDialog(it) }
  }
  private fun confirmDelete() {
   android.app.AlertDialog.Builder(this).setTitle("Видалити справу назавжди?")
@@ -214,7 +214,7 @@ class GraphActivity : Os1n7Activity() {
     for(i in 0 until a.length())if(a.optJSONObject(i)?.optString("id")!=caseId)updated.put(a.getJSONObject(i))
     prefs.edit().putString("cases",updated.toString()).remove("nodes_"+caseId).remove("links_"+caseId).apply()
     home()
-   }.show()
+   }.show().also { translateDialog(it) }
  }
  @Deprecated("Legacy Activity back navigation")
  override fun onBackPressed() { if(caseId.isNotBlank())home() else super.onBackPressed() }
