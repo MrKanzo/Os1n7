@@ -106,7 +106,7 @@ class MainActivity : Os1n7Activity() {
         startActivity(Intent(this, CategoryLibraryActivity::class.java))
     }
     private fun checkForUpdates(silent: Boolean = false) {
-        if (!silent) Toast.makeText(this, "Перевіряємо GitHub Releases…", Toast.LENGTH_SHORT).show()
+        if (!silent) showLocalizedToast("Перевіряємо GitHub Releases…", android.widget.Toast.LENGTH_SHORT)
         Thread {
             try {
                 val conn = URL("https://api.github.com/repos/MrKanzo/Os1n7/releases/latest").openConnection()
@@ -137,7 +137,7 @@ class MainActivity : Os1n7Activity() {
                 runOnUiThread {
                     if (isFinishing || isDestroyed) return@runOnUiThread
                     if (apkUrl.isBlank()) {
-                        if (!silent) Toast.makeText(this, "У релізі немає APK", Toast.LENGTH_LONG).show()
+                        if (!silent) showLocalizedToast("У релізі немає APK", android.widget.Toast.LENGTH_LONG)
                     } else if (!newer && !silent) {
                         android.app.AlertDialog.Builder(this)
                             .setTitle("OS1N7 оновлено")
@@ -184,7 +184,7 @@ class MainActivity : Os1n7Activity() {
                 .setMimeType("application/vnd.android.package-archive")
             val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             val downloadId = manager.enqueue(request)
-            Toast.makeText(this, "Завантажуємо оновлення…", Toast.LENGTH_LONG).show()
+            showLocalizedToast("Завантажуємо оновлення…", android.widget.Toast.LENGTH_LONG)
             Thread {
                 var finished = false
                 while (!finished) {
@@ -193,7 +193,7 @@ class MainActivity : Os1n7Activity() {
                     manager.query(query)?.use { cursor ->
                         if (!cursor.moveToFirst()) {
                             finished = true
-                            runOnUiThread { Toast.makeText(this, "Завантаження не знайдено", Toast.LENGTH_LONG).show() }
+                            runOnUiThread { showLocalizedToast("Завантаження не знайдено", android.widget.Toast.LENGTH_LONG) }
                         } else {
                             when (cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))) {
                                 DownloadManager.STATUS_SUCCESSFUL -> {
@@ -208,14 +208,14 @@ class MainActivity : Os1n7Activity() {
                                                 }
                                                 startActivity(intent)
                                             } catch (e: Exception) {
-                                                Toast.makeText(this, "Не вдалося відкрити інсталятор: ${e.message}", Toast.LENGTH_LONG).show()
+                                                showLocalizedToast("Не вдалося відкрити інсталятор: ${e.message}", android.widget.Toast.LENGTH_LONG)
                                             }
                                         }
                                     }
                                 }
                                 DownloadManager.STATUS_FAILED -> {
                                     finished = true
-                                    runOnUiThread { Toast.makeText(this, "Помилка завантаження APK", Toast.LENGTH_LONG).show() }
+                                    runOnUiThread { showLocalizedToast("Помилка завантаження APK", android.widget.Toast.LENGTH_LONG) }
                                 }
                             }
                         }
@@ -223,7 +223,7 @@ class MainActivity : Os1n7Activity() {
                 }
             }.start()
         } catch (e: Exception) {
-            Toast.makeText(this, "Не вдалося почати оновлення: ${e.message}", Toast.LENGTH_LONG).show()
+            showLocalizedToast("Не вдалося почати оновлення: ${e.message}", android.widget.Toast.LENGTH_LONG)
         }
     }
 
