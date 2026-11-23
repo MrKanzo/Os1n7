@@ -46,6 +46,17 @@ open class Os1n7Activity : Activity() {
     protected fun translateDialog(dialog: android.app.AlertDialog) {
         translationSession?.translateDialog(dialog)
     }
+
+    /** Translates our short notifications after the model becomes available. */
+    protected fun showLocalizedToast(message: String, duration: Int = android.widget.Toast.LENGTH_SHORT) {
+        Os1n7Translations.translateMessage(this, message) { translated ->
+            if (!isFinishing && !isDestroyed) {
+                runOnUiThread {
+                    android.widget.Toast.makeText(this, translated, duration).show()
+                }
+            }
+        }
+    }
 }
 
 object Os1n7Preferences {
