@@ -76,7 +76,7 @@ class GraphActivity : Os1n7Activity() {
   android.app.AlertDialog.Builder(this).setTitle(title).setView(field)
    .setNegativeButton("Скасувати",null).setPositiveButton("Зберегти"){_,_->
     val v=field.text.toString().trim()
-    if(v.isNotEmpty())action(v) else Toast.makeText(this,"Введи значення",Toast.LENGTH_SHORT).show()
+    if(v.isNotEmpty())action(v) else showLocalizedToast("Введи значення", android.widget.Toast.LENGTH_SHORT)
    }.show().also { translateDialog(it) }
  }
  private fun createCase() {
@@ -152,13 +152,13 @@ class GraphActivity : Os1n7Activity() {
   }.show().also { translateDialog(it) }
  }
  private fun addLink() {
-  if(nodes.size<2) { Toast.makeText(this,"Спочатку додай два об'єкти",Toast.LENGTH_SHORT).show();return }
+  if(nodes.size<2) { showLocalizedToast("Спочатку додай два об'єкти", android.widget.Toast.LENGTH_SHORT);return }
   val labels=nodes.map { it.type+": "+it.name }.toTypedArray()
   android.app.AlertDialog.Builder(this).setTitle("Звідки").setItems(labels){_,a->
    android.app.AlertDialog.Builder(this).setTitle("До якого об'єкта").setItems(labels){_,b->
     if(a!=b && links.none { (it.first==nodes[a].id && it.second==nodes[b].id) || (it.first==nodes[b].id && it.second==nodes[a].id) }) {
      links.add(nodes[a].id to nodes[b].id);save();render()
-    } else Toast.makeText(this,"Такий зв'язок уже є або обрано той самий вузол",Toast.LENGTH_SHORT).show()
+    } else showLocalizedToast("Такий зв'язок уже є або обрано той самий вузол", android.widget.Toast.LENGTH_SHORT)
    }.show().also { translateDialog(it) }
   }.show().also { translateDialog(it) }
  }
@@ -203,7 +203,7 @@ class GraphActivity : Os1n7Activity() {
    .setPositiveButton("Скопіювати") { _, _ ->
     val clip=getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     clip.setPrimaryClip(ClipData.newPlainText("OS1N7 Graph Report", report()))
-    Toast.makeText(this,"Звіт скопійовано",Toast.LENGTH_SHORT).show()
+    showLocalizedToast("Звіт скопійовано", android.widget.Toast.LENGTH_SHORT)
    }.show().also { translateDialog(it) }
  }
  private fun confirmDelete() {
