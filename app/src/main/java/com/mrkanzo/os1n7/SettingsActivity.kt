@@ -103,6 +103,48 @@ class SettingsActivity : Os1n7Activity() {
             setPadding(0, dp(9), 0, 0)
         })
 
+        val translatorSettings = group(body, getString(R.string.settings_translation_title))
+        translatorSettings.addView(label(
+            getString(R.string.settings_translation_detail), 12.5f, muted
+        ))
+        val selectedCode = Os1n7Preferences.language(this)
+        val modelStatus = label(
+            if (selectedCode == "uk" || Os1n7Translations.isReady(selectedCode))
+                getString(R.string.settings_translation_ready)
+            else getString(R.string.settings_translation_loading),
+            13f, accent
+        ).apply { setPadding(0, dp(8), 0, dp(8)) }
+        translatorSettings.addView(modelStatus)
+        fun checkModel() {
+            if (selectedCode == "uk") return
+            modelStatus.text = getString(R.string.settings_translation_loading)
+            Os1n7Translations.ensureModel(applicationContext, selectedCode) { success ->
+                if (!isFinishing && !isDestroyed &&
+                    Os1n7Preferences.language(this) == selectedCode) {
+                    runOnUiThread {
+                        modelStatus.text = getString(
+                            if (success) R.string.settings_translation_ready
+                            else R.string.settings_translation_failed
+                        )
+                    }
+                }
+            }
+        }
+        if (selectedCode != "uk") {
+            translatorSettings.addView(Os1n7Ui.button(this).apply {
+                text = getString(R.string.settings_translation_retry)
+                setOnClickListener { checkModel() }
+            })
+            if (Os1n7Translations.isReady(selectedCode)) {
+                modelStatus.text = getString(R.string.settings_translation_ready)
+            } else {
+                checkModel()
+            }
+        }
+        translatorSettings.addView(label(
+            getString(R.string.settings_translation_credit), 11.5f, muted
+        ))
+        
         val appearance = group(body, getString(R.string.settings_appearance))
         toggle(appearance,
             getString(R.string.settings_banner),
