@@ -291,7 +291,7 @@ class CategoryLibraryActivity : Os1n7Activity() {
                             else showQuiz(lesson, safeIndex + 1, replay)
                         }
                     }
-                    .show()
+                    .show().also { translateDialog(it) }
             }
         }
         if (replay) {
