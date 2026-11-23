@@ -398,7 +398,7 @@ class OsintTreeActivity : Os1n7Activity() {
                         .setTitle(entry.name)
                         .setMessage(entry.detail)
                         .setPositiveButton("Зрозуміло", null)
-                        .show()
+                        .show().also { translateDialog(it) }
                 }
             }
             row.addView(text("${order + 1}.  ${entry.name}", 17f, Color.WHITE, true))
