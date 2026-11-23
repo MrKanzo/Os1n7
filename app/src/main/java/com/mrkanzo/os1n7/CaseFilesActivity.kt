@@ -242,7 +242,13 @@ private class CaseGraphView(
             ink.color = Color.WHITE
             ink.textSize = radius * 0.46f
             ink.textAlign = Paint.Align.CENTER
-            canvas.drawText(node.third, x, y + radius * 0.16f, ink)
+            val caption = Os1n7Translations.canvasLabel(context, node.third) {
+                postInvalidateOnAnimation()
+            }
+            if (ink.measureText(caption) > radius * 2.1f) {
+                ink.textSize *= (radius * 2.1f) / ink.measureText(caption)
+            }
+            canvas.drawText(caption, x, y + radius * 0.16f, ink)
         }
     }
     override fun onTouchEvent(event: MotionEvent): Boolean {
