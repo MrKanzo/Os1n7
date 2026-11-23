@@ -7,8 +7,11 @@ on:
     branches: [main]
     paths:
       - "scripts/sync_cyber_intel.py"
+      - "scripts/sync_ai_news.py"
+      - "scripts/translate_ai_news.py"
       - "scripts/translate_cyber_intel.py"
       - "tests/test_cyber_intel.py"
+      - "tests/test_ai_news.py"
       - "tests/test_cyber_translation.py"
       - ".github/workflows/cyber-intel.yml"
 
@@ -29,13 +32,19 @@ jobs:
           python-version: "3.11"
       - name: Test feeds and Ukrainian translation logic
         run: python -m unittest discover -s tests -p "test_cyber*.py" -v
+      - name: Test original-source AI news feed parsing
+        run: python -m unittest discover -s tests -p "test_ai_news.py" -v
       - name: Install offline English-to-Ukrainian translator
         run: python -m pip install "argostranslate>=1.10,<2"
       - name: Fetch official cybersecurity sources
         run: python scripts/sync_cyber_intel.py
+      - name: Fetch original AI-news feeds
+        run: python scripts/sync_ai_news.py
       - name: Translate headlines and summaries into Ukrainian
         timeout-minutes: 15
-        run: python scripts/translate_cyber_intel.py
+        run: |
+          python scripts/translate_cyber_intel.py
+          python scripts/translate_ai_news.py
       - name: Publish official news without overwriting concurrent commits
         run: |
           set -e
@@ -47,8 +56,10 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             python scripts/sync_cyber_intel.py
+            python scripts/sync_ai_news.py
             python scripts/translate_cyber_intel.py
-            git add content/cyber-intel.json
+            python scripts/translate_ai_news.py
+            git add content/cyber-intel.json content/ai-news.json
             if git diff --cached --quiet; then
               echo "Official cyber data unchanged"
               exit 0
