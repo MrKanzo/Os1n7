@@ -37,8 +37,12 @@ class GraphActivity : Os1n7Activity() {
   val t=TextView(this).apply { text=s;textSize=size;setTextColor(color);if(bold)setTypeface(null,Typeface.BOLD);setPadding(0,dp(7),0,dp(7)) }
   p.addView(t);return t
  }
- private fun button(p:LinearLayout,s:String,action:()->Unit) {
-  p.addView(Os1n7Ui.button(this).apply { text=s;isAllCaps=false;setOnClickListener { action() } })
+ private fun button(p:LinearLayout,s:String,original:Boolean=false,action:()->Unit) {
+  p.addView(Os1n7Ui.button(this).apply {
+   text=s;isAllCaps=false
+   if(original) tag="os1n7_original"
+   setOnClickListener { action() }
+  })
  }
  private fun page():LinearLayout {
   val root=LinearLayout(this).apply {
@@ -67,7 +71,7 @@ class GraphActivity : Os1n7Activity() {
   for(i in 0 until arr.length()) {
    val obj=arr.optJSONObject(i)?:continue
    val id=obj.optString("id")
-   button(p,"▣ "+obj.optString("name","Без назви")+"  ›"){openCase(id)}
+   button(p,"▣ "+obj.optString("name","Без назви")+"  ›",original=true){openCase(id)}
   }
   if(arr.length()==0)text(p,"Справ поки немає. Створи першу — наприклад, аудит власного домену.")
  }
@@ -124,7 +128,7 @@ class GraphActivity : Os1n7Activity() {
  private fun render() {
   val p=page()
   button(p,"← Усі справи"){home()}
-  text(p,caseName,24f,mint,true)
+  text(p,caseName,24f,mint,true).tag="os1n7_original"
   text(p,"Об'єктів: "+nodes.size+" • зв'язків: "+links.size,13f,Color.LTGRAY)
   text(p,"Торкнись вузла для деталей. Перетягуй вузли пальцем. Зв'язок додається кнопкою нижче.",13f)
   canvas=GraphView()
@@ -135,7 +139,7 @@ class GraphActivity : Os1n7Activity() {
   button(p,"🗑 Видалити справу"){confirmDelete()}
   text(p,"ДОКАЗИ ТА ОБ'ЄКТИ",17f,mint,true)
   nodes.forEach { n ->
-   button(p,n.type+" • "+n.name+"  ›"){showNode(n.id)}
+   button(p,n.type+" • "+n.name+"  ›",original=true){showNode(n.id)}
   }
  }
  private fun addNode() {
@@ -159,8 +163,8 @@ class GraphActivity : Os1n7Activity() {
     if(a!=b && links.none { (it.first==nodes[a].id && it.second==nodes[b].id) || (it.first==nodes[b].id && it.second==nodes[a].id) }) {
      links.add(nodes[a].id to nodes[b].id);save();render()
     } else showLocalizedToast("Такий зв'язок уже є або обрано той самий вузол", android.widget.Toast.LENGTH_SHORT)
-   }.show().also { translateDialog(it) }
-  }.show().also { translateDialog(it) }
+   }.show().also { translateDialog(it,preserveListItems=true) }
+  }.show().also { translateDialog(it,preserveListItems=true) }
  }
  private fun showNode(id:String) {
   val n=nodes.firstOrNull { it.id==id }?:return
@@ -180,7 +184,10 @@ class GraphActivity : Os1n7Activity() {
       nodes.removeAll { it.id==id };links.removeAll { it.first==id || it.second==id }
       selected=null;save();render()
      }.show().also { translateDialog(it) }
-   }.show().also { translateDialog(it) }
+   }.show().also {
+    it.findViewById<TextView>(android.R.id.message)?.tag="os1n7_original"
+    translateDialog(it)
+   }
  }
  private fun report():String {
   val b=StringBuilder("OS1N7 • Локальний звіт\nСправа: "+caseName+"\n\nОб'єкти:\n")
