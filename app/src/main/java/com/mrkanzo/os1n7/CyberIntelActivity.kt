@@ -136,13 +136,13 @@ class CyberIntelActivity : Os1n7Activity() {
     }
     private fun openSource(url: String, source: String? = null) {
         if (!urlAllowed(url, source)) {
-            Toast.makeText(this, "Джерело не пройшло перевірку адреси", Toast.LENGTH_LONG).show()
+            showLocalizedToast("Джерело не пройшло перевірку адреси", android.widget.Toast.LENGTH_LONG)
             return
         }
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         } catch (_: Exception) {
-            Toast.makeText(this, "Не вдалося відкрити браузер", Toast.LENGTH_SHORT).show()
+            showLocalizedToast("Не вдалося відкрити браузер", android.widget.Toast.LENGTH_SHORT)
         }
     }
     private fun validate(data: JSONObject) {
@@ -267,7 +267,7 @@ class CyberIntelActivity : Os1n7Activity() {
                     "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
                 )))
             } catch (_: Exception) {
-                Toast.makeText(this, "Не вдалося відкрити умови ліцензії", Toast.LENGTH_SHORT).show()
+                showLocalizedToast("Не вдалося відкрити умови ліцензії", android.widget.Toast.LENGTH_SHORT)
             }
         })
         val sources = data.optJSONArray("sources")
