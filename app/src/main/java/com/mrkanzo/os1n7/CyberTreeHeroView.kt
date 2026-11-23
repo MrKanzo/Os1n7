@@ -265,7 +265,10 @@ class CyberTreeHeroView @JvmOverloads constructor(
         canvas.drawText("OSINT", 180f, 125f, ink)
         ink.textSize = 8.2f
         ink.color = neon
-        canvas.drawText("LIVE  NETWORK", 180f, 138f, ink)
+        canvas.drawText(
+            Os1n7Translations.canvasLabel(context, "ЖИВА МЕРЕЖА") { postInvalidateOnAnimation() },
+            180f, 138f, ink
+        )
         ink.typeface = Typeface.DEFAULT_BOLD
         ink.textSize = 9.7f
         branches.forEachIndexed { i, branch ->
@@ -273,11 +276,22 @@ class CyberTreeHeroView @JvmOverloads constructor(
             val y = branch.y * 256f
             val labelY = if (i in 0..1) y - 30f else y + 32f
             setColor(white, alpha = 240)
-            canvas.drawText(branch.name, x, labelY, ink)
+            val localized = Os1n7Translations.canvasLabel(context, branch.name) {
+                postInvalidateOnAnimation()
+            }
+            ink.textSize = (9.7f * 7.0f / localized.length.coerceAtLeast(7)).coerceIn(6.2f, 9.7f)
+            canvas.drawText(localized, x, labelY, ink)
         }
         setColor(neon, alpha = 200)
         ink.textSize = 9f
-        canvas.drawText("13 НАПРЯМКІВ  •  НАТИСНИ НА КАРТУ", 180f, 248f, ink)
+        val instruction = Os1n7Translations.canvasLabel(
+            context, "13 НАПРЯМКІВ  •  НАТИСНИ НА КАРТУ"
+        ) { postInvalidateOnAnimation() }
+        ink.textSize = 9f
+        if (ink.measureText(instruction) > 328f) {
+            ink.textSize *= 328f / ink.measureText(instruction)
+        }
+        canvas.drawText(instruction, 180f, 248f, ink)
         ink.textAlign = Paint.Align.LEFT
     }
 }
