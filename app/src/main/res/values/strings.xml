@@ -4,7 +4,7 @@
     <string name="settings_title">Налаштування</string>
     <string name="settings_subtitle">Мова • вигляд • приватність</string>
     <string name="settings_language">Мова інтерфейсу</string>
-    <string name="settings_language_note">Меню та основні екрани перекладаються. Навчальні статті й частина довідок поки українською.</string>
+    <string name="settings_language_note">Усі екрани, уроки й тести перекладаються на телефоні. Для першого перекладу потрібно один раз завантажити мовну модель через Wi-Fi.</string>
     <string name="settings_appearance">Вигляд і зручність</string>
     <string name="settings_banner">Живий банер</string>
     <string name="settings_banner_hint">Увімкнено: анімоване дерево і компаньйон. Вимкнено: класичне меню та 2D.</string>
@@ -64,4 +64,11 @@
     <string name="home_footer">OS1N7 • OSINT із повагою до приватності</string>
     <string name="home_settings_description">Відкрити налаштування</string>
     <string name="home_banner_warning">Анімації вимкнено системою Android.</string>
+    <string name="settings_translation_title">Переклад усіх розділів</string>
+    <string name="settings_translation_detail">Модель Google ML Kit завантажується через Wi-Fi (приблизно 30 МБ). Далі переклад працює офлайн. Автоматичні переклади можуть містити неточності.</string>
+    <string name="settings_translation_ready">✓ Мовна модель готова • переклад офлайн</string>
+    <string name="settings_translation_loading">Завантаження мовної моделі через Wi-Fi…</string>
+    <string name="settings_translation_failed">Модель поки недоступна. Підключи Wi-Fi та повтори.</string>
+    <string name="settings_translation_retry">↻ Завантажити / перевірити модель</string>
+    <string name="settings_translation_credit">Автоматичний переклад на пристрої • Google ML Kit</string>
 </resources>

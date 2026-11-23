@@ -4,7 +4,7 @@
     <string name="settings_title">Ayarlar</string>
     <string name="settings_subtitle">Dil • görünüm • gizlilik</string>
     <string name="settings_language">Arayüz dili</string>
-    <string name="settings_language_note">Menüler ve ana ekranlar çevrildi. Dersler ve bazı yardım sayfaları hâlâ Ukraynaca.</string>
+    <string name="settings_language_note">Tüm ekranlar, dersler ve testler cihazda çevrilir. Dil modelinin Wi-Fi üzerinden bir kez indirilmesi gerekir.</string>
     <string name="settings_appearance">Görünüm ve rahatlık</string>
     <string name="settings_banner">Canlı afiş</string>
     <string name="settings_banner_hint">Açık: animasyonlu ağaç ve yoldaş. Kapalı: klasik menü ve sabit 2D.</string>
@@ -64,4 +64,11 @@
     <string name="home_footer">OS1N7 • gizliliğe saygılı OSINT</string>
     <string name="home_settings_description">Ayarları aç</string>
     <string name="home_banner_warning">Android sistem animasyonları kapalı.</string>
+    <string name="settings_translation_title">Uygulamanın tamamını çevir</string>
+    <string name="settings_translation_detail">Google ML Kit modeli Wi-Fi üzerinden indirilir (yaklaşık 30 MB). Sonra çeviri çevrimdışı çalışır. Otomatik çeviri hatalar içerebilir.</string>
+    <string name="settings_translation_ready">✓ Dil modeli hazır • çevrimdışı çeviri</string>
+    <string name="settings_translation_loading">Wi-Fi üzerinden dil modeli indiriliyor…</string>
+    <string name="settings_translation_failed">Model henüz kullanılamıyor. Wi-Fi bağlantısını kontrol edip tekrar deneyin.</string>
+    <string name="settings_translation_retry">↻ Modeli indir / kontrol et</string>
+    <string name="settings_translation_credit">Cihaz üzerinde otomatik çeviri • Google ML Kit</string>
 </resources>

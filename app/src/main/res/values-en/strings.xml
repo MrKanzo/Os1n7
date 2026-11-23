@@ -4,7 +4,7 @@
     <string name="settings_title">Settings</string>
     <string name="settings_subtitle">Language • appearance • privacy</string>
     <string name="settings_language">Interface language</string>
-    <string name="settings_language_note">Menus and primary screens are translated. Lessons and some help pages are still in Ukrainian.</string>
+    <string name="settings_language_note">All screens, lessons and quizzes are translated on your device. A one-time language model download over Wi-Fi is needed.</string>
     <string name="settings_appearance">Appearance &amp; comfort</string>
     <string name="settings_banner">Live banner</string>
     <string name="settings_banner_hint">On: animated tree and companion. Off: classic menu and static 2D.</string>
@@ -64,4 +64,11 @@
     <string name="home_footer">OS1N7 • OSINT with respect for privacy</string>
     <string name="home_settings_description">Open settings</string>
     <string name="home_banner_warning">Android system animations are disabled.</string>
+    <string name="settings_translation_title">Translation across the app</string>
+    <string name="settings_translation_detail">A Google ML Kit model is downloaded over Wi-Fi (about 30 MB). Translation then works offline. Automatic translations can contain mistakes.</string>
+    <string name="settings_translation_ready">✓ Language model ready • offline translation</string>
+    <string name="settings_translation_loading">Downloading language model over Wi-Fi…</string>
+    <string name="settings_translation_failed">Model is not available yet. Connect to Wi-Fi and try again.</string>
+    <string name="settings_translation_retry">↻ Download / check translation model</string>
+    <string name="settings_translation_credit">On-device automatic translation • Google ML Kit</string>
 </resources>

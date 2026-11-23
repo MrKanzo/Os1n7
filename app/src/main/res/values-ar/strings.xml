@@ -4,7 +4,7 @@
     <string name="settings_title">الإعدادات</string>
     <string name="settings_subtitle">اللغة • المظهر • الخصوصية</string>
     <string name="settings_language">لغة الواجهة</string>
-    <string name="settings_language_note">القوائم والشاشات الرئيسية مترجمة. الدروس وبعض صفحات المساعدة ما زالت بالأوكرانية.</string>
+    <string name="settings_language_note">تُترجم جميع الشاشات والدروس والاختبارات على جهازك. يلزم تنزيل نموذج اللغة مرة واحدة عبر Wi-Fi.</string>
     <string name="settings_appearance">المظهر والراحة</string>
     <string name="settings_banner">الواجهة المتحركة</string>
     <string name="settings_banner_hint">تشغيل: شجرة ومرافق متحركان. إيقاف: قائمة كلاسيكية ورسم ثنائي الأبعاد ثابت.</string>
@@ -64,4 +64,11 @@
     <string name="home_footer">OS1N7 • بحث مفتوح يحترم الخصوصية</string>
     <string name="home_settings_description">فتح الإعدادات</string>
     <string name="home_banner_warning">رسوم Android المتحركة معطلة.</string>
+    <string name="settings_translation_title">ترجمة جميع أقسام التطبيق</string>
+    <string name="settings_translation_detail">يُنزّل نموذج Google ML Kit عبر Wi-Fi (حوالي 30 ميغابايت). تعمل الترجمة لاحقًا دون اتصال، وقد تحتوي الترجمة الآلية على أخطاء.</string>
+    <string name="settings_translation_ready">✓ النموذج جاهز • ترجمة دون اتصال</string>
+    <string name="settings_translation_loading">جارٍ تنزيل النموذج عبر Wi-Fi…</string>
+    <string name="settings_translation_failed">النموذج غير متاح بعد. اتصل بشبكة Wi-Fi وأعد المحاولة.</string>
+    <string name="settings_translation_retry">↻ تنزيل النموذج / التحقق منه</string>
+    <string name="settings_translation_credit">ترجمة آلية على الجهاز • Google ML Kit</string>
 </resources>

@@ -4,7 +4,7 @@
     <string name="settings_title">Pengaturan</string>
     <string name="settings_subtitle">Bahasa • tampilan • privasi</string>
     <string name="settings_language">Bahasa antarmuka</string>
-    <string name="settings_language_note">Menu dan layar utama sudah diterjemahkan. Pelajaran dan sebagian bantuan masih berbahasa Ukraina.</string>
+    <string name="settings_language_note">Semua layar, pelajaran, dan kuis diterjemahkan di perangkat. Model bahasa harus diunduh sekali melalui Wi-Fi.</string>
     <string name="settings_appearance">Tampilan dan kenyamanan</string>
     <string name="settings_banner">Banner animasi</string>
     <string name="settings_banner_hint">Aktif: pohon dan pendamping bergerak. Nonaktif: menu klasik dan 2D statis.</string>
@@ -64,4 +64,11 @@
     <string name="home_footer">OS1N7 • OSINT dengan menghormati privasi</string>
     <string name="home_settings_description">Buka pengaturan</string>
     <string name="home_banner_warning">Animasi sistem Android dinonaktifkan.</string>
+    <string name="settings_translation_title">Terjemahan seluruh aplikasi</string>
+    <string name="settings_translation_detail">Model Google ML Kit diunduh melalui Wi-Fi (sekitar 30 MB). Setelah itu terjemahan bekerja offline. Terjemahan otomatis mungkin kurang akurat.</string>
+    <string name="settings_translation_ready">✓ Model siap • terjemahan offline</string>
+    <string name="settings_translation_loading">Mengunduh model melalui Wi-Fi…</string>
+    <string name="settings_translation_failed">Model belum tersedia. Sambungkan Wi-Fi lalu coba lagi.</string>
+    <string name="settings_translation_retry">↻ Unduh / periksa model</string>
+    <string name="settings_translation_credit">Terjemahan otomatis di perangkat • Google ML Kit</string>
 </resources>

@@ -4,7 +4,7 @@
     <string name="settings_title">Einstellungen</string>
     <string name="settings_subtitle">Sprache • Ansicht • Datenschutz</string>
     <string name="settings_language">Sprache der Oberfläche</string>
-    <string name="settings_language_note">Menüs und Hauptseiten sind übersetzt. Lektionen und einige Hilfetexte sind noch auf Ukrainisch.</string>
+    <string name="settings_language_note">Alle Seiten, Lektionen und Tests werden auf dem Gerät übersetzt. Ein einmaliger Modell-Download über WLAN ist erforderlich.</string>
     <string name="settings_appearance">Darstellung und Komfort</string>
     <string name="settings_banner">Animiertes Banner</string>
     <string name="settings_banner_hint">An: animierter Baum und Begleiter. Aus: klassisches Menü und statisches 2D.</string>
@@ -64,4 +64,11 @@
     <string name="home_footer">OS1N7 • OSINT mit Respekt vor Privatsphäre</string>
     <string name="home_settings_description">Einstellungen öffnen</string>
     <string name="home_banner_warning">Android-Systemanimationen sind deaktiviert.</string>
+    <string name="settings_translation_title">Übersetzung in der gesamten App</string>
+    <string name="settings_translation_detail">Ein Google-ML-Kit-Modell wird über WLAN geladen (ca. 30 MB). Danach funktioniert die Übersetzung offline. Automatische Übersetzungen können Fehler enthalten.</string>
+    <string name="settings_translation_ready">✓ Sprachmodell bereit • Offline-Übersetzung</string>
+    <string name="settings_translation_loading">Sprachmodell wird über WLAN geladen…</string>
+    <string name="settings_translation_failed">Modell noch nicht verfügbar. Bitte WLAN verbinden und erneut versuchen.</string>
+    <string name="settings_translation_retry">↻ Modell laden / prüfen</string>
+    <string name="settings_translation_credit">Automatische Übersetzung auf dem Gerät • Google ML Kit</string>
 </resources>

@@ -4,7 +4,7 @@
     <string name="settings_title">Configurações</string>
     <string name="settings_subtitle">Idioma • aparência • privacidade</string>
     <string name="settings_language">Idioma da interface</string>
-    <string name="settings_language_note">Os menus e as telas principais estão traduzidos. As lições e parte da ajuda ainda estão em ucraniano.</string>
+    <string name="settings_language_note">Todas as telas, lições e testes são traduzidos no aparelho. É necessário baixar o modelo uma vez via Wi-Fi.</string>
     <string name="settings_appearance">Aparência e conforto</string>
     <string name="settings_banner">Banner animado</string>
     <string name="settings_banner_hint">Ligado: árvore e companheiro animados. Desligado: menu clássico e 2D estático.</string>
@@ -64,4 +64,11 @@
     <string name="home_footer">OS1N7 • OSINT com respeito à privacidade</string>
     <string name="home_settings_description">Abrir configurações</string>
     <string name="home_banner_warning">As animações do Android estão desativadas.</string>
+    <string name="settings_translation_title">Tradução em todo o aplicativo</string>
+    <string name="settings_translation_detail">O modelo do Google ML Kit é baixado por Wi-Fi (cerca de 30 MB). Depois funciona offline. Traduções automáticas podem conter erros.</string>
+    <string name="settings_translation_ready">✓ Modelo pronto • tradução offline</string>
+    <string name="settings_translation_loading">Baixando modelo por Wi-Fi…</string>
+    <string name="settings_translation_failed">Modelo indisponível. Conecte-se ao Wi-Fi e tente novamente.</string>
+    <string name="settings_translation_retry">↻ Baixar / verificar modelo</string>
+    <string name="settings_translation_credit">Tradução automática no dispositivo • Google ML Kit</string>
 </resources>

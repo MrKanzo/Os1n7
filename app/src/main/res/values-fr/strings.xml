@@ -4,7 +4,7 @@
     <string name="settings_title">Paramètres</string>
     <string name="settings_subtitle">Langue • apparence • confidentialité</string>
     <string name="settings_language">Langue de l’interface</string>
-    <string name="settings_language_note">Les menus et les écrans principaux sont traduits. Les leçons et certaines aides restent en ukrainien.</string>
+    <string name="settings_language_note">Tous les écrans, leçons et quiz sont traduits sur l’appareil. Un téléchargement du modèle par Wi-Fi est nécessaire une seule fois.</string>
     <string name="settings_appearance">Apparence et confort</string>
     <string name="settings_banner">Bannière animée</string>
     <string name="settings_banner_hint">Activée : arbre et compagnon animés. Désactivée : menu classique et 2D statique.</string>
@@ -64,4 +64,11 @@
     <string name="home_footer">OS1N7 • OSINT et respect de la vie privée</string>
     <string name="home_settings_description">Ouvrir les paramètres</string>
     <string name="home_banner_warning">Les animations Android sont désactivées.</string>
+    <string name="settings_translation_title">Traduction dans toute l’application</string>
+    <string name="settings_translation_detail">Un modèle Google ML Kit est téléchargé via Wi-Fi (environ 30 Mo). Ensuite, la traduction marche hors ligne. Elle peut comporter des erreurs.</string>
+    <string name="settings_translation_ready">✓ Modèle prêt • traduction hors ligne</string>
+    <string name="settings_translation_loading">Téléchargement du modèle via Wi-Fi…</string>
+    <string name="settings_translation_failed">Modèle indisponible. Connectez-vous au Wi-Fi et réessayez.</string>
+    <string name="settings_translation_retry">↻ Télécharger / vérifier le modèle</string>
+    <string name="settings_translation_credit">Traduction automatique sur l’appareil • Google ML Kit</string>
 </resources>
