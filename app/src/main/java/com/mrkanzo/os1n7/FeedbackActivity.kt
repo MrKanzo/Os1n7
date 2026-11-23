@@ -218,7 +218,7 @@ class FeedbackActivity : Os1n7Activity() {
                 prefs.edit().putBoolean("community_rules_accepted", true).apply()
                 compose()
             }
-            .show()
+            .show().also { translateDialog(it) }
     }
 
     private fun compose() {
@@ -279,12 +279,13 @@ class FeedbackActivity : Os1n7Activity() {
             }
         }
         dialog.show()
+        translateDialog(dialog)
     }
     private fun openUrl(url: String) {
         try {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         } catch (_: Exception) {
-            Toast.makeText(this, "Немає браузера для відкриття GitHub", Toast.LENGTH_LONG).show()
+            showLocalizedToast("Немає браузера для відкриття GitHub", android.widget.Toast.LENGTH_LONG)
         }
     }
 
