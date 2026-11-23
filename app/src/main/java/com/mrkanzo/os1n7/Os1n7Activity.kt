@@ -12,6 +12,7 @@ import java.util.Locale
  */
 open class Os1n7Activity : Activity() {
     private var activeLanguage = "uk"
+    private var translationSession: Os1n7Translations.Session? = null
 
     override fun attachBaseContext(newBase: Context) {
         activeLanguage = Os1n7Preferences.language(newBase)
@@ -25,10 +26,25 @@ open class Os1n7Activity : Activity() {
 
     override fun onResume() {
         super.onResume()
-        // Returning from Settings refreshes the current screen in the new locale.
+        // Returning from Settings rebuilds the Android resource locale, then
+        // the on-device translator handles hard-coded text and lesson content.
         if (Os1n7Preferences.language(this) != activeLanguage && !isFinishing) {
             recreate()
+            return
         }
+        translationSession?.stop()
+        translationSession = Os1n7Translations.Session(this).also { it.start() }
+    }
+
+    override fun onPause() {
+        translationSession?.stop()
+        translationSession = null
+        super.onPause()
+    }
+
+    /** Translate a modal's visible options without touching any user input. */
+    protected fun translateDialog(dialog: android.app.AlertDialog) {
+        translationSession?.translateDialog(dialog)
     }
 }
 
