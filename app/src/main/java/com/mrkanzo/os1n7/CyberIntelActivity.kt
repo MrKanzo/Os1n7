@@ -24,12 +24,16 @@ class CyberIntelActivity : Os1n7Activity() {
     private val muted = Os1n7Ui.muted
     private val prefs by lazy { getSharedPreferences("os1n7_cyber_intel", Context.MODE_PRIVATE) }
     private var snapshot: JSONObject? = null
+    private var aiSnapshot: JSONObject? = null
+    private var aiFilter = "all"
+    private var aiGeneration = 0
     private var tab = 0
     private var metric = 0
     private var selectedYear: Int? = null
     private var generation = 0
     private lateinit var status: TextView
     private lateinit var newsTab: Button
+    private lateinit var aiTab: Button
     private lateinit var statsTab: Button
     private lateinit var sync: Button
     private lateinit var content: LinearLayout
@@ -65,7 +69,11 @@ class CyberIntelActivity : Os1n7Activity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tab = if (intent.getStringExtra("tab") == "statistics") 1 else 0
+        tab = when (intent.getStringExtra("tab")) {
+            "statistics" -> 1
+            "ai" -> 2
+            else -> 0
+        }
         window.statusBarColor = bg
         window.navigationBarColor = bg
         val root = LinearLayout(this).apply {
@@ -79,22 +87,33 @@ class CyberIntelActivity : Os1n7Activity() {
             }
         }
         root.addView(button("← До хмарної бібліотеки") { finish() })
-        Os1n7Ui.pageTitle(this, root, "◉", "Cyber Intelligence", "Офіційні кіберновини • статистика за роками")
+        Os1n7Ui.pageTitle(this, root, "◉", "Cyber Intelligence", "Кіберновини • ШІ • статистика")
 
         val tabs = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
-        newsTab = button("📰 Новини") {
+        newsTab = button("🛡 Кібер") {
             tab = 0
             showContent()
         }
-        statsTab = button("▥ Статистика") {
+        aiTab = button("🤖 Новини ШІ") {
+            tab = 2
+            showContent()
+            if (aiGeneration == 0) refreshAi()
+        }
+        statsTab = button("▥ Дані") {
             tab = 1
             showContent()
         }
-        tabs.addView(newsTab, LinearLayout.LayoutParams(0, -2, 1f).apply { rightMargin = dp(5) })
-        tabs.addView(statsTab, LinearLayout.LayoutParams(0, -2, 1f))
+        listOf(newsTab, aiTab, statsTab).forEachIndexed { index, item ->
+            item.textSize = 12.5f
+            tabs.addView(item, LinearLayout.LayoutParams(0, -2, 1f).apply {
+                if (index < 2) rightMargin = dp(5)
+            })
+        }
         root.addView(tabs)
 
-        sync = button("↻ Оновити дані") { refresh() }
+        sync = button("↻ Оновити дані") {
+            if (tab == 2) refreshAi() else refresh()
+        }
         root.addView(sync)
         status = text("Перевіряємо локальну копію…", 12f, muted)
         status.setPadding(0, dp(7), 0, dp(13))
@@ -117,8 +136,14 @@ class CyberIntelActivity : Os1n7Activity() {
                 status.text = "Збереженої коректної копії поки немає."
             }
         } else status.text = "Новини підтягнуться з офіційних джерел через GitHub."
+        val aiCached = prefs.getString("ai_snapshot", null)
+        if (aiCached != null) try {
+            aiSnapshot = JSONObject(aiCached).also { validateAi(it) }
+        } catch (_: Exception) {
+            // Preserve the previous cyber feed; a damaged AI cache is isolated.
+        }
         showContent()
-        refresh()
+        if (tab == 2) refreshAi() else refresh()
     }
 
     private fun urlAllowed(link: String, source: String? = null): Boolean {
@@ -218,18 +243,186 @@ class CyberIntelActivity : Os1n7Activity() {
             }
         }.start()
     }
+
+    private fun aiUrlAllowed(link: String, source: String): Boolean {
+        val uri = try { Uri.parse(link) } catch (_: Exception) { return false }
+        val host = uri.host?.lowercase() ?: return false
+        val allowed = when (source) {
+            "OpenAI" -> setOf("openai.com", "www.openai.com")
+            "Google DeepMind" -> setOf("deepmind.google")
+            "Hugging Face" -> setOf("huggingface.co", "www.huggingface.co")
+            else -> return false
+        }
+        return uri.scheme == "https" && uri.userInfo == null &&
+            uri.port in listOf(-1, 443) && host in allowed
+    }
+
+    private fun validateAi(data: JSONObject) {
+        if (data.optInt("schemaVersion", -1) != 1) throw IllegalArgumentException("AI schema")
+        val items = data.getJSONArray("news")
+        if (items.length() > 60) throw IllegalArgumentException("Too many AI news")
+        val ids = HashSet<String>()
+        for (i in 0 until items.length()) {
+            val item = items.getJSONObject(i)
+            if (item.optString("id").isBlank() || !ids.add(item.optString("id")) ||
+                item.optString("title").isBlank() ||
+                !item.optString("published").matches(Regex("\\d{4}-\\d{2}-\\d{2}")) ||
+                !aiUrlAllowed(item.optString("url"), item.optString("source"))) {
+                throw IllegalArgumentException("Invalid AI publisher article")
+            }
+        }
+    }
+
+    private fun openAiArticle(url: String, source: String) {
+        if (!aiUrlAllowed(url, source)) {
+            showLocalizedToast("Неперевірене джерело: посилання не відкрито")
+            return
+        }
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        } catch (_: Exception) {
+            showLocalizedToast("Не вдалося відкрити браузер")
+        }
+    }
+
+    private fun refreshAi() {
+        sync.isEnabled = false
+        if (tab == 2) status.text = "Оновлюємо новини ШІ через GitHub…"
+        val request = ++aiGeneration
+        Thread {
+            var conn: HttpURLConnection? = null
+            try {
+                conn = URL("https://raw.githubusercontent.com/MrKanzo/Os1n7/main/content/ai-news.json")
+                    .openConnection() as HttpURLConnection
+                conn.connectTimeout = 7000
+                conn.readTimeout = 12000
+                conn.setRequestProperty("Accept", "application/json")
+                if (conn.responseCode != 200) throw IllegalStateException("HTTP " + conn.responseCode)
+                val out = java.io.ByteArrayOutputStream()
+                conn.inputStream.use { stream ->
+                    val bytes = ByteArray(8192)
+                    while (true) {
+                        val read = stream.read(bytes)
+                        if (read < 0) break
+                        if (out.size() + read > 512 * 1024) throw IllegalStateException("Oversized AI feed")
+                        out.write(bytes, 0, read)
+                    }
+                }
+                val raw = out.toString("UTF-8")
+                val loaded = JSONObject(raw)
+                validateAi(loaded)
+                runOnUiThread {
+                    if (isFinishing || isDestroyed || request != aiGeneration) return@runOnUiThread
+                    aiSnapshot = loaded
+                    prefs.edit().putString("ai_snapshot", raw).apply()
+                    sync.isEnabled = true
+                    if (tab == 2) showContent()
+                }
+            } catch (_: Exception) {
+                runOnUiThread {
+                    if (isFinishing || isDestroyed || request != aiGeneration) return@runOnUiThread
+                    sync.isEnabled = true
+                    if (tab == 2) status.text = if (aiSnapshot != null)
+                        "○ Немає мережі • показано збережені новини ШІ" else
+                        "○ Новини ШІ недоступні • перевір інтернет"
+                }
+            } finally {
+                conn?.disconnect()
+            }
+        }.start()
+    }
+
+    private fun showAiNews(data: JSONObject?) {
+        if (data == null) {
+            content.addView(text("Новини ШІ ще не синхронізовані. Підключи інтернет і натисни «Оновити дані».", 14f, muted))
+            return
+        }
+        val array = data.optJSONArray("news")
+        content.addView(text("ШІ • моделі, дослідження, інструменти", 16f, mint, true).apply {
+            setPadding(0, dp(6), 0, dp(7))
+        })
+        content.addView(text(
+            "Публікації першоджерел. Український переклад неофіційний; " +
+                "перевіряй подробиці в оригіналі. Блог Hugging Face містить і дописи спільноти.",
+            12f, muted
+        ).apply { setPadding(0, 0, 0, dp(9)) })
+        val horizontal = HorizontalScrollView(this).apply { isHorizontalScrollBarEnabled = false }
+        val filters = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        listOf("all" to "Усі", "OpenAI" to "OpenAI",
+            "Google DeepMind" to "DeepMind", "Hugging Face" to "Hugging Face").forEach { (key, title) ->
+            val item = button(title) {
+                aiFilter = key
+                showContent()
+            }
+            item.textSize = 12f
+            item.setTextColor(if (aiFilter == key) bg else mint)
+            item.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                if (aiFilter == key) mint else surface
+            )
+            filters.addView(item, LinearLayout.LayoutParams(-2, dp(44)).apply { rightMargin = dp(6) })
+        }
+        horizontal.addView(filters)
+        content.addView(horizontal, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(8) })
+        var visible = 0
+        if (array != null) for (i in 0 until array.length()) {
+            val row = array.getJSONObject(i)
+            val source = row.optString("source")
+            if (aiFilter != "all" && aiFilter != source) continue
+            visible++
+            val panel = card()
+            panel.addView(text(source + " • " + row.optString("published"), 12f, mint, true))
+            panel.addView(text(row.optString("title"), 17f, Color.WHITE, true).apply {
+                setPadding(0, dp(8), 0, dp(6))
+            })
+            val summary = row.optString("summary")
+            if (summary.isNotBlank()) panel.addView(text(summary, 13f, muted))
+            val link = row.optString("url")
+            panel.addView(button("Читати першоджерело ↗") { openAiArticle(link, source) })
+        }
+        if (visible == 0) {
+            val empty = card()
+            empty.addView(text(
+                if (array == null || array.length() == 0)
+                    "Оригінальні новини ще не надійшли. GitHub перевіряє стрічки кожні 6 годин."
+                else "У цьому джерелі поки немає публікацій.",
+                14f, muted
+            ))
+        }
+        val sources = data.optJSONArray("sources")
+        if (sources != null) {
+            val footer = card()
+            footer.addView(text("СТАН ДЖЕРЕЛ", 12f, mint, true))
+            for (i in 0 until sources.length()) {
+                val src = sources.getJSONObject(i)
+                footer.addView(text(src.optString("name") +
+                    (if (src.optBoolean("ok")) " • доступне" else " • тимчасово недоступне"),
+                    12f, muted))
+            }
+        }
+    }
+
     private fun showContent() {
         if (!::content.isInitialized) return
-        newsTab.setTextColor(if (tab == 0) bg else mint)
-        statsTab.setTextColor(if (tab == 1) bg else mint)
-        newsTab.backgroundTintList = android.content.res.ColorStateList.valueOf(if (tab == 0) mint else surface)
-        statsTab.backgroundTintList = android.content.res.ColorStateList.valueOf(if (tab == 1) mint else surface)
+        listOf(newsTab to 0, aiTab to 2, statsTab to 1).forEach { (button, section) ->
+            button.setTextColor(if (tab == section) bg else mint)
+            button.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                if (tab == section) mint else surface
+            )
+        }
         content.removeAllViews()
+        if (tab == 2) {
+            val updated = aiSnapshot?.optString("updatedAt").orEmpty().take(16)
+            status.text = if (updated.isNotBlank()) "● Новини ШІ • оновлено $updated • офлайн-копія"
+                else "Новини ШІ • очікуємо публікацій"
+            showAiNews(aiSnapshot)
+            return
+        }
         val data = snapshot
         if (data == null) {
             content.addView(text("Поки немає даних. Натисни «Оновити дані».", 15f, muted))
             return
         }
+        status.text = "Кібердані • " + data.optString("updatedAt").take(16) + " • офлайн-копія"
         if (tab == 0) showNews(data) else showStats(data)
     }
     private fun showNews(data: JSONObject) {
