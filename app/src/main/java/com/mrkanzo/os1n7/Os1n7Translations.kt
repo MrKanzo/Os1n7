@@ -145,6 +145,11 @@ object Os1n7Translations {
             }
     }
 
+    /** Localize short transient messages while preserving their original meaning. */
+    fun translateMessage(context: Context, original: String, callback: (String) -> Unit) {
+        request(Os1n7Preferences.language(context), original, callback)
+    }
+
     /** For custom Canvas labels, return cached translation and redraw when it arrives. */
     fun canvasLabel(context: Context, original: String, redraw: () -> Unit): String {
         val language = Os1n7Preferences.language(context)
