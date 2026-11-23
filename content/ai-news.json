@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "language": "uk",
+  "updatedAt": "",
+  "news": [],
+  "sources": [
+    {
+      "name": "OpenAI",
+      "ok": false,
+      "url": "https://openai.com/news/rss.xml"
+    },
+    {
+      "name": "Google DeepMind",
+      "ok": false,
+      "url": "https://deepmind.google/blog/rss.xml"
+    },
+    {
+      "name": "Hugging Face",
+      "ok": false,
+      "url": "https://huggingface.co/blog/feed.xml"
+    }
+  ]
+}
