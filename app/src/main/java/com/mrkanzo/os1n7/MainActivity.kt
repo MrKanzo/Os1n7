@@ -142,14 +142,14 @@ class MainActivity : Os1n7Activity() {
                         android.app.AlertDialog.Builder(this)
                             .setTitle("OS1N7 оновлено")
                             .setMessage("Встановлено: $current. Останній реліз: $latest.")
-                            .setPositiveButton("Гаразд", null).show()
+                            .setPositiveButton("Гаразд", null).show().also { translateDialog(it) }
                     } else if (newer) {
                         android.app.AlertDialog.Builder(this)
                             .setTitle("Доступне оновлення $latest")
                             .setMessage("Поточна версія: $current. Завантажити й встановити оновлення поверх наявної програми? Дані зберігаються, якщо APK підписаний тим самим ключем.")
                             .setNegativeButton("Пізніше", null)
                             .setPositiveButton("Оновити") { _, _ -> downloadAndInstall(apkUrl, latest) }
-                            .show()
+                            .show().also { translateDialog(it) }
                     }
                 }
             } catch (e: Exception) {
@@ -158,7 +158,7 @@ class MainActivity : Os1n7Activity() {
                     android.app.AlertDialog.Builder(this)
                         .setTitle("Оновлення поки недоступні")
                         .setMessage("Не вдалося перевірити GitHub Releases. Перевір інтернет та наявність опублікованого APK.")
-                        .setPositiveButton("Гаразд", null).show()
+                        .setPositiveButton("Гаразд", null).show().also { translateDialog(it) }
                 }
             }
         }.start()
