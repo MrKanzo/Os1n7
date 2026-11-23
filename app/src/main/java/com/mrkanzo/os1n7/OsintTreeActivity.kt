@@ -284,7 +284,7 @@ class OsintTreeActivity : Os1n7Activity() {
         layout.addView(hero, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(11) })
         val replay = button("▶  Показати анімацію ще раз") {
             if (ValueAnimator.areAnimatorsEnabled()) replayTree() else {
-                android.widget.Toast.makeText(this, "У системі Android вимкнено анімації. Перевір налаштування доступності.", android.widget.Toast.LENGTH_LONG).show()
+                showLocalizedToast("У системі Android вимкнено анімації. Перевір налаштування доступності.", android.widget.Toast.LENGTH_LONG)
             }
         }
         layout.addView(replay, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(10) })
