@@ -43,7 +43,11 @@ open class Os1n7Activity : Activity() {
     }
 
     /** Translate a modal's visible options without touching any user input. */
-    protected fun translateDialog(dialog: android.app.AlertDialog) {
+    protected fun translateDialog(
+        dialog: android.app.AlertDialog,
+        preserveListItems: Boolean = false
+    ) {
+        if (preserveListItems) dialog.listView?.tag = "os1n7_original"
         translationSession?.translateDialog(dialog)
     }
 
