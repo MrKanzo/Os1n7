@@ -108,14 +108,24 @@ class ServerLibraryActivity : Os1n7Activity() {
         Os1n7Ui.pageTitle(this,root,"☁","Хмарна бібліотека","GitHub • офлайн • Termux")
         val intelBar = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
         intelBar.addView(Os1n7Ui.button(this).apply {
-            text = "📰 Кіберновини"
+            text = "📰 Кібер"
+            textSize = 12.5f
             setOnClickListener {
                 startActivity(android.content.Intent(this@ServerLibraryActivity, CyberIntelActivity::class.java)
                     .putExtra("tab", "news"))
             }
         }, LinearLayout.LayoutParams(0, -2, 1f).apply { rightMargin = dp(6) })
         intelBar.addView(Os1n7Ui.button(this).apply {
-            text = "▥ Статистика"
+            text = "🤖 ШІ"
+            textSize = 12.5f
+            setOnClickListener {
+                startActivity(android.content.Intent(this@ServerLibraryActivity, CyberIntelActivity::class.java)
+                    .putExtra("tab", "ai"))
+            }
+        }, LinearLayout.LayoutParams(0, -2, 1f).apply { rightMargin = dp(6) })
+        intelBar.addView(Os1n7Ui.button(this).apply {
+            text = "▥ Дані"
+            textSize = 12.5f
             setOnClickListener {
                 startActivity(android.content.Intent(this@ServerLibraryActivity, CyberIntelActivity::class.java)
                     .putExtra("tab", "statistics"))
