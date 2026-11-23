@@ -40,6 +40,14 @@
 - Повний аудит та мобільний чекліст: `docs/QUIZ_AND_PRACTICE_AUDIT_2026-11-23.md`.
 - Версія `v0.8.4` / versionCode 48. **Офлайн-аудит, debug APK і підписаний release APK пройшли GitHub Actions; APK опубліковано:** https://github.com/MrKanzo/Os1n7/releases/tag/v0.8.4 . **Ручний тест на Android ще не виконано.**
 
+## Додано 2026-11-23 — Новини ШІ (v0.8.6)
+- Окрема вкладка «🤖 Новини ШІ» у `CyberIntelActivity.kt` та компактний пункт «🤖 ШІ» в хмарній бібліотеці. Ніякої нової картки на головному екрані.
+- `scripts/sync_ai_news.py` збирає RSS першоджерел OpenAI, Google DeepMind і Hugging Face раз на 6 годин разом з наявною GitHub Actions синхронізацією. HTTPS allowlist, дата, недубльовані URL; роздільні збої та остання валідна копія. `scripts/translate_ai_news.py` перекладає через вже встановлений локальний Argos, зберігаючи оригінали і посилання.
+- `content/ai-news.json` — нові дані без APK; кеш `os1n7_cyber_intel/ai_snapshot` на телефоні окремий від `snapshot` кіберновин. Три джерела фільтруються на екрані, відкриваються тільки перевірені URL.
+- На першому синхронізуванні RSS отримано 30 дійсних публікацій (15 OpenAI, 15 Hugging Face); DeepMind RSS тимчасово відхилено через некоректну XML-відповідь. Не заявляти, що DeepMind уже наповнений, поки його RSS не виправлено.
+- Тести `tests/test_ai_news.py` у GitHub Actions пройшли; Android debug APK у CI пройшов, підписаний release v0.8.6 — перевірити завершення перед публікацією фінальної версії.
+- Докладно: `docs/AI_NEWS.md`. Ручний тест на телефоні ще не виконаний.
+
 ## Мета
 Android OSINT-бібліотека українською на Kotlin з офлайн-уроками, локальним сервером на Android (Termux), вебадмінкою та RSS-імпортом. Репозиторій: https://github.com/MrKanzo/Os1n7.
 
