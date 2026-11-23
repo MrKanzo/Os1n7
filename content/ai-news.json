@@ -1,12 +1,343 @@
 {
   "schemaVersion": 1,
   "language": "uk",
-  "updatedAt": "",
-  "news": [],
+  "updatedAt": "2026-11-23T07:41:54Z",
+  "news": [
+    {
+      "id": "1a10f1676d46fc01a909",
+      "source": "OpenAI",
+      "title": "Перплексність і розвідка",
+      "summary": "Як прогресування перспективності в моделях AI, і чому це може допомогти розробникам встановити спільний підхід до оцінки можливостей збуту.",
+      "published": "2026-11-22",
+      "url": "https://openai.com/index/perplexity-and-intelligence",
+      "originalTitle": "Perplexity and Intelligence",
+      "originalSummary": "How perplexity measures progress in AI models, and why it could help developers establish a shared approach to evaluating emerging capabilities.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "c1a2af93db54bfcf7c21",
+      "source": "OpenAI",
+      "title": "Чи може штучний інтелект допомогти дослідникам визначити перспективні кандидати ліків?",
+      "summary": "MedChemBench оцінює, як добре інтерпретують моделі AI молекулярними структурами, причинами експериментальних доказів і вибирають сполуки на ранньому відкритті препарату.",
+      "published": "2026-11-20",
+      "url": "https://openai.com/index/introducing-medchembench",
+      "originalTitle": "Can AI help scientists identify promising drug candidates?",
+      "originalSummary": "MedChemBench evaluates how well AI models interpret molecular structures, reason from experimental evidence, and select compounds in early drug discovery.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "824c03b970f1dc58cad6",
+      "source": "Hugging Face",
+      "title": "Ласкаво просимо Inkling 2 Mini, різання продуктивності для вашого локального налаштування",
+      "summary": "",
+      "published": "2026-11-20",
+      "url": "https://huggingface.co/blog/inkling2mini",
+      "originalTitle": "Welcome Inkling 2 Mini, Cutting-edge Performance for your Local Setup",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "8145fefb47ff1ca9fa55",
+      "source": "OpenAI",
+      "title": "Hebbia бачить покращення фінансових досліджень з GPT-6 Astra",
+      "summary": "Hebbia протестувала GPT-6 Астра для фінансових досліджень. Його попередні оцінки були знайдені вигоди у висвітленні джерела, реанімації та якості презентації.",
+      "published": "2026-11-20",
+      "url": "https://openai.com/business/customer-stories/hebbia",
+      "originalTitle": "Hebbia sees improvements in financial research with GPT-6 Astra",
+      "originalSummary": "Hebbia tested GPT-6 Astra for financial research. Its prerelease evaluations found gains in source coverage, citation relevance, and presentation quality.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "7ad44f990f0c53ef2e2a",
+      "source": "OpenAI",
+      "title": "Боротьба рекламної дистиляції",
+      "summary": "Відкритий підхід OpenAI до проведення позакореневої дистиляції поєднує в собі модельне навчання, охоронці, виявлення та виконання для захисту від видобутку можливостей.",
+      "published": "2026-11-20",
+      "url": "https://openai.com/index/combatting-adversarial-distillation",
+      "originalTitle": "Combatting adversarial distillation",
+      "originalSummary": "OpenAI’s layered approach to adversarial distillation combines model training, safeguards, detection, and enforcement to protect against capability extraction.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "701a571706ec6c00de8b",
+      "source": "Hugging Face",
+      "title": "Впровадження адаптерів harness: адаптуйте свою улюблену модель до вашого джгута, щоб поліпшити продуктивність і вартість",
+      "summary": "",
+      "published": "2026-11-20",
+      "url": "https://huggingface.co/blog/harness-adapters-at-scale",
+      "originalTitle": "Introducing harness adapters: adapt your favorite model to your harness to improve performance and cost",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "da30645137037f0052cd",
+      "source": "OpenAI",
+      "title": "Почати з Daybreak Blue",
+      "summary": "Дивитися прохід на борту Blue, з більш наближеним поглядом на досвід налаштування і як розпочати роботу.",
+      "published": "2026-11-19",
+      "url": "https://openai.com/business/learn/daybreak-blue-onboarding-demo",
+      "originalTitle": "Get started with Daybreak Blue",
+      "originalSummary": "Watch a walkthrough of onboarding to Daybreak Blue, with a closer look at the setup experience and how to get started.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "a890a236270cc5e31862",
+      "source": "OpenAI",
+      "title": "Розгортання Daybreak Red",
+      "summary": "Вивчіть архітектуру доручених досліджень безпеки з Daybreak Red, включаючи контроль безпеки, налаштування та моніторинг.",
+      "published": "2026-11-19",
+      "url": "https://openai.com/business/learn/deploying-daybreak-red",
+      "originalTitle": "Deploying Daybreak Red",
+      "originalSummary": "Explore a reference architecture for supervised security investigations with Daybreak Red, including safety controls, setup, and monitoring.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "9342dbf934e428aa00c1",
+      "source": "OpenAI",
+      "title": "Як працює компанія OpenAI в чатGPT швидко",
+      "summary": "Дізнайтеся, як OpenAI побудував завод продуктивності, систему Codex-потужних робочих процесів, що знаходить і фіксує проблеми продуктивності, щоб допомогти зберегти ЧаГП швидко.",
+      "published": "2026-11-19",
+      "url": "https://openai.com/index/how-openai-performance-factory-keeps-chatgpt-fast",
+      "originalTitle": "How OpenAI’s Performance Factory keeps ChatGPT fast",
+      "originalSummary": "Learn how OpenAI built the Performance Factory, a system of Codex-powered workflows that finds and fixes performance issues to help keep ChatGPT fast.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "82fe289fe466dcc1d4f7",
+      "source": "OpenAI",
+      "title": "Досліджуйте плагін безпеки Codex",
+      "summary": "Переглядайте демо Codex Security Plugin і ознайомтеся з робочим процесом в дії, починаючи з пошуку результатів, показаних в записі.",
+      "published": "2026-11-19",
+      "url": "https://openai.com/business/learn/codex-security-plugin-demo",
+      "originalTitle": "Explore the Codex Security Plugin",
+      "originalSummary": "Watch a demo of the Codex Security Plugin and see the workflow in action, from getting started to reviewing the results shown in the recording.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "17b7a2b39f098895a220",
+      "source": "OpenAI",
+      "title": "Дивитися сканування PR в дії",
+      "summary": "Переглядайте прорив PR-сканів і подивіться, як сканують результати в роботі з запитом.",
+      "published": "2026-11-19",
+      "url": "https://openai.com/business/learn/pr-scans-demo",
+      "originalTitle": "See PR scans in action",
+      "originalSummary": "Watch a walkthrough of PR scans and see how the presenter reviews scan results in a pull request workflow.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "f0b81ce3c14612880642",
+      "source": "Hugging Face",
+      "title": "DaisyRose-27B: Зловживання Frontierом післядипломної ефективності",
+      "summary": "",
+      "published": "2026-11-18",
+      "url": "https://huggingface.co/blog/RadixArk/daisyrose-27b-pushing-the-frontier-of-post-trainin",
+      "originalTitle": "DaisyRose-27B: Pushing the Frontier of Post-Training Efficiency",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "ec56b5eff9affb1c339e",
+      "source": "Hugging Face",
+      "title": "180Б Параметри, 32 Гб оперативної пам'яті: милосердя Включення до обмеження з трансформаторами",
+      "summary": "",
+      "published": "2026-11-18",
+      "url": "https://huggingface.co/blog/moe-expert-streaming",
+      "originalTitle": "180B Parameters, 32GB of RAM: Pushing MoE Inference to the Limit with Transformers",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "e55c8f2df06c07ffc92b",
+      "source": "Hugging Face",
+      "title": "Чому ваша дрібна робота займає більше, ніж ФОПи говорять",
+      "summary": "",
+      "published": "2026-11-18",
+      "url": "https://huggingface.co/blog/Dharma-AI/predicting-fine-tuning-time",
+      "originalTitle": "Why your fine-tuning job takes longer than the FLOPs say",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "aef632472a5e3af7f91b",
+      "source": "Hugging Face",
+      "title": "Моделі Time-Series в Streamhouse: новий Frontier і використовувати кейси",
+      "summary": "",
+      "published": "2026-11-18",
+      "url": "https://huggingface.co/blog/ibm-research/time-series-powered-streamhouse",
+      "originalTitle": "Time-Series Models in the Streamhouse: A New Frontier and Use Cases",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "99be0c0a7e074380d1a5",
+      "source": "OpenAI",
+      "title": "Управління ризиком переднього AI: від тренінгу для розгортання",
+      "summary": "OpenAI пояснює, як він керує ризиком переднього AI від навчання через розгортання з вирівнюванням моделі, піскобоксингом, блокування захисних засобів та моніторингу.",
+      "published": "2026-11-18",
+      "url": "https://openai.com/index/managing-frontier-ai-risk",
+      "originalTitle": "Managing frontier AI risk: From training to deployment",
+      "originalSummary": "OpenAI explains how it manages frontier AI risk from training through deployment with model alignment, sandboxing, blocking safeguards, and monitoring.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "68ddb817fe4001c0fc7b",
+      "source": "OpenAI",
+      "title": "Дизайн чіпа Advancing з моделями OpenAI",
+      "summary": "Оптимізовані схеми OpenAI, що використовуються в кремнію Jalapeño та поліпшених конструкціях RISC‐V, демонструючи прогрес в дизайні чіпа AI з GPT‐6 Astra.",
+      "published": "2026-11-18",
+      "url": "https://openai.com/index/advancing-chip-design-with-our-models",
+      "originalTitle": "Advancing chip design with OpenAI models",
+      "originalSummary": "OpenAI models optimized circuits used in Jalapeño silicon and improved RISC‑V core designs, showing progress in AI-assisted chip design with GPT‑6 Astra.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "67952d9a918d2536a7bf",
+      "source": "OpenAI",
+      "title": "Усередині коробки Codex",
+      "summary": "Переглядайте, як Codex працює команди на вашому машині під час створення файлової системи та мережевих обмежень, які ви контролюєте через macOS, Linux та Windows.",
+      "published": "2026-11-18",
+      "url": "https://openai.com/index/inside-the-codex-sandbox",
+      "originalTitle": "Inside the Codex sandbox",
+      "originalSummary": "See how Codex runs commands on your machine while enforcing the filesystem and network limits you control across macOS, Linux, and Windows.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "5b89a2db7f60ae9099b7",
+      "source": "Hugging Face",
+      "title": "Rumble-2-Flash: відкрита модель мовлення 0.5B для 40+ мов",
+      "summary": "",
+      "published": "2026-11-18",
+      "url": "https://huggingface.co/blog/rumble-2-flash",
+      "originalTitle": "Rumble-2-Flash: an open 0.5B speech model for 40+ languages",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "58da586369f33999eb92",
+      "source": "OpenAI",
+      "title": "Дослідження прискорення: джегований передній",
+      "summary": "OpenAI заявляє, як конденсатори прискорюють дослідження AI, де їх продуктивність залишається нерівномірною, і що це сигнали про рекурсивне самовдосконалення.",
+      "published": "2026-11-18",
+      "url": "https://openai.com/index/research-acceleration-jagged-frontier",
+      "originalTitle": "Research acceleration: The jagged frontier",
+      "originalSummary": "OpenAI measures how coding agents are accelerating AI research, where their performance remains uneven, and what this signals about recursive self-improvement.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "53d809d7420a3923e8ba",
+      "source": "OpenAI",
+      "title": "Як лідери Sumitomo Life допомогли командам приймати чатGPT Enterprise",
+      "summary": "Sumitomo Life використовує чатGPT Enterprise для дослідників страховиків, підготувати пропозиції та проект коду для інвестиційного аналізу. Раннє використання виконавчих органів допомогло прийняття диску.",
+      "published": "2026-11-18",
+      "url": "https://openai.com/business/customer-stories/sumitomo-life",
+      "originalTitle": "How Sumitomo Life’s leaders helped teams adopt ChatGPT Enterprise",
+      "originalSummary": "Sumitomo Life uses ChatGPT Enterprise to research insurers, prepare proposals, and draft code for investment analysis. Early use by executives helped drive adoption.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "184d931227f2504de1a3",
+      "source": "OpenAI",
+      "title": "Кременчуг",
+      "summary": "Декан м'яч, керівник стратегічних перспектив у OpenAI, досліджує, як більш здатний штучний інтелект міг переосмислити суспільство і як люди можуть зберігати контроль своїх установ.",
+      "published": "2026-11-18",
+      "url": "https://openai.com/index/the-silent-consensus",
+      "originalTitle": "The Silent Consensus",
+      "originalSummary": "Dean Ball, Head of Strategic Futures at OpenAI, examines how more capable AI could reshape society and how people can retain control of their institutions.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "8ec21efa2c62273428cb",
+      "source": "Hugging Face",
+      "title": "Приєднуйся до сил, щоб зробити відкриті моделі легко",
+      "summary": "",
+      "published": "2026-11-16",
+      "url": "https://huggingface.co/blog/openrouter",
+      "originalTitle": "Hugging Face and OpenRouter join forces to make open-weight models easy to run",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "cdc8eef67bc55a0d0fa5",
+      "source": "Hugging Face",
+      "title": "Створіть робочий пік-і-розташуне моделювання з SimReady Assets",
+      "summary": "",
+      "published": "2026-11-13",
+      "url": "https://huggingface.co/blog/nvidia/simready-assets-robot-pick-and-place",
+      "originalTitle": "Build a Robot Pick-and-Place Simulation with SimReady Assets",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "96c7f67bef86f8316048",
+      "source": "Hugging Face",
+      "title": "XYBench: Допомога з проблемою за питанням",
+      "summary": "",
+      "published": "2026-11-13",
+      "url": "https://huggingface.co/blog/allenai/xybench",
+      "originalTitle": "XYBench: Helping with the problem behind the question",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "6841e619fcd7e8d93702",
+      "source": "Hugging Face",
+      "title": "llama.cpp v1.0.0 : Потужний фундамент для локальної екосистеми AI",
+      "summary": "",
+      "published": "2026-11-13",
+      "url": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
+      "originalTitle": "llama.cpp v1.0.0 : A stronger foundation for the local AI ecosystem",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "cbda9238a3684b28e47a",
+      "source": "Hugging Face",
+      "title": "Путівник для моделей 3D Generation",
+      "summary": "",
+      "published": "2026-11-12",
+      "url": "https://huggingface.co/blog/3d-lora-finetuning",
+      "originalTitle": "The Definitive Fine-Tuning Guide for 3D Generation Models",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "84ec87286cb35a64f463",
+      "source": "Hugging Face",
+      "title": "LLMON: Мова LLM-нативного Markup тепер у Граніт 4.1 3B і 8B",
+      "summary": "",
+      "published": "2026-11-12",
+      "url": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite",
+      "originalTitle": "LLMON: An LLM-Native Markup Language, now in Granite 4.1 3B and 8B",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "19b4fcb1faac9c9bdbcc",
+      "source": "Hugging Face",
+      "title": "BotPsy: На-Device Особистий помічник з суб-Billion-Parameter Агентична мовна модель",
+      "summary": "",
+      "published": "2026-11-11",
+      "url": "https://huggingface.co/blog/qvac/botpsy",
+      "originalTitle": "BotPsy: On-Device Personal Assistant with a Sub-Billion-Parameter Agentic Language Model",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "11568aa8dfcf9a3c0750",
+      "source": "Hugging Face",
+      "title": "Token Pooling-Aware Навчання для багатовекторних моделей",
+      "summary": "",
+      "published": "2026-11-11",
+      "url": "https://huggingface.co/blog/token-pooling",
+      "originalTitle": "Token Pooling-Aware Training for Multi-Vector Embedding Models",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    }
+  ],
   "sources": [
     {
       "name": "OpenAI",
-      "ok": false,
+      "ok": true,
       "url": "https://openai.com/news/rss.xml"
     },
     {
@@ -16,7 +347,7 @@
     },
     {
       "name": "Hugging Face",
-      "ok": false,
+      "ok": true,
       "url": "https://huggingface.co/blog/feed.xml"
     }
   ]
