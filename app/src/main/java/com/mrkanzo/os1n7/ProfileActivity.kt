@@ -77,7 +77,7 @@ class ProfileActivity : Os1n7Activity() {
                     profile.edit().putString("nickname", name).apply()
                     render()
                 } else Toast.makeText(this, "Введи нікнейм", Toast.LENGTH_SHORT).show()
-            }.show()
+            }.show().also { translateDialog(it) }
     }
     private fun showAvatarEditor() {
         val symbols = arrayOf("◈", "⌕", "◎", "✦", "⬡", "▦", "⚒", "▤")
@@ -89,7 +89,7 @@ class ProfileActivity : Os1n7Activity() {
                 render()
             }
             .setNegativeButton("Скасувати", null)
-            .show()
+            .show().also { translateDialog(it) }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -208,7 +208,7 @@ class ProfileActivity : Os1n7Activity() {
                         profile.edit().putString("companion_name", next).apply()
                         render()
                     }
-                }.show()
+                }.show().also { translateDialog(it) }
         }
         val styleNames = arrayOf("Неоновий", "Привид", "Вогник")
         val styleIds = arrayOf("neon", "ghost", "ember")
@@ -222,7 +222,7 @@ class ProfileActivity : Os1n7Activity() {
                     render()
                 }
                 .setNegativeButton("Закрити", null)
-                .show()
+                .show().also { translateDialog(it) }
         }
         action(companion, "◈ Гардероб • рівні та речі") {
             startActivity(Intent(this, CompanionWardrobeActivity::class.java))
