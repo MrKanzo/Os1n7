@@ -1,8 +1,74 @@
 {
   "schemaVersion": 1,
   "language": "uk",
-  "updatedAt": "2026-11-23T07:41:54Z",
+  "updatedAt": "2026-11-24T01:44:04Z",
   "news": [
+    {
+      "id": "eb2701ff66febea27293",
+      "source": "Hugging Face",
+      "title": "RoboTrack: Відстеження точок для реальної роботизованої маніпуляції",
+      "summary": "",
+      "published": "2026-11-23",
+      "url": "https://huggingface.co/blog/allenai/robotrack",
+      "originalTitle": "RoboTrack: Point tracking for real-world robotic manipulation",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "b0689cf87ab570a441c8",
+      "source": "OpenAI",
+      "title": "OpenAI і Cisco представила Shirudo",
+      "summary": "OpenAI та Cisco впроваджують Shirudo, відкритий робочий час для Linux. Це допомагає командам захистити запущені системи, коли вони розгортають патчі.",
+      "published": "2026-11-23",
+      "url": "https://openai.com/index/introducing-shirudo",
+      "originalTitle": "OpenAI and Cisco introduce Shirudo",
+      "originalSummary": "OpenAI and Cisco introduce Shirudo, an open-source runtime for Linux. It helps teams protect running systems while they roll out patches.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "3ffa5c39e01e3431aafb",
+      "source": "Google DeepMind",
+      "title": "Пошук швидших квантових алгоритмів з агентами та формальною перевіркою",
+      "summary": "Використання команд агента та формальної перевірки для покращення квантових алгоритмів для злиття та хімії.",
+      "published": "2026-11-23",
+      "url": "https://deepmind.google/blog/finding-faster-quantum-algorithms-with-agents-and-formal-verification/",
+      "originalTitle": "Finding faster quantum algorithms with agents and formal verification",
+      "originalSummary": "Using agent teams and formal verification to improve quantum algorithms for fusion and chemistry.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "1259b534687dd8b31711",
+      "source": "OpenAI",
+      "title": "Richpanel допомагає компаніям автоматизувати 50% підтримки за 30 днів",
+      "summary": "Richpanel використовує GPT-6 Astra і GPT-6.1 Sol для оснащення агентів з підтримки AI з інструментами та процедурами, і GPT-6 Luna для своїх розмов.",
+      "published": "2026-11-23",
+      "url": "https://openai.com/business/customer-stories/richpanel-ai-customer-support",
+      "originalTitle": "Richpanel helps companies automate 50% of support in 30 days",
+      "originalSummary": "Richpanel uses GPT-6 Astra and GPT-6.1 Sol to equip its AI support agents with tools and procedures, and GPT-6 Luna for their conversations.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "10878202550bbbf922d1",
+      "source": "OpenAI",
+      "title": "Підключений інтелект для юридичних осіб",
+      "summary": "Дивитися Stacey Wang і Craig Bruney, Mary O'Carroll of LECG, and Cooley's Richard Segal, як AI може допомогти в будь-якій юридичній команді з'єднати бізнес контекст, побудувати багаторазові робочі процеси і отримати більше від зовнішнього радника.",
+      "published": "2026-11-23",
+      "url": "https://openai.com/business/learn/connected-intelligence-for-in-house-legal",
+      "originalTitle": "Connected intelligence for in-house legal",
+      "originalSummary": "Watch OpenAI’s Stacey Wang and Craig Bruney, Mary O’Carroll of LECG, and Cooley’s Richard Segal explore how AI can help in-house legal teams connect business context, build reusable workflows and get more from outside counsel.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "00d52199bef25f9eda98",
+      "source": "Hugging Face",
+      "title": "Як побудувати і підтримувати агентську оцінку",
+      "summary": "",
+      "published": "2026-11-23",
+      "url": "https://huggingface.co/blog/agentic-evals",
+      "originalTitle": "How to build and maintain an agentic evaluation",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
     {
       "id": "1a10f1676d46fc01a909",
       "source": "OpenAI",
@@ -158,6 +224,17 @@
       "translation": "uk-v1"
     },
     {
+      "id": "cac57b5217ba2caa29c8",
+      "source": "Google DeepMind",
+      "title": "Genie 4 тепер доступний",
+      "summary": "",
+      "published": "2026-11-18",
+      "url": "https://deepmind.google/blog/genie-4-is-now-available/",
+      "originalTitle": "Genie 4 is now available",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
       "id": "aef632472a5e3af7f91b",
       "source": "Hugging Face",
       "title": "Моделі Time-Series в Streamhouse: новий Frontier і використовувати кейси",
@@ -169,36 +246,14 @@
       "translation": "uk-v1"
     },
     {
-      "id": "99be0c0a7e074380d1a5",
-      "source": "OpenAI",
-      "title": "Управління ризиком переднього AI: від тренінгу для розгортання",
-      "summary": "OpenAI пояснює, як він керує ризиком переднього AI від навчання через розгортання з вирівнюванням моделі, піскобоксингом, блокування захисних засобів та моніторингу.",
+      "id": "95da0fde7d56c751139e",
+      "source": "Google DeepMind",
+      "title": "Представляємо Близнюки 4 Neon",
+      "summary": "",
       "published": "2026-11-18",
-      "url": "https://openai.com/index/managing-frontier-ai-risk",
-      "originalTitle": "Managing frontier AI risk: From training to deployment",
-      "originalSummary": "OpenAI explains how it manages frontier AI risk from training through deployment with model alignment, sandboxing, blocking safeguards, and monitoring.",
-      "translation": "uk-v1"
-    },
-    {
-      "id": "68ddb817fe4001c0fc7b",
-      "source": "OpenAI",
-      "title": "Дизайн чіпа Advancing з моделями OpenAI",
-      "summary": "Оптимізовані схеми OpenAI, що використовуються в кремнію Jalapeño та поліпшених конструкціях RISC‐V, демонструючи прогрес в дизайні чіпа AI з GPT‐6 Astra.",
-      "published": "2026-11-18",
-      "url": "https://openai.com/index/advancing-chip-design-with-our-models",
-      "originalTitle": "Advancing chip design with OpenAI models",
-      "originalSummary": "OpenAI models optimized circuits used in Jalapeño silicon and improved RISC‑V core designs, showing progress in AI-assisted chip design with GPT‑6 Astra.",
-      "translation": "uk-v1"
-    },
-    {
-      "id": "67952d9a918d2536a7bf",
-      "source": "OpenAI",
-      "title": "Усередині коробки Codex",
-      "summary": "Переглядайте, як Codex працює команди на вашому машині під час створення файлової системи та мережевих обмежень, які ви контролюєте через macOS, Linux та Windows.",
-      "published": "2026-11-18",
-      "url": "https://openai.com/index/inside-the-codex-sandbox",
-      "originalTitle": "Inside the Codex sandbox",
-      "originalSummary": "See how Codex runs commands on your machine while enforcing the filesystem and network limits you control across macOS, Linux, and Windows.",
+      "url": "https://deepmind.google/blog/introducing-gemini-4-neon/",
+      "originalTitle": "Introducing Gemini 4 Neon",
+      "originalSummary": "",
       "translation": "uk-v1"
     },
     {
@@ -268,17 +323,6 @@
       "translation": "uk-v1"
     },
     {
-      "id": "96c7f67bef86f8316048",
-      "source": "Hugging Face",
-      "title": "XYBench: Допомога з проблемою за питанням",
-      "summary": "",
-      "published": "2026-11-13",
-      "url": "https://huggingface.co/blog/allenai/xybench",
-      "originalTitle": "XYBench: Helping with the problem behind the question",
-      "originalSummary": "",
-      "translation": "uk-v1"
-    },
-    {
       "id": "6841e619fcd7e8d93702",
       "source": "Hugging Face",
       "title": "llama.cpp v1.0.0 : Потужний фундамент для локальної екосистеми AI",
@@ -301,6 +345,17 @@
       "translation": "uk-v1"
     },
     {
+      "id": "c7a410ad3b8628097c72",
+      "source": "Google DeepMind",
+      "title": "Представляємо Близнюки 4 Гідроген",
+      "summary": "",
+      "published": "2026-11-12",
+      "url": "https://deepmind.google/blog/introducing-gemini-4-hydrogen/",
+      "originalTitle": "Introducing Gemini 4 Hydrogen",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
       "id": "84ec87286cb35a64f463",
       "source": "Hugging Face",
       "title": "LLMON: Мова LLM-нативного Markup тепер у Граніт 4.1 3B і 8B",
@@ -309,6 +364,17 @@
       "url": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite",
       "originalTitle": "LLMON: An LLM-Native Markup Language, now in Granite 4.1 3B and 8B",
       "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "833534b672b8daa32ace",
+      "source": "Google DeepMind",
+      "title": "AlphaGenome 2: Дециферування, як клітини, які читають ДНК, щоб краще зрозуміти захворювання",
+      "summary": "Вирокуючи, як послідовність ДНК і їх варіації впливають на специфічні типи клітин людини і захворювання.",
+      "published": "2026-11-11",
+      "url": "https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/",
+      "originalTitle": "AlphaGenome 2: Deciphering how cells read DNA to better understand disease",
+      "originalSummary": "Predicting how DNA sequences and their variations impact specific human cell types and disease.",
       "translation": "uk-v1"
     },
     {
@@ -323,13 +389,57 @@
       "translation": "uk-v1"
     },
     {
-      "id": "11568aa8dfcf9a3c0750",
-      "source": "Hugging Face",
-      "title": "Token Pooling-Aware Навчання для багатовекторних моделей",
+      "id": "f321c904268bcef29356",
+      "source": "Google DeepMind",
+      "title": "Впровадження АльфаПроф-коду: покрокове підтвердження комплексного програмного забезпечення на глибину",
+      "summary": "АльфаProof Code агенти писали три мільйони рядків доказів в Леані, щоб перевірити Core шифрування Signal.",
+      "published": "2026-11-10",
+      "url": "https://deepmind.google/blog/introducing-alphaproof-code/",
+      "originalTitle": "Introducing AlphaProof Code: a breakthrough in verifying complex software at depth",
+      "originalSummary": "AlphaProof Code agents wrote three million lines of proofs in Lean to verify Signal’s core encryption.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "d0f9bf46fa9dba7cc8ef",
+      "source": "Google DeepMind",
+      "title": "Відкриття пресетів за моделями погоди AI",
+      "summary": "Фундаментальні опади та геостаціонарні супутникові дані для спостереження за планетою чітко.",
+      "published": "2026-11-10",
+      "url": "https://deepmind.google/blog/opening-the-datasets-behind-our-ai-weather-models/",
+      "originalTitle": "Opening the datasets behind our AI weather models",
+      "originalSummary": "Foundational precipitation and geostationary satellite datasets to observe the planet clearly.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "6d8eb3bcd497222db158",
+      "source": "Google DeepMind",
+      "title": "Gemini 4 Carbon тепер доступний",
       "summary": "",
-      "published": "2026-11-11",
-      "url": "https://huggingface.co/blog/token-pooling",
-      "originalTitle": "Token Pooling-Aware Training for Multi-Vector Embedding Models",
+      "published": "2026-11-10",
+      "url": "https://deepmind.google/blog/gemini-4-carbon-is-now-available/",
+      "originalTitle": "Gemini 4 Carbon is now available",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "8827aad4505e69ef98eb",
+      "source": "Google DeepMind",
+      "title": "Gemini Robotics 2.5 прискорює загальну спритність реального світу",
+      "summary": "Ми можемо самі зателефонувати одержувачу за номером:",
+      "published": "2026-11-09",
+      "url": "https://deepmind.google/blog/gemini-robotics-2-5-accelerates-real-world-physical-intelligence/",
+      "originalTitle": "Gemini Robotics 2.5 accelerates real-world general dexterity",
+      "originalSummary": "Our most capable vision-language-action model enhances robot dexterity, reliability, and safety",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "f09d7876c1e95fcaa2b6",
+      "source": "Google DeepMind",
+      "title": "Близнюки Omni 1.2 Флеш: Швидко і економічно вигідно з більшим кліпом",
+      "summary": "",
+      "published": "2026-11-05",
+      "url": "https://deepmind.google/blog/gemini-omni-12-flash-fast-and-cost-effective-with-longer-clips/",
+      "originalTitle": "Gemini Omni 1.2 Flash: Fast and cost-effective with longer clips",
       "originalSummary": "",
       "translation": "uk-v1"
     }
@@ -342,7 +452,7 @@
     },
     {
       "name": "Google DeepMind",
-      "ok": false,
+      "ok": true,
       "url": "https://deepmind.google/blog/rss.xml"
     },
     {

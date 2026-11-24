@@ -1,8 +1,19 @@
 {
   "schemaVersion": 1,
   "language": "uk",
-  "updatedAt": "2026-11-22T21:52:53Z",
+  "updatedAt": "2026-11-24T01:44:04Z",
   "news": [
+    {
+      "id": "75ea09ea3e752e0248bf",
+      "source": "CISA",
+      "title": "CISA додає два знахідки, що розширюються вразливості до каталогу",
+      "summary": "CISA додала дві нові вразливості до своїх знаних вибухобезпечних Vulnerabilities (KEV) Каталог, що базується на доказах активного експлуатації. CVE-2026-133968 Проект MONAI MONAI Етикетка шлях Traversal Vulnerability CVE-2026-134624 N-able Пошта Забезпечення (SpamExperts) Сервер-Side Запит для випромінювання (SSRF) Про нас",
+      "published": "2026-11-23",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/23/cisa-adds-two-known-exploited-vulnerabilities-catalog",
+      "originalTitle": "CISA Adds Two Known Exploited Vulnerabilities to Catalog",
+      "originalSummary": "CISA has added two new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2026-133968 Project MONAI MONAI Label Path Traversal Vulnerability CVE-2026-134624 N-able Mail Assure (SpamExperts) Server-Side Request Forgery (SSRF) Vulnerability These",
+      "translation": "uk-v1"
+    },
     {
       "id": "b22eec5809ce5c9c44d6",
       "source": "CISA",
@@ -169,17 +180,6 @@
       "translation": "uk-v1"
     },
     {
-      "id": "37902359fb183e156991",
-      "source": "CISA",
-      "title": "CISA додало одну експлуатовану вразливість до каталогу KEV",
-      "summary": "До каталогу KEV внесено CVE-2026-115731 у Perforce Puppet Enterprise — проблему десеріалізації недовірених даних. CISA наголошує на ризику її використання зловмисниками.",
-      "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/alerts/2026/11/17/cisa-adds-one-known-exploited-vulnerability-catalog",
-      "originalTitle": "CISA Adds One Known Exploited Vulnerability to Catalog",
-      "originalSummary": "CISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2026-115731 Perforce Puppet Enterprise Deserialization of Untrusted Data Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and",
-      "translation": "uk-v1"
-    },
-    {
       "id": "2b90ef71fb0880376bf8",
       "source": "CISA",
       "title": "CISA закликає терміново усунути критичну вразливість Java",
@@ -320,7 +320,7 @@
       "description": "Кількість CVE, внесених до каталогу CISA KEV у відповідному році. Це НЕ кількість зламів і не дата фактичної атаки.",
       "source": "CISA (офіційне дзеркало GitHub)",
       "sourceUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
-      "sourceUpdated": "2026-11-20T17:48:39.1516Z",
+      "sourceUpdated": "2026-11-23T19:43:55.7979Z",
       "years": [
         {
           "year": 2021,
@@ -344,7 +344,7 @@
         },
         {
           "year": 2026,
-          "count": 306
+          "count": 308
         }
       ]
     },
