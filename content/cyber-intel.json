@@ -1,8 +1,52 @@
 {
   "schemaVersion": 1,
   "language": "uk",
-  "updatedAt": "2026-11-24T01:44:04Z",
+  "updatedAt": "2026-11-24T23:31:06Z",
   "news": [
+    {
+      "id": "7b6115f8e21f6eecb0f9",
+      "source": "CISA",
+      "title": "Schneider Electric EcoStruxure Power Build Rapsody програмне забезпечення",
+      "summary": "Переглянути CSAF Резюме Schneider Electric знає вразливість у своєму продукті EcoStruxureTM Power Build Rapsody. ЕкоStruxureTM Power Build Rapsody використовується для введення або імпортування єдиної діаграми лінії, щоб отримати великий рахунок матеріалу вашого комутаційного щита, включаючи всі пристрої, елементи з'єднання і мус",
+      "published": "2026-11-24",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-328-02",
+      "originalTitle": "Schneider Electric EcoStruxure Power Build Rapsody software",
+      "originalSummary": "View CSAF Summary Schneider Electric is aware of a vulnerability in its EcoStruxure™ Power Build Rapsody product. The EcoStruxure™ Power Build Rapsody is used to enter or import the single line diagram, to get the extensive bill of material of your switchboard, including all devices, connection items, and mou",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "3ed1970e74313c87defd",
+      "source": "CISA",
+      "title": "Автоматика Програмне забезпечення для програмування C-More EA9",
+      "summary": "Переглядайте CSAF Резюме Успішне використання цієї вразливості може дозволити атаки на пошкоджену пам'ять додатків і викликати нестійкість або аварійну катастрофу, потенційно веде до виконання довільного коду, якщо користувач переконаний відкрити шкідливий файл. Наступні версії програми автоматизаціїDirect C-More EA9",
+      "published": "2026-11-24",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-328-01",
+      "originalTitle": "AutomationDirect C-More EA9 Programming Software",
+      "originalSummary": "View CSAF Summary Successful exploitation of this vulnerability could allow attackers to corrupt application memory and cause instability or a crash, potentially leading to arbitrary code execution, if a user is convinced to open a malicious file. The following versions of AutomationDirect C-More EA9 Programm",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "3a8ad132bbb8c2a03e0e",
+      "source": "CISA",
+      "title": "Danfoss AK-SM 8xxA серії",
+      "summary": "Переглядайте CSAF Резюме Успішне використання цієї вразливості може дозволити атакуристу виконати довільний код з привілеїв вебсервера. Наведено наступні варіанти серії Danfoss AK-SM 8xxA: AK-SM8xxA <=5.4.0 (CVE-2026-129713) CVS Постачальник обладнання v3 9.8 Danfosss AK-SM8xA 1 Вульnerability Stac",
+      "published": "2026-11-24",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-328-03",
+      "originalTitle": "Danfoss AK-SM 8xxA Series",
+      "originalSummary": "View CSAF Summary Successful exploitation of this vulnerability could allow an attacker to execute arbitrary code with webserver privileges. The following versions of Danfoss AK-SM 8xxA Series are affected: AK-SM8xxA <=5.4.0 (CVE-2026-129713) CVSS Vendor Equipment v3 9.8 Danfoss AK-SM8xxA 1 Vulnerability Stac",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "165729c3cbfbb2e3eb18",
+      "source": "CISA",
+      "title": "CISA додає три відомі вразливості до каталогу",
+      "summary": "CISA додала три нові вразливості до своїх знаних вибухобезпечних вразливостей (KEV) Каталог, що базується на доказах активного експлуатації. CVE-2026-131914 Idunno AntiCsrf Deserialization Untrusted Data Vulnerability CVE-2026-132165 Drupal Core Remote Code Виконання Vulnerability CVE-2026-132224 Оптимізуйте W",
+      "published": "2026-11-24",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/24/cisa-adds-three-known-exploited-vulnerabilities-catalog",
+      "originalTitle": "CISA Adds Three Known Exploited Vulnerabilities to Catalog",
+      "originalSummary": "CISA has added three new vulnerabilities to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2026-131914 Idunno AntiCsrf Deserialization of Untrusted Data Vulnerability CVE-2026-132165 Drupal Core Remote Code Execution Vulnerability CVE-2026-132224 Optimizely W",
+      "translation": "uk-v1"
+    },
     {
       "id": "75ea09ea3e752e0248bf",
       "source": "CISA",
@@ -136,47 +180,14 @@
       "translation": "uk-v1"
     },
     {
-      "id": "5b5cf4f017dbab0ebb96",
+      "id": "37902359fb183e156991",
       "source": "CISA",
-      "title": "Siemens SIMATIC: можливий обхід автентифікації",
-      "summary": "У деяких продуктах SIMATIC вразливість може дозволити зловмиснику в мережевому шляху перехопити сеанс користувача й виконати код з його правами. Siemens готує виправлення та рекомендує тимчасові заходи захисту.",
+      "title": "CISA додає одну з відомих вразливостей до каталогу",
+      "summary": "CISA додала одну нову вразливість до її знаного вибухобезпечного каталогу Vulnerabilities (KEV) на основі доказів активного експлуатації. CVE-2026-115731 Підприємництво підсилення ненадійності даних Цей тип вразливості є частим вектором атаки для шкідливих кіберігор і",
       "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-08",
-      "originalTitle": "Siemens SIMATIC",
-      "originalSummary": "View CSAF Summary The products listed below contain an authentication bypass vulnerability that could allow an on-path attacker to take over the session of a legitimate user and execute arbitrary code with the privileges of the victim user. Siemens is preparing fixes and recommends specific mitigations for pr",
-      "translation": "uk-v1"
-    },
-    {
-      "id": "4a756643b0596f8c2c40",
-      "source": "CISA",
-      "title": "Siemens ROS#: ризик ін’єкції коду",
-      "summary": "У ROS# до версії 2.3.1 спеціально підготовлений файл опису повідомлення може призвести до вставлення довільного коду в згенеровану програму. Siemens рекомендує оновлення.",
-      "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-06",
-      "originalTitle": "Siemens ROS#",
-      "originalSummary": "View CSAF Summary ROS# before version 2.3.1 contains a code injection vulnerability that could allow an attacker that is able to pass a crafted message definition file to the user to inject arbitrary code into the generated program. Siemens has released a new version for ROS# and recommends to update to the l",
-      "translation": "uk-v1"
-    },
-    {
-      "id": "3b573666de1648f8a362",
-      "source": "CISA",
-      "title": "Промислова автоматизація Siemens: проблема Node.js/Brotli",
-      "summary": "Повідомлення стосується критичної проблеми в декодері Brotli компонента Node.js — Node2Shell (CVE-2026-111497). Вразливість пов’язана із записом поза межами буфера; виправлення опубліковані 21 жовтня 2026 року.",
-      "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-03",
-      "originalTitle": "Siemens Industrial Automation Software Products",
-      "originalSummary": "View CSAF Summary On October 21, 2026, the Node.js project released security updates addressing a critical vulnerability in the Brotli decoder bundled with Node.js, commonly referred to as \"Node2Shell\" (tracked as CVE-2026-111497). The vulnerability is an out-of-bounds write that could allow a remote attacker",
-      "translation": "uk-v1"
-    },
-    {
-      "id": "3989b95c68b62c6d091e",
-      "source": "CISA",
-      "title": "Siemens Simcenter Femap: читання пам’яті поза межами буфера",
-      "summary": "Під час відкриття файлів формату X_T у Simcenter Femap може виникати читання даних за межами буфера. Це може спричинити аварійне завершення програми або виконання довільного коду. Siemens випустив нову версію.",
-      "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-10",
-      "originalTitle": "Siemens Simcenter Femap",
-      "originalSummary": "View CSAF Summary Simcenter Femap is affected by an out of bounds read vulnerability that could be triggered when the application reads files in X_T format. This could allow an attacker to crash the application or execute arbitrary code. Siemens has released a new version for Simcenter Femap and recommends to",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/11/17/cisa-adds-one-known-exploited-vulnerability-catalog",
+      "originalTitle": "CISA Adds One Known Exploited Vulnerability to Catalog",
+      "originalSummary": "CISA has added one new vulnerability to its Known Exploited Vulnerabilities (KEV) Catalog , based on evidence of active exploitation. CVE-2026-115731 Perforce Puppet Enterprise Deserialization of Untrusted Data Vulnerability This type of vulnerability is a frequent attack vector for malicious cyber actors and",
       "translation": "uk-v1"
     },
     {
@@ -188,17 +199,6 @@
       "url": "https://www.cisa.gov/news-events/alerts/2026/11/17/critical-java-vulnerability-requires-immediate-patching",
       "originalTitle": "Critical Java Vulnerability Requires Immediate Patching",
       "originalSummary": "Purpose CISA strongly urges organizations to immediately patch the recently disclosed Oracle Java vulnerability CVE-2026-114938 . This critical memory-corruption vulnerability, known as “Java4Shell,” affects the Base64 decoder of the x86-64 HotSpot Java Virtual Machine (JVM), which is part of the Java Develop",
-      "translation": "uk-v1"
-    },
-    {
-      "id": "1e3a8a0a7e3cd062f91c",
-      "source": "CISA",
-      "title": "Siemens SIMATIC WinCC: можливе виконання коду через файл",
-      "summary": "У Graphics Designer для SIMATIC WinCC до версії V8.2 відкриття спеціального файлу може спричинити виконання активного вмісту й довільного коду. Siemens готує виправлення та рекомендує заходи зниження ризику.",
-      "published": "2026-11-17",
-      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-321-09",
-      "originalTitle": "Siemens SIMATIC WinCC",
-      "originalSummary": "View CSAF Summary Graphics Designer of SIMATIC WinCC before V8.2 contains an implicit active content execution vulnerability upon opening files, which could allow an attacker to cause arbitrary code execution on the device. Siemens is preparing fixes and recommends specific mitigations for products where fixe",
       "translation": "uk-v1"
     },
     {
@@ -320,7 +320,7 @@
       "description": "Кількість CVE, внесених до каталогу CISA KEV у відповідному році. Це НЕ кількість зламів і не дата фактичної атаки.",
       "source": "CISA (офіційне дзеркало GitHub)",
       "sourceUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
-      "sourceUpdated": "2026-11-23T19:43:55.7979Z",
+      "sourceUpdated": "2026-11-24T17:47:46.199Z",
       "years": [
         {
           "year": 2021,
@@ -344,7 +344,7 @@
         },
         {
           "year": 2026,
-          "count": 308
+          "count": 311
         }
       ]
     },
