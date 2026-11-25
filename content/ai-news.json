@@ -1,8 +1,30 @@
 {
   "schemaVersion": 1,
   "language": "uk",
-  "updatedAt": "2026-11-25T11:23:57Z",
+  "updatedAt": "2026-11-25T23:09:33Z",
   "news": [
+    {
+      "id": "df3be113c8aed13fbadf",
+      "source": "Hugging Face",
+      "title": "Хілл-клімбінг Inkling 2 Міні-навчання на одному RTX PRO 6000",
+      "summary": "",
+      "published": "2026-11-25",
+      "url": "https://huggingface.co/blog/inkling-2-mini-inference-hillclimb",
+      "originalTitle": "Hill-climbing Inkling 2 Mini inference on one RTX PRO 6000",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "88bd06d7e0e9b82f43a3",
+      "source": "Hugging Face",
+      "title": "Де вчені виводять лінію на агенти AI",
+      "summary": "",
+      "published": "2026-11-25",
+      "url": "https://huggingface.co/blog/allenai/where-scientists-draw-the-line-on-ai-agents",
+      "originalTitle": "Where scientists draw the line on AI agents",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
     {
       "id": "0077e07924e43bf73f6b",
       "source": "Hugging Face",
@@ -77,17 +99,6 @@
       "published": "2026-11-24",
       "url": "https://huggingface.co/blog/nvidia/microduck-obstacle-avoidance",
       "originalTitle": "Microduck Obstacle Avoidance: A Sim2Real Workflow with Isaac Lab and Newton",
-      "originalSummary": "",
-      "translation": "uk-v1"
-    },
-    {
-      "id": "eb2701ff66febea27293",
-      "source": "Hugging Face",
-      "title": "RoboTrack: Відстеження точок для реальної роботизованої маніпуляції",
-      "summary": "",
-      "published": "2026-11-23",
-      "url": "https://huggingface.co/blog/allenai/robotrack",
-      "originalTitle": "RoboTrack: Point tracking for real-world robotic manipulation",
       "originalSummary": "",
       "translation": "uk-v1"
     },
@@ -378,17 +389,6 @@
       "translation": "uk-v1"
     },
     {
-      "id": "19b4fcb1faac9c9bdbcc",
-      "source": "Hugging Face",
-      "title": "BotPsy: На-Device Особистий помічник з суб-Billion-Parameter Агентична мовна модель",
-      "summary": "",
-      "published": "2026-11-11",
-      "url": "https://huggingface.co/blog/qvac/botpsy",
-      "originalTitle": "BotPsy: On-Device Personal Assistant with a Sub-Billion-Parameter Agentic Language Model",
-      "originalSummary": "",
-      "translation": "uk-v1"
-    },
-    {
       "id": "f321c904268bcef29356",
       "source": "Google DeepMind",
       "title": "Впровадження АльфаПроф-коду: покрокове підтвердження комплексного програмного забезпечення на глибину",
@@ -452,7 +452,7 @@
     },
     {
       "name": "Google DeepMind",
-      "ok": true,
+      "ok": false,
       "url": "https://deepmind.google/blog/rss.xml"
     },
     {
