@@ -1,8 +1,19 @@
 {
   "schemaVersion": 1,
   "language": "uk",
-  "updatedAt": "2026-11-24T23:31:06Z",
+  "updatedAt": "2026-11-25T11:23:57Z",
   "news": [
+    {
+      "id": "0077e07924e43bf73f6b",
+      "source": "Hugging Face",
+      "title": "Індикційний голосовий агент з CUGA",
+      "summary": "",
+      "published": "2026-11-25",
+      "url": "https://huggingface.co/blog/ibm-research/an-indic-voice-agent-with-cuga",
+      "originalTitle": "An Indic Voice Agent with CUGA",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
     {
       "id": "ac2f786b30f6d45772c4",
       "source": "OpenAI",
@@ -275,17 +286,6 @@
       "published": "2026-11-18",
       "url": "https://deepmind.google/blog/genie-4-is-now-available/",
       "originalTitle": "Genie 4 is now available",
-      "originalSummary": "",
-      "translation": "uk-v1"
-    },
-    {
-      "id": "aef632472a5e3af7f91b",
-      "source": "Hugging Face",
-      "title": "Моделі Time-Series в Streamhouse: новий Frontier і використовувати кейси",
-      "summary": "",
-      "published": "2026-11-18",
-      "url": "https://huggingface.co/blog/ibm-research/time-series-powered-streamhouse",
-      "originalTitle": "Time-Series Models in the Streamhouse: A New Frontier and Use Cases",
       "originalSummary": "",
       "translation": "uk-v1"
     },
