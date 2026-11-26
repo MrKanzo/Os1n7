@@ -1,8 +1,30 @@
 {
   "schemaVersion": 1,
   "language": "uk",
-  "updatedAt": "2026-11-26T10:59:15Z",
+  "updatedAt": "2026-11-26T23:01:56Z",
   "news": [
+    {
+      "id": "a734da9d3a1d876054f8",
+      "source": "Hugging Face",
+      "title": "Представляємо llama.cpp бендик для AMD Ryzen і Radeon",
+      "summary": "",
+      "published": "2026-11-26",
+      "url": "https://huggingface.co/blog/ggml-org/llamacpp-amd-bench",
+      "originalTitle": "Introducing the llama.cpp benchmark dashboard for AMD Ryzen and Radeon",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "819f2bb8e324e5e7f3ab",
+      "source": "Hugging Face",
+      "title": "Swarms, Flocks, Gangs: Як побудувати, поїзд і оцінити багатоагентні системи",
+      "summary": "",
+      "published": "2026-11-26",
+      "url": "https://huggingface.co/blog/training-swarms",
+      "originalTitle": "Swarms, Flocks, Gangs: How to build, train, and evaluate multi-agent systems",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
     {
       "id": "3d2697b636d74b834fc0",
       "source": "Hugging Face",
@@ -100,6 +122,17 @@
       "url": "https://openai.com/index/searching-for-distant-planets-with-astra",
       "originalTitle": "Searching for distant planets with Astra",
       "originalSummary": "See how two amateur astronomers used Codex and Astra to find potential exoplanets in public data from NASA’s Kepler and TESS space telescopes.",
+      "translation": "uk-v1"
+    },
+    {
+      "id": "10ef75306f1db512480f",
+      "source": "Google DeepMind",
+      "title": "Від спектра до структури: Виявлення молекул з масовими навичками для Google Antigravity",
+      "summary": "Навички масового типу використовуються вчені з використанням Google Antigravity для інтерпретації тандемних масових спектрів.",
+      "published": "2026-11-24",
+      "url": "https://deepmind.google/blog/interpreting-mass-spectra-with-google-antigravity/",
+      "originalTitle": "From spectrum to structure: Identifying molecules with Mass Spec Skills for Google Antigravity",
+      "originalSummary": "Mass Spec Skills empowers scientists using Google Antigravity to interpret tandem mass spectra.",
       "translation": "uk-v1"
     },
     {
@@ -334,28 +367,6 @@
       "translation": "uk-v1"
     },
     {
-      "id": "6841e619fcd7e8d93702",
-      "source": "Hugging Face",
-      "title": "llama.cpp v1.0.0 : Потужний фундамент для локальної екосистеми AI",
-      "summary": "",
-      "published": "2026-11-13",
-      "url": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
-      "originalTitle": "llama.cpp v1.0.0 : A stronger foundation for the local AI ecosystem",
-      "originalSummary": "",
-      "translation": "uk-v1"
-    },
-    {
-      "id": "cbda9238a3684b28e47a",
-      "source": "Hugging Face",
-      "title": "Путівник для моделей 3D Generation",
-      "summary": "",
-      "published": "2026-11-12",
-      "url": "https://huggingface.co/blog/3d-lora-finetuning",
-      "originalTitle": "The Definitive Fine-Tuning Guide for 3D Generation Models",
-      "originalSummary": "",
-      "translation": "uk-v1"
-    },
-    {
       "id": "c7a410ad3b8628097c72",
       "source": "Google DeepMind",
       "title": "Представляємо Близнюки 4 Гідроген",
@@ -431,17 +442,6 @@
       "originalTitle": "Gemini Robotics 2.5 accelerates real-world general dexterity",
       "originalSummary": "Our most capable vision-language-action model enhances robot dexterity, reliability, and safety",
       "translation": "uk-v1"
-    },
-    {
-      "id": "f09d7876c1e95fcaa2b6",
-      "source": "Google DeepMind",
-      "title": "Близнюки Omni 1.2 Флеш: Швидко і економічно вигідно з більшим кліпом",
-      "summary": "",
-      "published": "2026-11-05",
-      "url": "https://deepmind.google/blog/gemini-omni-12-flash-fast-and-cost-effective-with-longer-clips/",
-      "originalTitle": "Gemini Omni 1.2 Flash: Fast and cost-effective with longer clips",
-      "originalSummary": "",
-      "translation": "uk-v1"
     }
   ],
   "sources": [
@@ -452,7 +452,7 @@
     },
     {
       "name": "Google DeepMind",
-      "ok": false,
+      "ok": true,
       "url": "https://deepmind.google/blog/rss.xml"
     },
     {
