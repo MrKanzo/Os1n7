@@ -1,8 +1,19 @@
 {
   "schemaVersion": 1,
   "language": "uk",
-  "updatedAt": "2026-11-25T23:09:33Z",
+  "updatedAt": "2026-11-26T10:59:15Z",
   "news": [
+    {
+      "id": "3d2697b636d74b834fc0",
+      "source": "Hugging Face",
+      "title": "Будівля на Nemotron 3.5 Parse: відкриті дані, Fine-Tuning та Faster Inference",
+      "summary": "",
+      "published": "2026-11-26",
+      "url": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+      "originalTitle": "Building on Nemotron 3.5 Parse: Open Data, Fine-Tuning, and Faster Inference",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
     {
       "id": "df3be113c8aed13fbadf",
       "source": "Hugging Face",
@@ -89,17 +100,6 @@
       "url": "https://openai.com/index/searching-for-distant-planets-with-astra",
       "originalTitle": "Searching for distant planets with Astra",
       "originalSummary": "See how two amateur astronomers used Codex and Astra to find potential exoplanets in public data from NASA’s Kepler and TESS space telescopes.",
-      "translation": "uk-v1"
-    },
-    {
-      "id": "6a28e842b3bf4bfd8400",
-      "source": "Hugging Face",
-      "title": "Microduck Obstacle Уникнення: A Sim2Real Workflow with Isaac Lab and Newton",
-      "summary": "",
-      "published": "2026-11-24",
-      "url": "https://huggingface.co/blog/nvidia/microduck-obstacle-avoidance",
-      "originalTitle": "Microduck Obstacle Avoidance: A Sim2Real Workflow with Isaac Lab and Newton",
-      "originalSummary": "",
       "translation": "uk-v1"
     },
     {
