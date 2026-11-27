@@ -1,8 +1,19 @@
 {
   "schemaVersion": 1,
   "language": "uk",
-  "updatedAt": "2026-11-26T23:01:56Z",
+  "updatedAt": "2026-11-27T22:45:56Z",
   "news": [
+    {
+      "id": "c2bd7953104652e48b06",
+      "source": "Hugging Face",
+      "title": "Взявши Trainium3 в трек: Генерація Відео з LTX-2.5",
+      "summary": "",
+      "published": "2026-11-27",
+      "url": "https://huggingface.co/blog/video-trainium3",
+      "originalTitle": "Taking Trainium3 to the Track: Generating Videos with LTX-2.5",
+      "originalSummary": "",
+      "translation": "uk-v1"
+    },
     {
       "id": "a734da9d3a1d876054f8",
       "source": "Hugging Face",
@@ -374,17 +385,6 @@
       "published": "2026-11-12",
       "url": "https://deepmind.google/blog/introducing-gemini-4-hydrogen/",
       "originalTitle": "Introducing Gemini 4 Hydrogen",
-      "originalSummary": "",
-      "translation": "uk-v1"
-    },
-    {
-      "id": "84ec87286cb35a64f463",
-      "source": "Hugging Face",
-      "title": "LLMON: Мова LLM-нативного Markup тепер у Граніт 4.1 3B і 8B",
-      "summary": "",
-      "published": "2026-11-12",
-      "url": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite",
-      "originalTitle": "LLMON: An LLM-Native Markup Language, now in Granite 4.1 3B and 8B",
       "originalSummary": "",
       "translation": "uk-v1"
     },
