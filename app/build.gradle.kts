@@ -9,8 +9,8 @@ android {
         applicationId = "com.mrkanzo.os1n7"
         minSdk = 26
         targetSdk = 35
-        versionCode = 50
-        versionName = "0.8.6"
+        versionCode = 51
+        versionName = "0.8.7"
     }
     signingConfigs {
         create("production") {
@@ -31,8 +31,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
+    packaging { resources { excludes += setOf("META-INF/versions/9/OSGI-INF/MANIFEST.MF", "META-INF/DEPENDENCIES") } }
 }
 
 dependencies {
+    implementation("com.github.MuntashirAkon:libadb-android:3.1.1")
+    implementation("org.conscrypt:conscrypt-android:2.5.3")
+    implementation("org.bouncycastle:bcpkix-jdk18on:1.78.1")
     implementation("com.google.mlkit:translate:17.0.3")
 }
