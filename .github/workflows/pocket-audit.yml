@@ -1,0 +1,43 @@
+name: Build Pocket Audit 2.8
+on:
+  push:
+    branches: [pocket-audit]
+    paths:
+      - 'pocket-audit/Pocket_Audit_2.8_source.zip'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack Pocket Audit
+        run: |
+          mkdir -p "$RUNNER_TEMP/pocket-audit"
+          unzip -q pocket-audit/Pocket_Audit_2.8_source.zip -d "$RUNNER_TEMP/pocket-audit"
+          test -f "$RUNNER_TEMP/pocket-audit/settings.gradle"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Build APKs
+        run: gradle --no-daemon -p "$RUNNER_TEMP/pocket-audit" :app:assembleDebug :app:assembleRelease
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Pocket-Audit-2.8-debug
+          path: ${{ runner.temp }}/pocket-audit/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+      - name: Upload unsigned release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Pocket-Audit-2.8-unsigned
+          path: ${{ runner.temp }}/pocket-audit/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
