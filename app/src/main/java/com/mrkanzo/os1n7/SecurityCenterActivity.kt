@@ -55,6 +55,9 @@ class SecurityCenterActivity: Os1n7Activity() {
   setContentView(root);root.requestApplyInsets()
   button(body,"← Головне меню"){finish()}
   Os1n7Ui.pageTitle(this,body,"⬡","Security Center","DNS • конфіденційність • захист")
+  button(body,"Pocket Audit • аналіз програм і фаєрвол") {
+   startActivity(android.content.Intent(this, ua.local.diiaaudit.PocketAuditActivity::class.java))
+  }
   body.addView(Os1n7Ui.sectionHeading(this,"🔎 DNS • власні й дозволені домени"))
   text(body,"Введи домен без https:// і шляху. Перевірка виконує лише DNS-запит, не сканує порти та не відвідує сайт.",14f)
   val input=EditText(this).apply {
