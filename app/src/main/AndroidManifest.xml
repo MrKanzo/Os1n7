@@ -1,9 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"/>
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <application android:icon="@drawable/ic_os1n7" android:roundIcon="@drawable/ic_os1n7" android:allowBackup="false" android:supportsRtl="true" android:label="OSINT Бібліотека" android:theme="@style/Os1n7Theme" android:usesCleartextTraffic="true">
         <activity android:name=".GraphActivity" android:exported="false"/>
         <activity android:name=".SecurityCenterActivity" android:exported="false"/>
+        <activity android:name="ua.local.diiaaudit.PocketAuditActivity" android:exported="false"/>
+        <activity android:name="ua.local.diiaaudit.LocalFirewallActivity" android:exported="false" android:resizeableActivity="true"/>
         <activity android:name=".ToolCatalogActivity" android:exported="false"/>
         <activity android:name=".FoundationsActivity" android:exported="false"/>
         <activity android:name=".AcademyActivity" android:exported="false"/>
