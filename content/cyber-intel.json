@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "language": "uk",
-  "updatedAt": "2026-11-27T22:45:55Z",
+  "updatedAt": "2026-11-28T10:32:45Z",
   "news": [
     {
       "id": "a939823268298b2351a6",
@@ -320,7 +320,7 @@
       "description": "Кількість CVE, внесених до каталогу CISA KEV у відповідному році. Це НЕ кількість зламів і не дата фактичної атаки.",
       "source": "CISA (офіційне дзеркало GitHub)",
       "sourceUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
-      "sourceUpdated": "2026-11-25T19:48:12.4344Z",
+      "sourceUpdated": "2026-11-27T18:03:12.5733Z",
       "years": [
         {
           "year": 2021,
@@ -344,7 +344,7 @@
         },
         {
           "year": 2026,
-          "count": 321
+          "count": 324
         }
       ]
     },
